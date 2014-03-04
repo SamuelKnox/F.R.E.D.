@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Mascape
+namespace Fred
 {
     class Attribute
     {

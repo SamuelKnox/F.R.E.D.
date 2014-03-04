@@ -8,7 +8,7 @@
     <ProjectGuid>{84B37229-AE33-4FF4-A226-CE0D44F637A4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mascape</RootNamespace>
+    <RootNamespace>Fred</RootNamespace>
     <AssemblyName>Mascape</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -69,7 +69,7 @@
     <Compile Include="TextField.cs" />
     <Compile Include="Trap.cs" />
     <Compile Include="Wall.cs" />
-    <Compile Include="Game1.cs" />
+    <Compile Include="Fred.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

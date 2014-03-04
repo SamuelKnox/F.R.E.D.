@@ -5,22 +5,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Mascape
+namespace Fred
 {
-    class Trap
+    class Wall
     {
-        public double Damage { get; set; }
-        public double Delay { get; set; }
+
         public Texture2D Image { get; set; }
         public Rectangle Rectangle { get; set; }
         public bool Active { get; set; }
+        public string Orientation { get; set; }
+        //public bool Locked { get; set; }
+        //public bool Trapped { get; set; }
 
-
-        public Trap(double dmg, double delay)
-        {
-            Damage = dmg;
-            Delay = delay;
-            Active = true;
-        }
+        //public override string ToString()
+        //{
+        //    return base.ToString() + ": " + "Active: " + Active;
+        //}
     }
 }
+

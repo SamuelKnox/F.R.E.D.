@@ -20,3 +20,5 @@ C:\Users\Samuel\Desktop\Workspaces\Visual Studio\Mascape\Mascape\bin\WindowsGL\D
 C:\Users\Samuel\Desktop\Workspaces\Visual Studio\Mascape\Mascape\bin\WindowsGL\Debug\Mascape.application
 C:\Users\Samuel\Desktop\Workspaces\Visual Studio\Mascape\Mascape\obj\x86\Debug\Mascape.exe.manifest
 C:\Users\Samuel\Desktop\Workspaces\Visual Studio\Mascape\Mascape\obj\x86\Debug\Mascape.application
+C:\Users\Samuel\Desktop\Workspaces\Visual Studio\Fred\Mascape\obj\x86\Debug\Mascape.exe
+C:\Users\Samuel\Desktop\Workspaces\Visual Studio\Fred\Mascape\obj\x86\Debug\Mascape.pdb

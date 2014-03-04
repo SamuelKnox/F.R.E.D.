@@ -13,12 +13,12 @@ using Fonts;
 //TODO: set up GameOver() for 3+ players
 //TODO: Controller designation is not fully functional for 3+ players in update()
 
-namespace Mascape
+namespace Fred
 {
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Game
+    public class Fred : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -36,7 +36,7 @@ namespace Mascape
         List<Player> goodPlayers = new List<Player>();
         List<Player> evilPlayers = new List<Player>();
 
-        public Game1()
+        public Fred()
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
