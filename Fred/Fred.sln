@@ -1,6 +1,7 @@
-﻿Microsoft Visual Studio Solution File, Format Version 11.00
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fred", "Fred.csproj", "{33251CEF-7718-4D77-AE06-9D4C0C77EF46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mascape", "Mascape.csproj", "{84B37229-AE33-4FF4-A226-CE0D44F637A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,12 +9,12 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{33251CEF-7718-4D77-AE06-9D4C0C77EF46}.Debug|x86.ActiveCfg = Debug|x86
-		{33251CEF-7718-4D77-AE06-9D4C0C77EF46}.Debug|x86.Build.0 = Debug|x86
-		{33251CEF-7718-4D77-AE06-9D4C0C77EF46}.Release|x86.ActiveCfg = Release|x86
-		{33251CEF-7718-4D77-AE06-9D4C0C77EF46}.Release|x86.Build.0 = Release|x86
+		{84B37229-AE33-4FF4-A226-CE0D44F637A4}.Debug|x86.ActiveCfg = Debug|x86
+		{84B37229-AE33-4FF4-A226-CE0D44F637A4}.Debug|x86.Build.0 = Debug|x86
+		{84B37229-AE33-4FF4-A226-CE0D44F637A4}.Release|x86.ActiveCfg = Release|x86
+		{84B37229-AE33-4FF4-A226-CE0D44F637A4}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Fred.csproj
+		StartupItem = Mascape.csproj
 	EndGlobalSection
 EndGlobal

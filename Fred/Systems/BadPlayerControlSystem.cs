@@ -14,13 +14,13 @@ using System.Text;
 namespace Fred.Systems
 {
     [ArtemisEntitySystem(GameLoopType = GameLoopType.Update)]
-    class GoodPlayerControlSystem : TagSystem
+    class BadPlayerControlSystem : TagSystem
     {
 
         private GraphicsDevice graphicsDevice;
 
-        public GoodPlayerControlSystem()
-            : base("GOOD_PLAYER")
+        public BadPlayerControlSystem()
+            : base("BAD_PLAYER")
         {
         }
 
@@ -34,7 +34,7 @@ namespace Fred.Systems
             TransformComponent transformComponent = entity.GetComponent<TransformComponent>();
             KeyboardState keyboardState = Keyboard.GetState();
             float keyMoveSpeed = 0.3f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
-            if (keyboardState.IsKeyDown(Keys.A))
+            if (keyboardState.IsKeyDown(Keys.Left))
             {
                 transformComponent.X -= keyMoveSpeed;
                 if (transformComponent.X < 32)
@@ -42,7 +42,7 @@ namespace Fred.Systems
                     transformComponent.X = 32;
                 }
             }
-             if (keyboardState.IsKeyDown(Keys.D))
+            if (keyboardState.IsKeyDown(Keys.Right))
             {
                 transformComponent.X += keyMoveSpeed;
                 if (transformComponent.X > graphicsDevice.Viewport.Width - 32)
@@ -50,7 +50,7 @@ namespace Fred.Systems
                     transformComponent.X = graphicsDevice.Viewport.Width - 32;
                 }
             }
-             if (keyboardState.IsKeyDown(Keys.W))
+            if (keyboardState.IsKeyDown(Keys.Up))
             {
                 transformComponent.Y -= keyMoveSpeed;
                 if (transformComponent.Y < 32)
@@ -58,7 +58,7 @@ namespace Fred.Systems
                     transformComponent.Y = 32;
                 }
             }
-             if (keyboardState.IsKeyDown(Keys.S))
+            if (keyboardState.IsKeyDown(Keys.Down))
             {
                 transformComponent.Y += keyMoveSpeed;
                 if (transformComponent.Y > graphicsDevice.Viewport.Height - 32)

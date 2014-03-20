@@ -102,7 +102,7 @@ namespace Fred
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
@@ -119,14 +119,21 @@ namespace Fred
             player.AddComponentFromPool<TransformComponent>();
             player.AddComponent(new SpatialFormComponent("GoodPlayer"));
 
-            player.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.5f;
+            player.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.2f;
             player.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - 50;
             player.Tag = "GOOD_PLAYER";
 
         }
         void InitializeEvilPlayers()
         {
+            Entity enemy = world.CreateEntity();
 
+            enemy.AddComponentFromPool<TransformComponent>();
+            enemy.AddComponent(new SpatialFormComponent("BadPlayer"));
+
+            enemy.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.8f;
+            enemy.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - 50;
+            enemy.Tag = "BAD_PLAYER";
         }
     }
 }
