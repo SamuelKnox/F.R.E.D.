@@ -12,24 +12,16 @@ namespace Fred.Components
     class HealthComponent : IComponent
     {
         public HealthComponent()
-            : this(0.0f)
+            : this(0)
         {
         }
 
-        public HealthComponent(float points)
+        public HealthComponent(int points)
         {
             this.Points = this.MaximumHealth = points;
         }
 
-        public float Points { get; set; }
-
-        public double HealthPercentage
-        {
-            get
-            {
-                return Math.Round(this.Points / this.MaximumHealth * 100f);
-            }
-        }
+        public int Points { get; set; }
 
         public bool IsAlive
         {
@@ -39,7 +31,7 @@ namespace Fred.Components
             }
         }
 
-        public float MaximumHealth { get; private set; }
+        public int MaximumHealth { get; private set; }
 
         public void AddDamage(int damage)
         {
