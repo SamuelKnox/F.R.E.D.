@@ -48,6 +48,7 @@ namespace Fred
             world = new EntityWorld();
 
             EntitySystem.BlackBoard.SetEntry("ContentManager", Content);
+            EntitySystem.BlackBoard.SetEntry("GraphicsDevice", GraphicsDevice);
             EntitySystem.BlackBoard.SetEntry("SpriteBatch", spriteBatch);
 
             world.InitializeAll(true);
@@ -90,6 +91,7 @@ namespace Fred
                 Exit();
 
             // TODO: Add your update logic here
+            this.world.Update();
 
             base.Update(gameTime);
         }
@@ -119,6 +121,7 @@ namespace Fred
 
             player.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.5f;
             player.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - 50;
+            player.Tag = "GOOD_PLAYER";
 
         }
         void InitializeEvilPlayers()
