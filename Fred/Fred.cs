@@ -118,6 +118,7 @@ namespace Fred
 
             player.AddComponentFromPool<TransformComponent>();
             player.AddComponent(new SpatialFormComponent("GoodPlayer"));
+            player.AddComponent(new VelocityComponent());
 
             player.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.5f;
             player.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - 50;

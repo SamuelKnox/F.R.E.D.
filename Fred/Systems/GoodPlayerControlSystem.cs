@@ -31,40 +31,128 @@ namespace Fred.Systems
 
         public override void Process(Entity entity)
         {
-            TransformComponent transformComponent = entity.GetComponent<TransformComponent>();
+            VelocityComponent velocityComponent = entity.GetComponent<VelocityComponent>();
             KeyboardState keyboardState = Keyboard.GetState();
-            float keyMoveSpeed = 0.3f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+            float turningOffset = 1F;
+            float changeInAngle = 1;
+            float maxMoveSpeed = .4F;
+            float keyMoveSpeed = 0.001F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+            float moveSpeedFriction = 0.0003f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             if (keyboardState.IsKeyDown(Keys.A) || keyboardState.IsKeyDown(Keys.Left))
             {
-                transformComponent.X -= keyMoveSpeed;
-                if (transformComponent.X < 32)
+                if (Math.Abs(velocityComponent.Speed) < turningOffset)
                 {
-                    transformComponent.X = 32;
+                    velocityComponent.Angle = 180;
+                }
+                if (velocityComponent.Angle >= 90 && velocityComponent.Angle < 270)
+                {
+                    velocityComponent.Speed += keyMoveSpeed;
+                }
+                else
+                {
+                    velocityComponent.Speed -= keyMoveSpeed;
+                }
+
+                if (velocityComponent.Angle < 180)
+                {
+                    velocityComponent.AddAngle(changeInAngle);
+                }
+                else if(velocityComponent.Angle > 180 && velocityComponent.Angle > 0)
+                {
+
+                    velocityComponent.AddAngle(-changeInAngle);
                 }
             }
              if (keyboardState.IsKeyDown(Keys.D) || keyboardState.IsKeyDown(Keys.Right))
-            {
-                transformComponent.X += keyMoveSpeed;
-                if (transformComponent.X > graphicsDevice.Viewport.Width - 32)
-                {
-                    transformComponent.X = graphicsDevice.Viewport.Width - 32;
-                }
+             {
+                 if (Math.Abs(velocityComponent.Speed) < turningOffset)
+                 {
+                     velocityComponent.Angle = 0;
+                 }
+                 if (velocityComponent.Angle >= 270 || velocityComponent.Angle < 90)
+                 {
+                     velocityComponent.Speed += keyMoveSpeed;
+                 }
+                 else
+                 {
+                     velocityComponent.Speed -= keyMoveSpeed;
+                 }
+                 if (velocityComponent.Angle > 180)
+                 {
+                     velocityComponent.AddAngle(changeInAngle);
+                 }
+                 else if(velocityComponent.Angle < 180 && velocityComponent.Angle > 0)
+                 {
+
+                     velocityComponent.AddAngle(-changeInAngle);
+                 }
             }
              if (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Up))
-            {
-                transformComponent.Y -= keyMoveSpeed;
-                if (transformComponent.Y < 32)
-                {
-                    transformComponent.Y = 32;
-                }
+             {
+                 if (Math.Abs(velocityComponent.Speed) < turningOffset)
+                 {
+                     velocityComponent.Angle = 270;
+                 }
+                 if (velocityComponent.Angle >=180)
+                 {
+                     velocityComponent.Speed += keyMoveSpeed;
+                 }
+                 else
+                 {
+                     velocityComponent.Speed -= keyMoveSpeed;
+                 }
+                 if (velocityComponent.Angle < 270 && velocityComponent.Angle > 90)
+                 {
+                     velocityComponent.AddAngle(changeInAngle);
+                 }
+                 else if (velocityComponent.Angle < 90 || velocityComponent.Angle > 270)
+                 {
+
+                     velocityComponent.AddAngle(-changeInAngle);
+                 }
             }
              if (keyboardState.IsKeyDown(Keys.S) || keyboardState.IsKeyDown(Keys.Down))
-            {
-                transformComponent.Y += keyMoveSpeed;
-                if (transformComponent.Y > graphicsDevice.Viewport.Height - 32)
-                {
-                    transformComponent.Y = graphicsDevice.Viewport.Height - 32;
-                }
+             {
+                 if (Math.Abs(velocityComponent.Speed) < turningOffset)
+                 {
+                     velocityComponent.Angle = 90;
+                 }
+                 if (velocityComponent.Angle < 180)
+                 {
+                     velocityComponent.Speed += keyMoveSpeed;
+                 }
+                 else
+                 {
+                     velocityComponent.Speed -= keyMoveSpeed;
+                 }
+                 if (velocityComponent.Angle < 90 || velocityComponent.Angle > 270)
+                 {
+                     velocityComponent.AddAngle(changeInAngle);
+                 }
+                 else if (velocityComponent.Angle < 270 && velocityComponent.Angle > 90)
+                 {
+
+                     velocityComponent.AddAngle(-changeInAngle);
+                 }
+            }
+             if (velocityComponent.Speed > 0)
+             {
+                 velocityComponent.Speed -= moveSpeedFriction;
+            }
+             else if (velocityComponent.Speed < 0)
+             {
+                 velocityComponent.Speed += moveSpeedFriction;
+             }
+             if (Math.Abs(velocityComponent.Speed) > maxMoveSpeed)
+             {
+                 if (velocityComponent.Speed > 0)
+                 {
+                     velocityComponent.Speed -= keyMoveSpeed;
+             }
+                 else
+                 {
+                     velocityComponent.Speed += keyMoveSpeed;
+                 }
             }
         }
     }
