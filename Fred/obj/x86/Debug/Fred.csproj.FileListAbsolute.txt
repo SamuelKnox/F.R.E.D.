@@ -1,0 +1,12 @@
+C:\Users\Samuel\Desktop\Workspaces\Visual Studio\Fred\Fred\bin\WindowsGL\Debug\SDL.dll
+C:\Users\Samuel\Desktop\Workspaces\Visual Studio\Fred\Fred\bin\WindowsGL\Debug\Fred.exe
+C:\Users\Samuel\Desktop\Workspaces\Visual Studio\Fred\Fred\bin\WindowsGL\Debug\Fred.pdb
+C:\Users\Samuel\Desktop\Workspaces\Visual Studio\Fred\Fred\bin\WindowsGL\Debug\artemis.dll
+C:\Users\Samuel\Desktop\Workspaces\Visual Studio\Fred\Fred\bin\WindowsGL\Debug\Lidgren.Network.dll
+C:\Users\Samuel\Desktop\Workspaces\Visual Studio\Fred\Fred\bin\WindowsGL\Debug\MonoGame.Framework.dll
+C:\Users\Samuel\Desktop\Workspaces\Visual Studio\Fred\Fred\bin\WindowsGL\Debug\OpenTK.dll
+C:\Users\Samuel\Desktop\Workspaces\Visual Studio\Fred\Fred\bin\WindowsGL\Debug\Tao.Sdl.dll
+C:\Users\Samuel\Desktop\Workspaces\Visual Studio\Fred\Fred\obj\x86\Debug\Fred.csprojResolveAssemblyReference.cache
+C:\Users\Samuel\Desktop\Workspaces\Visual Studio\Fred\Fred\obj\x86\Debug\Fred.exe
+C:\Users\Samuel\Desktop\Workspaces\Visual Studio\Fred\Fred\obj\x86\Debug\Fred.pdb
+C:\Users\Samuel\Desktop\Workspaces\Visual Studio\Fred\Fred\bin\WindowsGL\Debug\Content\goodplayer.png
