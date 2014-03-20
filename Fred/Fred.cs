@@ -118,11 +118,11 @@ namespace Fred
 
             player.AddComponentFromPool<TransformComponent>();
             player.AddComponent(new SpatialFormComponent("GoodPlayer"));
+            player.AddComponent(new HealthComponent(10));
 
             player.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.5f;
             player.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - 50;
             player.Tag = "GOOD_PLAYER";
-
         }
         void InitializeEvilPlayers()
         {
