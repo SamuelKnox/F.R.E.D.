@@ -132,17 +132,6 @@ namespace Fred.Systems
                             }
                         velocityComponent.Speed = Math.Max(velocityComponent.Speed, -1 * maxMoveSpeed);
                         velocityComponent.Speed = Math.Min(velocityComponent.Speed, maxMoveSpeed);
-                        if (Math.Abs(velocityComponent.Speed) > maxMoveSpeed)
-                            {
-                                if (velocityComponent.Speed > 0)
-                                    {
-                                        velocityComponent.Speed -= keyMoveSpeed;
-                                    }
-                                else
-                                    {
-                                        velocityComponent.Speed += keyMoveSpeed;
-                                    }
-                            }
                 }
     }
 }
