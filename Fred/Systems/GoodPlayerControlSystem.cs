@@ -33,11 +33,13 @@ namespace Fred.Systems
         {
             VelocityComponent velocityComponent = entity.GetComponent<VelocityComponent>();
             KeyboardState keyboardState = Keyboard.GetState();
+
             float turningOffset = 1F;
             float changeInAngle = 1;
-            float maxMoveSpeed = .4F;
+            float maxMoveSpeed = .2F;
             float keyMoveSpeed = 0.001F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             float moveSpeedFriction = 0.0003f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+
             if (keyboardState.IsKeyDown(Keys.A) || keyboardState.IsKeyDown(Keys.Left))
             {
                 if (Math.Abs(velocityComponent.Speed) < turningOffset)
@@ -63,7 +65,7 @@ namespace Fred.Systems
                     velocityComponent.AddAngle(-changeInAngle);
                 }
             }
-             if (keyboardState.IsKeyDown(Keys.D) || keyboardState.IsKeyDown(Keys.Right))
+            if (keyboardState.IsKeyDown(Keys.D) || keyboardState.IsKeyDown(Keys.Right))
              {
                  if (Math.Abs(velocityComponent.Speed) < turningOffset)
                  {
@@ -87,7 +89,7 @@ namespace Fred.Systems
                      velocityComponent.AddAngle(-changeInAngle);
                  }
             }
-             if (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Up))
+            if (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Up))
              {
                  if (Math.Abs(velocityComponent.Speed) < turningOffset)
                  {
@@ -111,7 +113,7 @@ namespace Fred.Systems
                      velocityComponent.AddAngle(-changeInAngle);
                  }
             }
-             if (keyboardState.IsKeyDown(Keys.S) || keyboardState.IsKeyDown(Keys.Down))
+            if (keyboardState.IsKeyDown(Keys.S) || keyboardState.IsKeyDown(Keys.Down))
              {
                  if (Math.Abs(velocityComponent.Speed) < turningOffset)
                  {
@@ -143,6 +145,8 @@ namespace Fred.Systems
              {
                  velocityComponent.Speed += moveSpeedFriction;
              }
+             velocityComponent.Speed = Math.Max(velocityComponent.Speed, -1 * maxMoveSpeed);
+             velocityComponent.Speed = Math.Min(velocityComponent.Speed, maxMoveSpeed);
              if (Math.Abs(velocityComponent.Speed) > maxMoveSpeed)
              {
                  if (velocityComponent.Speed > 0)
