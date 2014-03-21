@@ -15,19 +15,19 @@ namespace Fred.Systems
     {
         protected override void Process(Entity entity, TransformComponent transformComponent, VelocityComponent velocityComponent, HealthComponent healthComponent)
         {
-            if (velocityComponent != null)
+            if (velocityComponent != null && transformComponent != null && healthComponent != null)
             {
-                if (transformComponent != null)
+                if (healthComponent.IsAlive)
                 {
-                    if (healthComponent != null && healthComponent.IsAlive)
-                    {
-                        float ms = TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+                    Console.WriteLine("CURRENT HEALTH:  " + healthComponent.CurrentHealth);
+                    float ms = TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
 
-                        transformComponent.X += (float)(Math.Cos(velocityComponent.AngleAsRadians) * velocityComponent.Speed * ms);
-                        transformComponent.Y += (float)(Math.Sin(velocityComponent.AngleAsRadians) * velocityComponent.Speed * ms);
-                    }
+                    transformComponent.X += (float)(Math.Cos(velocityComponent.AngleAsRadians) * velocityComponent.Speed * ms);
+                    transformComponent.Y += (float)(Math.Sin(velocityComponent.AngleAsRadians) * velocityComponent.Speed * ms);
                 }
             }
         }
     }
 }
+    
+
