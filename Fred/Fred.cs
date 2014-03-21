@@ -145,23 +145,25 @@ namespace Fred
         }
         List<Vector2> InitializeWalls()
         {
+            int mazesNum = Directory.GetFiles("Mazes/", "*.*", SearchOption.TopDirectoryOnly).Length;
+            Random rand = new Random();
+            StreamReader file = new StreamReader("Mazes/maze" + rand.Next(0, mazesNum) + ".txt");
+            string line = file.ReadLine();
+            string[] firstLine = line.Split(' ');
             int wallSize = Content.Load<Texture2D>("wall").Width;
-            int width = 39;
-            int height = 22;
+            int width = int.Parse(firstLine[0]);
+            int height = int.Parse(firstLine[1]);
             List<Vector2> playerStartPoints = new List<Vector2>();
             playerStartPoints.Add(new Vector2(GraphicsDevice.DisplayMode.Width * 0.5F, GraphicsDevice.DisplayMode.Height * 0.5F));
             playerStartPoints.Add(new Vector2(GraphicsDevice.DisplayMode.Width * 0.8F, GraphicsDevice.DisplayMode.Height * 0.5F));
             int[,] mazeLayout = new int[width, height];
-            int mazesNum = Directory.GetFiles("Mazes/", "*.*", SearchOption.TopDirectoryOnly).Length;
-            Random rand = new Random();
 
-            StreamReader file = new StreamReader("Mazes/maze" + rand.Next(0,mazesNum) + ".txt");
             while (file.Peek() != -1)
             {
             for (int i = 0; i < height; ++i)
             {
 
-                string line = file.ReadLine();
+                line = file.ReadLine();
                 Console.WriteLine(line);
 
                 for (int j = 0; j < line.Length; ++j)
