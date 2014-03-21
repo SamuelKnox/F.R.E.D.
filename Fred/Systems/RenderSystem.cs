@@ -43,6 +43,14 @@ namespace Fred.Systems
                     {
                         GoodPlayer.Render(spriteBatch, contentManager, transformComponent);
                     }
+                    else if (string.Compare("BadPlayer", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
+                    {
+                        BadPlayer.Render(spriteBatch, contentManager, transformComponent);
+                    }
+                    else if (string.Compare("Wall", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
+                    {
+                        Wall.Render(spriteBatch, contentManager, transformComponent);
+                    }
                 }
             }
         }

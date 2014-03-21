@@ -1,0 +1,28 @@
+﻿using Fred.Components;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Fred.Spatials
+{
+    class Wall
+    {
+        static Texture2D tex;
+
+        public static void Render(SpriteBatch spriteBatch, ContentManager contentManager, TransformComponent transformComponent)
+        {
+            if (tex == null)
+            {
+                tex = contentManager.Load<Texture2D>("wall");
+            }
+            spriteBatch.Begin();
+            spriteBatch.Draw(tex, new Vector2(transformComponent.X - (tex.Width * 0.5f), transformComponent.Y - (tex.Height * 0.5f)), tex.Bounds, Color.White);
+            spriteBatch.End();
+        }
+
+    }
+}

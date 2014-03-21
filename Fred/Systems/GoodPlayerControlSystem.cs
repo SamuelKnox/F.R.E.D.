@@ -6,6 +6,7 @@ using Artemis.Utils;
 using Fred.Components;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,107 +32,153 @@ namespace Fred.Systems
 
         public override void Process (Entity entity)
                 {
-                        VelocityComponent velocityComponent = entity.GetComponent<VelocityComponent> ();
-                        KeyboardState keyboardState = Keyboard.GetState ();
+                    TransformComponent transformComponent = entity.GetComponent<TransformComponent>();
+                    VelocityComponent velocityComponent = entity.GetComponent<VelocityComponent> ();
 
-                        float turningOffset = 1F;
-                        float changeInAngle = 1;
-                        float maxMoveSpeed = .9F;
-                        float keyMoveSpeed = 0.001F * TimeSpan.FromTicks (this.EntityWorld.Delta).Milliseconds;
-                        float moveSpeedFriction = 0.0003f * TimeSpan.FromTicks (this.EntityWorld.Delta).Milliseconds;
+                    float turningOffset = 1F;
+                    float changeInAngle = 1;
+                    float maxMoveSpeed = .3F;
+                    float keyMoveSpeed = 0.001F * TimeSpan.FromTicks (this.EntityWorld.Delta).Milliseconds;
+                    float moveSpeedFriction = 0.0003f * TimeSpan.FromTicks (this.EntityWorld.Delta).Milliseconds;
 
-                        Keys[] pressed_Key = Keyboard.GetState().GetPressedKeys();
+                    string vertical = "none";
+                    string horizontal = "none";
 
-                        for (int i = 0; i < pressed_Key.Length; i++) {
-                            switch (pressed_Key [i]) {
+                    Keys[] pressed_Key = Keyboard.GetState().GetPressedKeys();
 
-                            case Keys.A:
-                            case Keys.Left:
-                                if (Math.Abs (velocityComponent.Speed) < turningOffset) {
-                                    velocityComponent.Angle = 180;
-                                }
+                    for (int i = 0; i < pressed_Key.Length; i++) {
+                        switch (pressed_Key [i]) {
 
-                                if (velocityComponent.Angle >= 90 && velocityComponent.Angle < 270) {
-                                    velocityComponent.Speed += keyMoveSpeed;
-                                } else {
-                                    velocityComponent.Speed -= keyMoveSpeed;
-                                }
-
-                                if (velocityComponent.Angle < 180) {
-                                    velocityComponent.AddAngle (changeInAngle);
-                                } else if (velocityComponent.Angle > 180 && velocityComponent.Angle > 0) {
-                                    velocityComponent.AddAngle (-changeInAngle);
-                                }
-                                break;
-
-                            case Keys.D:
-                            case Keys.Right:
-                                if (Math.Abs (velocityComponent.Speed) < turningOffset) {
-                                    velocityComponent.Angle = 0;
-                                }
-                                if (velocityComponent.Angle >= 270 || velocityComponent.Angle < 90) {
-                                    velocityComponent.Speed += keyMoveSpeed;
-                                } else {
-                                    velocityComponent.Speed -= keyMoveSpeed;
-                                }
-                                if (velocityComponent.Angle > 180) {
-                                    velocityComponent.AddAngle (changeInAngle);
-                                } else if (velocityComponent.Angle < 180 && velocityComponent.Angle > 0) {
-                                    velocityComponent.AddAngle (-changeInAngle);
-                                }
-                                break;
-
-                            case Keys.W:
-                            case Keys.Up:
-                                if (Math.Abs (velocityComponent.Speed) < turningOffset) {
-                                    velocityComponent.Angle = 270;
-                                }
-                                if (velocityComponent.Angle >= 180) {
-                                    velocityComponent.Speed += keyMoveSpeed;
-                                } else {
-                                    velocityComponent.Speed -= keyMoveSpeed;
-                                }
-                                if (velocityComponent.Angle < 270 && velocityComponent.Angle > 90) {
-                                    velocityComponent.AddAngle (changeInAngle);
-                                } else if (velocityComponent.Angle < 90 || velocityComponent.Angle > 270) {
-
-                                    velocityComponent.AddAngle (-changeInAngle);
-                                }
-                                break;
-
-                            case Keys.S:
-                            case Keys.Down:
-                                if (Math.Abs (velocityComponent.Speed) < turningOffset) {
-                                    velocityComponent.Angle = 90;
-                                }
-                                if (velocityComponent.Angle < 180) {
-                                    velocityComponent.Speed += keyMoveSpeed;
-                                } else {
-                                    velocityComponent.Speed -= keyMoveSpeed;
-                                }
-                                if (velocityComponent.Angle < 90 || velocityComponent.Angle > 270) {
-                                    velocityComponent.AddAngle (changeInAngle);
-                                } else if (velocityComponent.Angle < 270 && velocityComponent.Angle > 90) {
-
-                                    velocityComponent.AddAngle (-changeInAngle);
-                                }
-                                break;
-
-                            default:
-                                break;
+                        case Keys.A:
+                        case Keys.Left:
+                            if (Math.Abs (velocityComponent.Speed) < turningOffset) {
+                                velocityComponent.Angle = 180;
                             }
+
+                            if (velocityComponent.Angle >= 90 && velocityComponent.Angle < 270) {
+                                velocityComponent.Speed += keyMoveSpeed;
+                            } else {
+                                velocityComponent.Speed -= keyMoveSpeed;
+                            }
+
+                            if (velocityComponent.Angle < 180) {
+                                velocityComponent.AddAngle (changeInAngle);
+                            } else if (velocityComponent.Angle > 180 && velocityComponent.Angle > 0) {
+                                velocityComponent.AddAngle (-changeInAngle);
+                            }
+                            horizontal = "left";
+                            break;
+
+                        case Keys.D:
+                        case Keys.Right:
+                            if (Math.Abs (velocityComponent.Speed) < turningOffset) {
+                                velocityComponent.Angle = 0;
+                            }
+                            if (velocityComponent.Angle >= 270 || velocityComponent.Angle < 90) {
+                                velocityComponent.Speed += keyMoveSpeed;
+                            } else {
+                                velocityComponent.Speed -= keyMoveSpeed;
+                            }
+                            if (velocityComponent.Angle > 180) {
+                                velocityComponent.AddAngle (changeInAngle);
+                            } else if (velocityComponent.Angle < 180 && velocityComponent.Angle > 0) {
+                                velocityComponent.AddAngle (-changeInAngle);
+                            }
+                            horizontal = "right";
+                            break;
+
+                        case Keys.W:
+                        case Keys.Up:
+                            if (Math.Abs (velocityComponent.Speed) < turningOffset) {
+                                velocityComponent.Angle = 270;
+                            }
+                            if (velocityComponent.Angle >= 180) {
+                                velocityComponent.Speed += keyMoveSpeed;
+                            } else {
+                                velocityComponent.Speed -= keyMoveSpeed;
+                            }
+                            if (velocityComponent.Angle < 270 && velocityComponent.Angle > 90) {
+                                velocityComponent.AddAngle (changeInAngle);
+                            } else if (velocityComponent.Angle < 90 || velocityComponent.Angle > 270) {
+                                velocityComponent.AddAngle (-changeInAngle);
+                            }
+                            vertical = "up";
+                            break;
+
+                        case Keys.S:
+                        case Keys.Down:
+                            if (Math.Abs (velocityComponent.Speed) < turningOffset) {
+                                velocityComponent.Angle = 90;
+                            }
+                            if (velocityComponent.Angle < 180) {
+                                velocityComponent.Speed += keyMoveSpeed;
+                            } else {
+                                velocityComponent.Speed -= keyMoveSpeed;
+                            }
+                            if (velocityComponent.Angle < 90 || velocityComponent.Angle > 270) {
+                                velocityComponent.AddAngle (changeInAngle);
+                            } else if (velocityComponent.Angle < 270 && velocityComponent.Angle > 90) {
+                                velocityComponent.AddAngle (-changeInAngle);
+                            }
+                            vertical = "down";
+                            break;
+
+                        default:
+                            break;
                         }
+                    }
 
-                        if (velocityComponent.Speed > 0)
+                    // Handle max speed
+                    if (velocityComponent.Speed > 0)
+                        {
+                            velocityComponent.Speed -= moveSpeedFriction;
+                        }
+                    else if (velocityComponent.Speed < 0)
+                        {
+                            velocityComponent.Speed += moveSpeedFriction;
+                        }
+                    velocityComponent.Speed = Math.Max(velocityComponent.Speed, -1 * maxMoveSpeed);
+                    velocityComponent.Speed = Math.Min(velocityComponent.Speed, maxMoveSpeed);
+
+                    // Handle collisions
+                    bool collides = ProcessCollisions(entity);
+                    while (collides && horizontal == "left")
+                        {
+                            transformComponent.X += keyMoveSpeed;
+                            collides = ProcessCollisions(entity);
+                        }
+                    while (collides && horizontal == "right")
+                        {
+                            transformComponent.X -= keyMoveSpeed;
+                            collides = ProcessCollisions(entity);
+                        }
+                    while (collides && vertical == "up")
+                        {
+                            transformComponent.Y += keyMoveSpeed;
+                            collides = ProcessCollisions(entity);
+                        }
+                    while (collides && vertical == "down")
+                        {
+                            transformComponent.Y -= keyMoveSpeed;
+                            collides = ProcessCollisions(entity);
+                        }
+                    }
+                private bool ProcessCollisions(Entity entity)
+                    {
+                        Bag<Entity> walls = this.EntityWorld.GroupManager.GetEntities("Walls");
+                        for (int wallIndex = 0; walls.Count > wallIndex; ++wallIndex)
                             {
-                                velocityComponent.Speed -= moveSpeedFriction;
+                                Entity wall = walls.Get(wallIndex);
+                                if (this.CollisionExists(wall, entity))
+                                    {
+                                        return true;
+                                    }
                             }
-                        else if (velocityComponent.Speed < 0)
-                            {
-                                velocityComponent.Speed += moveSpeedFriction;
-                            }
-                        velocityComponent.Speed = Math.Max(velocityComponent.Speed, -1 * maxMoveSpeed);
-                        velocityComponent.Speed = Math.Min(velocityComponent.Speed, maxMoveSpeed);
-                }
+                        return false;
+                    }
+                    private bool CollisionExists(Entity entity1, Entity entity2)
+                    {
+                        return Vector2.Distance(entity1.GetComponent<TransformComponent>().Position, entity2.GetComponent<TransformComponent>().Position) < 20;
+                    }
     }
 }

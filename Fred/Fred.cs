@@ -55,6 +55,7 @@ namespace Fred
 
             InitializeGoodPlayers();
             InitializeEvilPlayers();
+            InitializeWalls();
 
             base.Initialize();
         }
@@ -102,7 +103,7 @@ namespace Fred
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
@@ -121,13 +122,45 @@ namespace Fred
             player.AddComponent(new HealthComponent(10));
             player.AddComponent(new VelocityComponent());
 
-            player.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.5f;
+            player.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.2f;
             player.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - 50;
             player.Tag = "GOOD_PLAYER";
+            player.Group = "GoodPlayer";
+
         }
         void InitializeEvilPlayers()
         {
+            Entity enemy = world.CreateEntity();
 
+            enemy.AddComponentFromPool<TransformComponent>();
+            enemy.AddComponent(new SpatialFormComponent("BadPlayer"));
+
+            enemy.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.95f;
+            enemy.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - 50;
+            enemy.Tag = "BAD_PLAYER";
         }
+        void InitializeWalls()
+        {
+            Entity wall = world.CreateEntity();
+
+            wall.AddComponentFromPool<TransformComponent>();
+            wall.AddComponent(new SpatialFormComponent("Wall"));
+
+            wall.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.8f;
+            wall.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - 50;
+            wall.Tag = "WALL";
+            wall.Group = "Walls";
+
+            Entity wall2 = world.CreateEntity();
+
+            wall2.AddComponentFromPool<TransformComponent>();
+            wall2.AddComponent(new SpatialFormComponent("Wall"));
+
+            wall2.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.8f;
+            wall2.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - 80;
+            //wall2.Tag = "WALL";
+            wall2.Group = "Walls";
+        }
+
     }
 }
