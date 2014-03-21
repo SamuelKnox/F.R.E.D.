@@ -50,7 +50,6 @@ namespace Fred.Systems
                         switch (pressed_Key [i]) {
 
                         case Keys.A:
-                        case Keys.Left:
                             if (Math.Abs (velocityComponent.Speed) < turningOffset) {
                                 velocityComponent.Angle = 180;
                             }
@@ -70,7 +69,6 @@ namespace Fred.Systems
                             break;
 
                         case Keys.D:
-                        case Keys.Right:
                             if (Math.Abs (velocityComponent.Speed) < turningOffset) {
                                 velocityComponent.Angle = 0;
                             }
@@ -88,7 +86,6 @@ namespace Fred.Systems
                             break;
 
                         case Keys.W:
-                        case Keys.Up:
                             if (Math.Abs (velocityComponent.Speed) < turningOffset) {
                                 velocityComponent.Angle = 270;
                             }
@@ -106,7 +103,6 @@ namespace Fred.Systems
                             break;
 
                         case Keys.S:
-                        case Keys.Down:
                             if (Math.Abs (velocityComponent.Speed) < turningOffset) {
                                 velocityComponent.Angle = 90;
                             }
@@ -142,24 +138,32 @@ namespace Fred.Systems
 
                     // Handle collisions
                     bool collides = ProcessCollisions(entity);
+		    if (collides)
+			{
+                            velocityComponent.Speed = 0;
+                        }
                     while (collides && horizontal == "left")
                         {
                             transformComponent.X += keyMoveSpeed;
+                            velocityComponent.Speed = 0;
                             collides = ProcessCollisions(entity);
                         }
                     while (collides && horizontal == "right")
                         {
                             transformComponent.X -= keyMoveSpeed;
+                            velocityComponent.Speed = 0;
                             collides = ProcessCollisions(entity);
                         }
                     while (collides && vertical == "up")
                         {
                             transformComponent.Y += keyMoveSpeed;
+                            velocityComponent.Speed = 0;
                             collides = ProcessCollisions(entity);
                         }
                     while (collides && vertical == "down")
                         {
                             transformComponent.Y -= keyMoveSpeed;
+                            velocityComponent.Speed = 0;
                             collides = ProcessCollisions(entity);
                         }
                     }
