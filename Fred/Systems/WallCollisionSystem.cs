@@ -28,13 +28,14 @@ namespace Fred.Systems
 
                             if (transformComponent.Y < w.GetComponent<TransformComponent>().Y)
                             {
-                                float y = Rectangle.Intersect(transformComponent.Location, w.GetComponent<TransformComponent>().Location).Height * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+                                float y = Rectangle.Intersect(transformComponent.Location, w.GetComponent<TransformComponent>().Location).Height;
                                 transformComponent.Y -= y;
                             }
                             else
                             {
-                                float y = Rectangle.Intersect(transformComponent.Location, w.GetComponent<TransformComponent>().Location).Height * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
-
+                                float y = Rectangle.Intersect(transformComponent.Location, w.GetComponent<TransformComponent>().Location).Height;
+                                Console.WriteLine("Rectangle Height: " + y);
+                                Console.WriteLine();
                                 transformComponent.Y += y;
                             }
                         }
@@ -46,12 +47,12 @@ namespace Fred.Systems
                                 if (transformComponent.X < w.GetComponent<TransformComponent>().Y)
                                 {
                                     float x = Rectangle.Intersect(transformComponent.Location, w.GetComponent<TransformComponent>().Location).Width * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
-                                    transformComponent.X -= x;
+                                    transformComponent.X -= x * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
                                 }
                                 else
                                 {
                                     float x = Rectangle.Intersect(transformComponent.Location, w.GetComponent<TransformComponent>().Location).Width * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
-                                    transformComponent.X += x;
+                                    transformComponent.X += x * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
                                 }
                             }
                         }
