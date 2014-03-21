@@ -56,9 +56,9 @@ namespace Fred
 
             world.InitializeAll(true);
 
-            Vector2 playerStartPosition = InitializeWalls();
-            InitializeGoodPlayers(playerStartPosition);
-            InitializeEvilPlayers();
+            List<Vector2> playerStartPositions = InitializeWalls();
+            InitializeGoodPlayers(playerStartPositions[0]);
+            InitializeEvilPlayers(playerStartPositions[1]);
 
             base.Initialize();
         }
@@ -130,7 +130,7 @@ namespace Fred
             player.Tag = "GOOD_PLAYER";
 
         }
-        void InitializeEvilPlayers()
+        void InitializeEvilPlayers(Vector2 playerStartPosition)
         {
             Entity enemy = world.CreateEntity();
 
@@ -139,16 +139,18 @@ namespace Fred
             enemy.AddComponent(new HealthComponent(10));
             enemy.AddComponent(new VelocityComponent());
 
-            enemy.GetComponent<TransformComponent>().X = GraphicsDevice.DisplayMode.Width * 0.95f;
-            enemy.GetComponent<TransformComponent>().Y = GraphicsDevice.DisplayMode.Height * 0.95F;
+            enemy.GetComponent<TransformComponent>().X = playerStartPosition.X;
+            enemy.GetComponent<TransformComponent>().Y = playerStartPosition.Y;
             enemy.Tag = "BAD_PLAYER";
         }
-        Vector2 InitializeWalls()
+        List<Vector2> InitializeWalls()
         {
             int wallSize = 40;
             int width = 39;
             int height = 22;
-            Vector2 playerStartPoint = new Vector2(GraphicsDevice.DisplayMode.Width * 0.5F, GraphicsDevice.DisplayMode.Height * 0.5F);
+            List<Vector2> playerStartPoints = new List<Vector2>();
+            playerStartPoints.Add(new Vector2(GraphicsDevice.DisplayMode.Width * 0.5F, GraphicsDevice.DisplayMode.Height * 0.5F));
+            playerStartPoints.Add(new Vector2(GraphicsDevice.DisplayMode.Width * 0.8F, GraphicsDevice.DisplayMode.Height * 0.5F));
             int[,] mazeLayout = new int[width, height];
             Random rand = new Random();
 
@@ -186,13 +188,20 @@ namespace Fred
                     }
                     else if (mazeLayout[i, j] == 2)
                     {
-                        playerStartPoint.X = i * wallSize + wallSize/4;
-                        playerStartPoint.Y = j * wallSize + wallSize/4;
+                        float x = i * wallSize + wallSize / 4;
+                        float y = j * wallSize + wallSize / 4;
+                        playerStartPoints[0] = new Vector2(x, y);
+                    }
+                    else if (mazeLayout[i, j] == 3)
+                    {
+                        float x = i * wallSize + wallSize / 4;
+                        float y = j * wallSize + wallSize / 4;
+                        playerStartPoints[1] = new Vector2(x, y);
                     }
                 }
             }
             }
-            return playerStartPoint;
+            return playerStartPoints;
         }
 
     }
