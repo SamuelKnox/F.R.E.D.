@@ -23,43 +23,76 @@ namespace Fred.Systems
                 {
                     if (transformComponent.Location.Intersects(w.GetComponent<TransformComponent>().Location))
                     {
-                        if (w.GetComponent<OrientationComponent>().Orientation.Equals("horizontal"))
+                        //collision on TOP of wall
+                        //ball x greater than wall x, y lesser
+                        float xDistance = w.GetComponent<TransformComponent>().CenterOfRectangle.X - transformComponent.CenterOfRectangle.X;
+                        float YDistance = w.GetComponent<TransformComponent>().CenterOfRectangle.Y - transformComponent.CenterOfRectangle.Y;
+                        if (xDistance < 0 && YDistance <= 0)
                         {
-
-                            if (transformComponent.Y < w.GetComponent<TransformComponent>().Y)
+                            if (Math.Abs(xDistance) >= Math.Abs(YDistance))
                             {
-                                float y = Rectangle.Intersect(transformComponent.Location, w.GetComponent<TransformComponent>().Location).Height;
-                                transformComponent.Y -= y;
+                                //right
+                                float x = Rectangle.Intersect(transformComponent.Location, w.GetComponent<TransformComponent>().Location).Width;
+                                transformComponent.X += x;
                             }
                             else
                             {
+                                //bottom
                                 float y = Rectangle.Intersect(transformComponent.Location, w.GetComponent<TransformComponent>().Location).Height;
-                                Console.WriteLine("Rectangle Height: " + y);
-                                Console.WriteLine();
                                 transformComponent.Y += y;
                             }
                         }
-                        else
+                        else if (xDistance >= 0 && YDistance < 0)
                         {
-
+                            if (Math.Abs(xDistance) >= Math.Abs(YDistance))
                             {
-
-                                if (transformComponent.X < w.GetComponent<TransformComponent>().Y)
-                                {
-                                    float x = Rectangle.Intersect(transformComponent.Location, w.GetComponent<TransformComponent>().Location).Width * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
-                                    transformComponent.X -= x * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
-                                }
-                                else
-                                {
-                                    float x = Rectangle.Intersect(transformComponent.Location, w.GetComponent<TransformComponent>().Location).Width * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
-                                    transformComponent.X += x * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
-                                }
+                                //left
+                                float x = Rectangle.Intersect(transformComponent.Location, w.GetComponent<TransformComponent>().Location).Width;
+                                transformComponent.X -= x;
+                            }
+                            else
+                            {
+                                //bottom
+                                float y = Rectangle.Intersect(transformComponent.Location, w.GetComponent<TransformComponent>().Location).Height;
+                                transformComponent.Y += y;
                             }
                         }
 
+                        else if (xDistance > 0 && YDistance >= 0)
+                        {
+                            if (Math.Abs(xDistance) >= Math.Abs(YDistance))
+                            {
+                                //left
+                                float x = Rectangle.Intersect(transformComponent.Location, w.GetComponent<TransformComponent>().Location).Width;
+                                transformComponent.X -= x;
+                            }
+                            else
+                            {
+                                //top
+                                float y = Rectangle.Intersect(transformComponent.Location, w.GetComponent<TransformComponent>().Location).Height;
+                                transformComponent.Y -= y;
+                            }
+                        }
+                        else if (xDistance <= 0 && YDistance > 0)
+                        {
+                            if (Math.Abs(xDistance) >= Math.Abs(YDistance))
+                            {
+                                //right
+                                float x = Rectangle.Intersect(transformComponent.Location, w.GetComponent<TransformComponent>().Location).Width;
+                                transformComponent.X += x;
+                            }
+                            else
+                            {
+                                //top
+                                float y = Rectangle.Intersect(transformComponent.Location, w.GetComponent<TransformComponent>().Location).Height;
+                                transformComponent.Y -= y;
+                            }
+
+                        }
                     }
                 }
             }
+
         }
     }
 }

@@ -16,6 +16,15 @@ namespace Fred.Components
 
         public float Y { get; set; }
         public Rectangle Location { get; set; }
+        public Vector2 CenterOfRectangle 
+        {
+            get
+            {
+                float x = Location.X + Location.Width / 2;
+                float y = Location.Y + Location.Height / 2;
+                return new Vector2(x, y);
+            }
+        }
         public Vector2 Position
         {
             get

@@ -37,7 +37,7 @@ namespace Fred.Systems
 
             float turningOffset = 1F;
             float changeInAngle = 1;
-            float maxMoveSpeed = .3F;
+            float maxMoveSpeed = .2F;
             float keyMoveSpeed = 0.001F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             float moveSpeedFriction = 0.0003f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
 

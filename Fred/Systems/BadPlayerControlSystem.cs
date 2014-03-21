@@ -32,40 +32,132 @@ namespace Fred.Systems
         public override void Process(Entity entity)
         {
             TransformComponent transformComponent = entity.GetComponent<TransformComponent>();
-            KeyboardState keyboardState = Keyboard.GetState();
-            float keyMoveSpeed = 0.3f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
-            if (keyboardState.IsKeyDown(Keys.Left))
+            VelocityComponent velocityComponent = entity.GetComponent<VelocityComponent>();
+
+            float turningOffset = 1F;
+            float changeInAngle = 1;
+            float maxMoveSpeed = .2F;
+            float keyMoveSpeed = 0.001F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+            float moveSpeedFriction = 0.0003f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+
+            Keys[] pressed_Key = Keyboard.GetState().GetPressedKeys();
+
+            for (int i = 0; i < pressed_Key.Length; i++)
             {
-                transformComponent.X -= keyMoveSpeed;
-                if (transformComponent.X < 32)
+                switch (pressed_Key[i])
                 {
-                    transformComponent.X = 32;
+
+                    case Keys.Left:
+                        if (Math.Abs(velocityComponent.Speed) < turningOffset)
+                        {
+                            velocityComponent.Angle = 180;
+                        }
+
+                        if (velocityComponent.Angle >= 90 && velocityComponent.Angle < 270)
+                        {
+                            velocityComponent.Speed += keyMoveSpeed;
+                        }
+                        else
+                        {
+                            velocityComponent.Speed -= keyMoveSpeed;
+                        }
+
+                        if (velocityComponent.Angle < 180)
+                        {
+                            velocityComponent.AddAngle(changeInAngle);
+                        }
+                        else if (velocityComponent.Angle > 180 && velocityComponent.Angle > 0)
+                        {
+                            velocityComponent.AddAngle(-changeInAngle);
+                        }
+                        break;
+
+                    case Keys.Right:
+                        if (Math.Abs(velocityComponent.Speed) < turningOffset)
+                        {
+                            velocityComponent.Angle = 0;
+                        }
+                        if (velocityComponent.Angle >= 270 || velocityComponent.Angle < 90)
+                        {
+                            velocityComponent.Speed += keyMoveSpeed;
+                        }
+                        else
+                        {
+                            velocityComponent.Speed -= keyMoveSpeed;
+                        }
+                        if (velocityComponent.Angle > 180)
+                        {
+                            velocityComponent.AddAngle(changeInAngle);
+                        }
+                        else if (velocityComponent.Angle < 180 && velocityComponent.Angle > 0)
+                        {
+                            velocityComponent.AddAngle(-changeInAngle);
+                        }
+                        break;
+
+                    case Keys.Up:
+                        if (Math.Abs(velocityComponent.Speed) < turningOffset)
+                        {
+                            velocityComponent.Angle = 270;
+                        }
+                        if (velocityComponent.Angle >= 180)
+                        {
+                            velocityComponent.Speed += keyMoveSpeed;
+                        }
+                        else
+                        {
+                            velocityComponent.Speed -= keyMoveSpeed;
+                        }
+                        if (velocityComponent.Angle < 270 && velocityComponent.Angle > 90)
+                        {
+                            velocityComponent.AddAngle(changeInAngle);
+                        }
+                        else if (velocityComponent.Angle < 90 || velocityComponent.Angle > 270)
+                        {
+                            velocityComponent.AddAngle(-changeInAngle);
+                        }
+                        break;
+
+                    case Keys.Down:
+                        if (Math.Abs(velocityComponent.Speed) < turningOffset)
+                        {
+                            velocityComponent.Angle = 90;
+                        }
+                        if (velocityComponent.Angle < 180)
+                        {
+                            velocityComponent.Speed += keyMoveSpeed;
+                        }
+                        else
+                        {
+                            velocityComponent.Speed -= keyMoveSpeed;
+                        }
+                        if (velocityComponent.Angle < 90 || velocityComponent.Angle > 270)
+                        {
+                            velocityComponent.AddAngle(changeInAngle);
+                        }
+                        else if (velocityComponent.Angle < 270 && velocityComponent.Angle > 90)
+                        {
+                            velocityComponent.AddAngle(-changeInAngle);
+                        }
+                        break;
+
+                    default:
+                        break;
                 }
             }
-            if (keyboardState.IsKeyDown(Keys.Right))
+
+            // Handle max speed
+            if (velocityComponent.Speed > 0)
             {
-                transformComponent.X += keyMoveSpeed;
-                if (transformComponent.X > graphicsDevice.Viewport.Width - 32)
-                {
-                    transformComponent.X = graphicsDevice.Viewport.Width - 32;
-                }
+                velocityComponent.Speed -= moveSpeedFriction;
             }
-            if (keyboardState.IsKeyDown(Keys.Up))
+            else if (velocityComponent.Speed < 0)
             {
-                transformComponent.Y -= keyMoveSpeed;
-                if (transformComponent.Y < 32)
-                {
-                    transformComponent.Y = 32;
-                }
+                velocityComponent.Speed += moveSpeedFriction;
             }
-            if (keyboardState.IsKeyDown(Keys.Down))
-            {
-                transformComponent.Y += keyMoveSpeed;
-                if (transformComponent.Y > graphicsDevice.Viewport.Height - 32)
-                {
-                    transformComponent.Y = graphicsDevice.Viewport.Height - 32;
-                }
-            }
+            velocityComponent.Speed = Math.Max(velocityComponent.Speed, -1 * maxMoveSpeed);
+            velocityComponent.Speed = Math.Min(velocityComponent.Speed, maxMoveSpeed);
+
         }
     }
 }

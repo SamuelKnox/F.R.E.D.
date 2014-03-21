@@ -29,7 +29,7 @@ namespace Fred
         {
             graphics = new GraphicsDeviceManager(this)
             {
-                IsFullScreen = false
+                IsFullScreen = true
             };
             Content.RootDirectory = "Content";
         }
@@ -44,6 +44,8 @@ namespace Fred
         {
             // TODO: Add your initialization logic here
             LoadContent();
+
+            IsMouseVisible = false;
 
             world = new EntityWorld();
 
@@ -122,8 +124,8 @@ namespace Fred
             player.AddComponent(new HealthComponent(10));
             player.AddComponent(new VelocityComponent());
 
-            player.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.2f;
-            player.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - 50;
+            player.GetComponent<TransformComponent>().X = GraphicsDevice.DisplayMode.Width * 0.2f;
+            player.GetComponent<TransformComponent>().Y = GraphicsDevice.DisplayMode.Height * 0.2F;
             player.Tag = "GOOD_PLAYER";
 
         }
@@ -133,13 +135,17 @@ namespace Fred
 
             enemy.AddComponentFromPool<TransformComponent>();
             enemy.AddComponent(new SpatialFormComponent("BadPlayer"));
+            enemy.AddComponent(new HealthComponent(10));
+            enemy.AddComponent(new VelocityComponent());
 
-            enemy.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.95f;
-            enemy.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - 50;
+            enemy.GetComponent<TransformComponent>().X = GraphicsDevice.DisplayMode.Width * 0.95f;
+            enemy.GetComponent<TransformComponent>().Y = GraphicsDevice.DisplayMode.Height * 0.95F;
             enemy.Tag = "BAD_PLAYER";
         }
         void InitializeWalls()
         {
+
+
             float[] xArray = {20, 20, 20, 20, 20, 20, 20, 20, 20,
                               60, 60, 60,
                               100, 100, 100, 100, 100, 100, 100, 100, 100,
@@ -182,20 +188,13 @@ namespace Fred
                               20, 100, 180, 260, 300, 340, 420, 460,
                               100, 180};
 
-            wall.AddComponentFromPool<TransformComponent>();
-            wall.AddComponent(new SpatialFormComponent("Wall"));
-            wall.AddComponent(new HealthComponent(3));
-            wall.AddComponent(new OrientationComponent("horizontal"));
-
-            wall.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.75F;
-            wall.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height *.5F;
-            wall.Group = "Walls";
-
-            for(int x=0; x<xArray.Length; x++){
+            for (int x = 0; x < xArray.Length; x++)
+            {
                 Entity wall = world.CreateEntity();
 
                 wall.AddComponentFromPool<TransformComponent>();
                 wall.AddComponent(new SpatialFormComponent("Wall"));
+                wall.AddComponent(new HealthComponent(3));
 
                 wall.GetComponent<TransformComponent>().X = xArray[x];
                 wall.GetComponent<TransformComponent>().Y = yArray[x];
