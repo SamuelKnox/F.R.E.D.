@@ -63,7 +63,7 @@ namespace Fred.Systems
                 }
                 horizontal = "right";
             }
-             if (keyboardState.IsKeyDown(Keys.W))
+            if (keyboardState.IsKeyDown(Keys.W))
             {
                 transformComponent.Y -= keyMoveSpeed;
                 //if (ProcessCollisions(entity))
@@ -130,7 +130,7 @@ namespace Fred.Systems
         }
         private bool CollisionExists(Entity entity1, Entity entity2)
         {
-            return Vector2.Distance(entity1.GetComponent<TransformComponent>().Position, entity2.GetComponent<TransformComponent>().Position) < 20;
+            return Vector2.Distance(entity1.GetComponent<TransformComponent>().Position, entity2.GetComponent<TransformComponent>().Position) < 25;
         }
     }
 }
