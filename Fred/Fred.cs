@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Artemis;
 using Fred.Components;
 using Artemis.System;
+using System.IO;
 #endregion
 
 namespace Fred
@@ -55,9 +56,9 @@ namespace Fred
 
             world.InitializeAll(true);
 
-            InitializeGoodPlayers();
+            Vector2 playerStartPosition = InitializeWalls();
+            InitializeGoodPlayers(playerStartPosition);
             InitializeEvilPlayers();
-            InitializeWalls();
 
             base.Initialize();
         }
@@ -115,7 +116,7 @@ namespace Fred
             base.Draw(gameTime);
         }
 
-        void InitializeGoodPlayers()
+        void InitializeGoodPlayers(Vector2 playerStartPosition)
         {
             Entity player = world.CreateEntity();
 
@@ -124,8 +125,8 @@ namespace Fred
             player.AddComponent(new HealthComponent(10));
             player.AddComponent(new VelocityComponent());
 
-            player.GetComponent<TransformComponent>().X = GraphicsDevice.DisplayMode.Width * 0.2f;
-            player.GetComponent<TransformComponent>().Y = GraphicsDevice.DisplayMode.Height * 0.2F;
+            player.GetComponent<TransformComponent>().X = playerStartPosition.X;
+            player.GetComponent<TransformComponent>().Y = playerStartPosition.Y;
             player.Tag = "GOOD_PLAYER";
 
         }
@@ -142,64 +143,56 @@ namespace Fred
             enemy.GetComponent<TransformComponent>().Y = GraphicsDevice.DisplayMode.Height * 0.95F;
             enemy.Tag = "BAD_PLAYER";
         }
-        void InitializeWalls()
+        Vector2 InitializeWalls()
         {
+            int wallSize = 40;
+            int width = 39;
+            int height = 22;
+            Vector2 playerStartPoint = new Vector2(GraphicsDevice.DisplayMode.Width * 0.5F, GraphicsDevice.DisplayMode.Height * 0.5F);
+            int[,] mazeLayout = new int[width, height];
+            Random rand = new Random();
 
-
-            float[] xArray = {20, 20, 20, 20, 20, 20, 20, 20, 20,
-                              60, 60, 60,
-                              100, 100, 100, 100, 100, 100, 100, 100, 100,
-                              140, 140,
-                              180, 180, 180, 180, 180, 180, 180, 180, 180,
-                              220, 220, 220, 220,
-                              260, 260, 260, 260, 260, 260, 260, 260, 260,
-                              300, 300, 300,
-                              340, 340, 340, 340, 340, 340, 340, 340, 340,
-                              380, 380,
-                              420, 420, 420, 420, 420, 420, 420, 420, 420, 420,
-                              460, 460,
-                              500, 500, 500, 500, 500, 500, 500, 500, 500, 500,
-                              540, 540, 540,
-                              580, 580, 580, 580, 580, 580, 580,
-                              620, 620, 620, 620,
-                              660, 660, 660, 660, 660, 660, 660, 660,
-                              700, 700, 700, 700, 700,
-                              740, 740, 740, 740, 740, 740, 740, 740,
-                              780, 780};
-
-            float[] yArray = {20, 60, 100, 180, 260, 300, 340, 380, 420,
-                              180, 260, 340,
-                              20, 60, 100, 180, 220, 260, 340, 380, 420,
-                              100, 420,
-                              20, 100, 140, 180, 260, 300, 340, 420, 460,
-                              20, 100, 180, 340,
-                              20, 100, 180, 220, 260, 300, 340, 380, 420,
-                              20, 100, 420,
-                              20, 100, 140, 180, 260, 300, 340, 380, 420,
-                              20, 180,
-                              20, 100, 140, 180, 260, 300, 340, 380, 420, 460,
-                              100, 260,
-                              20, 60, 100, 140, 180, 260, 300, 340, 420, 460,
-                              180, 340, 420,
-                              20, 60, 100, 180, 220, 260, 340,
-                              20, 100, 260, 340,
-                              20, 100, 180, 220, 260, 340, 380, 420,
-                              20, 100, 180, 260, 420,
-                              20, 100, 180, 260, 300, 340, 420, 460,
-                              100, 180};
-
-            for (int x = 0; x < xArray.Length; x++)
+            StreamReader file = new StreamReader("Mazes/maze" + rand.Next(0,2) + ".txt");
+            while (file.Peek() != -1)
             {
-                Entity wall = world.CreateEntity();
+            for (int i = 0; i < height; ++i)
+            {
 
-                wall.AddComponentFromPool<TransformComponent>();
-                wall.AddComponent(new SpatialFormComponent("Wall"));
-                wall.AddComponent(new HealthComponent(3));
+                string line = file.ReadLine();
+                Console.WriteLine(line);
 
-                wall.GetComponent<TransformComponent>().X = xArray[x];
-                wall.GetComponent<TransformComponent>().Y = yArray[x];
-                wall.Group = "Walls";
+                for (int j = 0; j < line.Length; ++j)
+                {
+                    mazeLayout[j, i] = int.Parse(line[j] + "");
+                }
             }
+
+
+            for (int i = 0; i < width; ++i)
+            {
+                for (int j = 0; j < height; ++j)
+                {
+                    if (mazeLayout[i, j] == 1)
+                    {
+                        Entity wall = world.CreateEntity();
+
+                        wall.AddComponentFromPool<TransformComponent>();
+                        wall.AddComponent(new SpatialFormComponent("Wall"));
+                        wall.AddComponent(new HealthComponent(3));
+
+                        wall.GetComponent<TransformComponent>().X = i * wallSize;
+                        wall.GetComponent<TransformComponent>().Y = j * wallSize;
+                        wall.Group = "Walls";
+                    }
+                    else if (mazeLayout[i, j] == 2)
+                    {
+                        playerStartPoint.X = i * wallSize + wallSize/4;
+                        playerStartPoint.Y = j * wallSize + wallSize/4;
+                    }
+                }
+            }
+            }
+            return playerStartPoint;
         }
 
     }
