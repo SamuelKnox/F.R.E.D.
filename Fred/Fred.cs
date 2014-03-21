@@ -152,9 +152,10 @@ namespace Fred
             playerStartPoints.Add(new Vector2(GraphicsDevice.DisplayMode.Width * 0.5F, GraphicsDevice.DisplayMode.Height * 0.5F));
             playerStartPoints.Add(new Vector2(GraphicsDevice.DisplayMode.Width * 0.8F, GraphicsDevice.DisplayMode.Height * 0.5F));
             int[,] mazeLayout = new int[width, height];
+            int mazesNum = Directory.GetFiles("Mazes/", "*.*", SearchOption.TopDirectoryOnly).Length;
             Random rand = new Random();
 
-            StreamReader file = new StreamReader("Mazes/maze" + rand.Next(0,2) + ".txt");
+            StreamReader file = new StreamReader("Mazes/maze" + rand.Next(0,mazesNum) + ".txt");
             while (file.Peek() != -1)
             {
             for (int i = 0; i < height; ++i)
