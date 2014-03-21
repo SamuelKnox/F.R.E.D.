@@ -145,7 +145,7 @@ namespace Fred
         }
         List<Vector2> InitializeWalls()
         {
-            int wallSize = 40;
+            int wallSize = Content.Load<Texture2D>("wall").Width;
             int width = 39;
             int height = 22;
             List<Vector2> playerStartPoints = new List<Vector2>();
