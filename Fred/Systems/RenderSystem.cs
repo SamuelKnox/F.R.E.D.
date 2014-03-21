@@ -47,6 +47,10 @@ namespace Fred.Systems
                     {
                         BadPlayer.Render(spriteBatch, contentManager, transformComponent);
                     }
+                    else if (string.Compare("Wall", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
+                    {
+                        Wall.Render(spriteBatch, contentManager, transformComponent);
+                    }
                 }
             }
         }

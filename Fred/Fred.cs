@@ -55,6 +55,7 @@ namespace Fred
 
             InitializeGoodPlayers();
             InitializeEvilPlayers();
+            InitializeWalls();
 
             base.Initialize();
         }
@@ -122,6 +123,7 @@ namespace Fred
             player.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.2f;
             player.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - 50;
             player.Tag = "GOOD_PLAYER";
+            player.Group = "GoodPlayer";
 
         }
         void InitializeEvilPlayers()
@@ -131,9 +133,32 @@ namespace Fred
             enemy.AddComponentFromPool<TransformComponent>();
             enemy.AddComponent(new SpatialFormComponent("BadPlayer"));
 
-            enemy.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.8f;
+            enemy.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.95f;
             enemy.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - 50;
             enemy.Tag = "BAD_PLAYER";
         }
+        void InitializeWalls()
+        {
+            Entity wall = world.CreateEntity();
+
+            wall.AddComponentFromPool<TransformComponent>();
+            wall.AddComponent(new SpatialFormComponent("Wall"));
+
+            wall.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.8f;
+            wall.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - 50;
+            wall.Tag = "WALL";
+            wall.Group = "Walls";
+
+            Entity wall2 = world.CreateEntity();
+
+            wall2.AddComponentFromPool<TransformComponent>();
+            wall2.AddComponent(new SpatialFormComponent("Wall"));
+
+            wall2.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.8f;
+            wall2.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - 80;
+            //wall2.Tag = "WALL";
+            wall2.Group = "Walls";
+        }
+
     }
 }
