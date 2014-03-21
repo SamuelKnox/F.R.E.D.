@@ -140,7 +140,8 @@ namespace Fred
         }
         void InitializeWalls()
         {
-            Entity wall = world.CreateEntity();
+            float[] xArray = {0.1f, 0.1f, 0.8f};
+            float[] yArray = {20, 50, 80};
 
             wall.AddComponentFromPool<TransformComponent>();
             wall.AddComponent(new SpatialFormComponent("Wall"));
@@ -151,23 +152,16 @@ namespace Fred
             wall.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height *.5F;
             wall.Group = "Walls";
 
+            for(int x=0; x<xArray.Length; x++){
+                Entity wall = world.CreateEntity();
 
-            //omponentFromPool<TransformComponent>();
-            //wall.AddComponent(new SpatialFormComponent("Wall"));
+                wall.AddComponentFromPool<TransformComponent>();
+                wall.AddComponent(new SpatialFormComponent("Wall"));
 
-            //wall.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.8f;
-            //wall.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - 50;
-            //wall.Tag = "WALL";
-            //wall.Group = "Walls";
-
-            //Entity wall2 = world.CreateEntity();
-
-            //wall2.AddComponentFromPool<TransformComponent>();
-            //wall2.AddComponent(new SpatialFormComponent("Wall"));
-
-            //wall2.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * 0.8f;
-            //wall2.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - 80;
-            ////wall2.Tag = "WALL";
+                wall.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * xArray[x];
+                wall.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - yArray[x];
+                wall.Group = "Walls";
+            }
         }
 
     }
