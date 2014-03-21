@@ -156,8 +156,16 @@ namespace Fred.Systems
             {
                 velocityComponent.Speed += moveSpeedFriction;
             }
+<<<<<<< HEAD
             velocityComponent.Speed = Math.Max(velocityComponent.Speed, -1 * maxMoveSpeed);
             velocityComponent.Speed = Math.Min(velocityComponent.Speed, maxMoveSpeed);
+=======
+            return false;
+        }
+        private bool CollisionExists(Entity entity1, Entity entity2)
+        {
+            return Vector2.Distance(entity1.GetComponent<TransformComponent>().Position, entity2.GetComponent<TransformComponent>().Position) < 25;
+>>>>>>> 21d9fa3... *Completed initial maze
         }
     }
 }
