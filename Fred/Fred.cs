@@ -139,8 +139,8 @@ namespace Fred
         }
         void InitializeWalls()
         {
-            float[] xArray = {0.1f, 0.1f, 0.8f};
-            float[] yArray = {20, 50, 80};
+            float[] xArray = {20, 40, 80};
+            float[] yArray = {250, 250, 80};
 
             for(int x=0; x<xArray.Length; x++){
                 Entity wall = world.CreateEntity();
@@ -148,8 +148,8 @@ namespace Fred
                 wall.AddComponentFromPool<TransformComponent>();
                 wall.AddComponent(new SpatialFormComponent("Wall"));
 
-                wall.GetComponent<TransformComponent>().X = GraphicsDevice.Viewport.Width * xArray[x];
-                wall.GetComponent<TransformComponent>().Y = GraphicsDevice.Viewport.Height - yArray[x];
+                wall.GetComponent<TransformComponent>().X = xArray[x];
+                wall.GetComponent<TransformComponent>().Y = yArray[x];
                 wall.Group = "Walls";
             }
         }
