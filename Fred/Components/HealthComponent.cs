@@ -18,27 +18,27 @@ namespace Fred.Components
 
         public HealthComponent(int points)
         {
-            this.Points = this.MaximumHealth = points;
+            this.CurrentHealth = this.MaximumHealth = points;
         }
 
-        public int Points { get; set; }
+        public int CurrentHealth { get; set; }
 
         public bool IsAlive
         {
             get
             {
-                return this.Points > 0;
+                return this.CurrentHealth > 0;
             }
         }
 
-        public int MaximumHealth { get; private set; }
+        public int MaximumHealth { get; set; }
 
         public void AddDamage(int damage)
         {
-            this.Points -= damage;
-            if (this.Points < 0)
+            this.CurrentHealth -= damage;
+            if (this.CurrentHealth < 0)
             {
-                this.Points = 0;
+                this.CurrentHealth = 0;
             }
         }
     }
