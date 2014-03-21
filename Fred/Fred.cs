@@ -164,7 +164,6 @@ namespace Fred
             {
 
                 line = file.ReadLine();
-                Console.WriteLine(line);
 
                 for (int j = 0; j < line.Length; ++j)
                 {
