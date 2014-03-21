@@ -20,8 +20,9 @@ namespace Fred.Spatials
                 tex = contentManager.Load<Texture2D>("goodplayer");
             }
             spriteBatch.Begin();
-            spriteBatch.Draw(tex, new Vector2(transformComponent.X - (tex.Width * 0.5f), transformComponent.Y - (tex.Height * 0.5f)), tex.Bounds, Color.White);
+            spriteBatch.Draw(tex, new Rectangle((int)transformComponent.X, (int)transformComponent.Y, tex.Width, tex.Height), tex.Bounds, Color.White);
             spriteBatch.End();
+            transformComponent.Location = new Rectangle((int)transformComponent.X, (int)transformComponent.Y, tex.Width, tex.Height);
         }
 
     }

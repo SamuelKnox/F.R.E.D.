@@ -19,7 +19,6 @@ namespace Fred.Systems
             {
                 if (healthComponent.IsAlive)
                 {
-                    Console.WriteLine("CURRENT HEALTH:  " + healthComponent.CurrentHealth);
                     float ms = TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
 
                     transformComponent.X += (float)(Math.Cos(velocityComponent.AngleAsRadians) * velocityComponent.Speed * ms);

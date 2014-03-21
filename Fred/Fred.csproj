@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components\HealthComponent.cs" />
+    <Compile Include="Components\OrientationComponent.cs" />
     <Compile Include="Components\SpatialFormComponent.cs" />
     <Compile Include="Components\TransformComponent.cs" />
     <Compile Include="Components\VelocityComponent.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="Systems\GoodPlayerControlSystem.cs" />
     <Compile Include="Systems\MovementSystem.cs" />
     <Compile Include="Systems\RenderSystem.cs" />
+    <Compile Include="Systems\WallCollisionSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="artemis">

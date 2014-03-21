@@ -15,6 +15,7 @@ namespace Fred.Components
         public float X { get; set; }
 
         public float Y { get; set; }
+        public Rectangle Location { get; set; }
         public Vector2 Position
         {
             get
