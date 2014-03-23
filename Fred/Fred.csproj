@@ -35,6 +35,9 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Components\CooldownComponent.cs" />
+    <Compile Include="Components\HealComponent.cs" />
+    <Compile Include="Components\DamageComponent.cs" />
     <Compile Include="Components\HealthComponent.cs" />
     <Compile Include="Components\OrientationComponent.cs" />
     <Compile Include="Components\SpatialFormComponent.cs" />
@@ -47,6 +50,7 @@
     <Compile Include="Spatials\GoodPlayer.cs" />
     <Compile Include="Spatials\Wall.cs" />
     <Compile Include="Systems\BadPlayerControlSystem.cs" />
+    <Compile Include="Systems\CooldownSystem.cs" />
     <Compile Include="Systems\GoodPlayerControlSystem.cs" />
     <Compile Include="Systems\MovementSystem.cs" />
     <Compile Include="Systems\RenderSystem.cs" />

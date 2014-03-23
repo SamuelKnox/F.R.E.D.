@@ -35,6 +35,7 @@ namespace Fred.Systems
             // TODO: Add your update logic here
             TransformComponent transformComponent = entity.GetComponent<TransformComponent>();
             VelocityComponent velocityComponent = entity.GetComponent<VelocityComponent>();
+            CooldownComponent cooldownComponent = entity.GetComponent<CooldownComponent>();
 
             float turningOffset = 1F;
             float changeInAngle = 1;
@@ -139,6 +140,27 @@ namespace Fred.Systems
                 else if (velocityComponent.Angle < 270 && velocityComponent.Angle > 90)
                 {
                     velocityComponent.AddAngle(-changeInAngle);
+                }
+            }
+            if ((pressedKey.IsKeyDown(Keys.D1) || controller.Buttons.A == ButtonState.Pressed) && cooldownComponent.IsAttackReady)
+            {
+                Bag<Entity> walls = this.EntityWorld.GroupManager.GetEntities("Walls");
+                double closestDistance = int.MaxValue;
+                Entity closestWall = walls[0];
+                foreach (Entity w in walls)
+                {
+                    //w.GetComponent<HealthComponent>().CurrentHealth = 0;
+                    double currentDistance = Math.Sqrt(Math.Pow(w.GetComponent<TransformComponent>().X - transformComponent.X, 2) + Math.Pow(w.GetComponent<TransformComponent>().Y - transformComponent.Y, 2));
+                    if (w.GetComponent<HealthComponent>().IsAlive && currentDistance < closestDistance)
+                    {
+                        closestDistance = currentDistance;
+                        closestWall = w;
+                    }
+                }
+                if (closestDistance < 50)
+                {
+                    closestWall.GetComponent<HealthComponent>().AddDamage(entity.GetComponent<DamageComponent>().Damage);
+                cooldownComponent.ResetAttackCooldown();
                 }
             }
 

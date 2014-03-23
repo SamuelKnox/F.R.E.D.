@@ -15,16 +15,13 @@ namespace Fred.Systems
     {
         protected override void Process(Entity entity, TransformComponent transformComponent, VelocityComponent velocityComponent)
         {
-
-            if (velocityComponent != null && transformComponent != null)
+            if (velocityComponent != null && transformComponent != null && !entity.Tag.Equals("BAD_PLAYER"))
             {
                 Bag<Entity> walls = this.EntityWorld.GroupManager.GetEntities("Walls");
                 foreach (Entity w in walls)
                 {
-                    if (transformComponent.Location.Intersects(w.GetComponent<TransformComponent>().Location))
+                    if (transformComponent.Location.Intersects(w.GetComponent<TransformComponent>().Location) && w.GetComponent<HealthComponent>().IsAlive)
                     {
-                        //collision on TOP of wall
-                        //ball x greater than wall x, y lesser
                         float xDistance = w.GetComponent<TransformComponent>().CenterOfRectangle.X - transformComponent.CenterOfRectangle.X;
                         float YDistance = w.GetComponent<TransformComponent>().CenterOfRectangle.Y - transformComponent.CenterOfRectangle.Y;
                         if (xDistance < 0 && YDistance <= 0)

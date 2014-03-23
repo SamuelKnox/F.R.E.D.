@@ -49,7 +49,10 @@ namespace Fred.Systems
                     }
                     else if (string.Compare("Wall", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
                     {
-                        Wall.Render(spriteBatch, contentManager, transformComponent);
+                        if (entity.GetComponent<HealthComponent>().IsAlive)
+                        {
+                            Wall.Render(spriteBatch, contentManager, transformComponent);
+                        }
                     }
                 }
             }

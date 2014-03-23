@@ -123,7 +123,9 @@ namespace Fred
             player.AddComponentFromPool<TransformComponent>();
             player.AddComponent(new SpatialFormComponent("GoodPlayer"));
             player.AddComponent(new HealthComponent(10));
+            player.AddComponent(new DamageComponent(5, .25));
             player.AddComponent(new VelocityComponent());
+            player.AddComponent(new CooldownComponent());
 
             player.GetComponent<TransformComponent>().X = playerStartPosition.X;
             player.GetComponent<TransformComponent>().Y = playerStartPosition.Y;
@@ -138,6 +140,8 @@ namespace Fred
             enemy.AddComponent(new SpatialFormComponent("BadPlayer"));
             enemy.AddComponent(new HealthComponent(10));
             enemy.AddComponent(new VelocityComponent());
+            enemy.AddComponent(new HealComponent(3));
+            enemy.AddComponent(new CooldownComponent());
 
             enemy.GetComponent<TransformComponent>().X = playerStartPosition.X;
             enemy.GetComponent<TransformComponent>().Y = playerStartPosition.Y;
@@ -176,13 +180,25 @@ namespace Fred
             {
                 for (int j = 0; j < height; ++j)
                 {
-                    if (mazeLayout[i, j] == 1)
+                    if (mazeLayout[i, j] == 0)
                     {
                         Entity wall = world.CreateEntity();
 
                         wall.AddComponentFromPool<TransformComponent>();
                         wall.AddComponent(new SpatialFormComponent("Wall"));
-                        wall.AddComponent(new HealthComponent(3));
+                        wall.AddComponent(new HealthComponent(0, 10));
+
+                        wall.GetComponent<TransformComponent>().X = i * wallSize;
+                        wall.GetComponent<TransformComponent>().Y = j * wallSize;
+                        wall.Group = "Walls";
+                    }
+                    else if (mazeLayout[i, j] == 1)
+                    {
+                        Entity wall = world.CreateEntity();
+
+                        wall.AddComponentFromPool<TransformComponent>();
+                        wall.AddComponent(new SpatialFormComponent("Wall"));
+                        wall.AddComponent(new HealthComponent(5, 10));
 
                         wall.GetComponent<TransformComponent>().X = i * wallSize;
                         wall.GetComponent<TransformComponent>().Y = j * wallSize;
@@ -190,15 +206,49 @@ namespace Fred
                     }
                     else if (mazeLayout[i, j] == 2)
                     {
-                        float x = i * wallSize + wallSize / 4;
-                        float y = j * wallSize + wallSize / 4;
-                        playerStartPoints[0] = new Vector2(x, y);
+                        Entity wall = world.CreateEntity();
+
+                        wall.AddComponentFromPool<TransformComponent>();
+                        wall.AddComponent(new SpatialFormComponent("Wall"));
+                        wall.AddComponent(new HealthComponent(1000000000));
+
+                        wall.GetComponent<TransformComponent>().X = i * wallSize;
+                        wall.GetComponent<TransformComponent>().Y = j * wallSize;
+                        wall.Group = "Walls";
                     }
                     else if (mazeLayout[i, j] == 3)
                     {
                         float x = i * wallSize + wallSize / 4;
                         float y = j * wallSize + wallSize / 4;
+                        playerStartPoints[0] = new Vector2(x, y);
+
+
+                        Entity wall = world.CreateEntity();
+
+                        wall.AddComponentFromPool<TransformComponent>();
+                        wall.AddComponent(new SpatialFormComponent("Wall"));
+                        wall.AddComponent(new HealthComponent(0));
+
+                        wall.GetComponent<TransformComponent>().X = i * wallSize;
+                        wall.GetComponent<TransformComponent>().Y = j * wallSize;
+                        wall.Group = "Walls";
+                    }
+                    else if (mazeLayout[i, j] == 4)
+                    {
+                        float x = i * wallSize + wallSize / 4;
+                        float y = j * wallSize + wallSize / 4;
                         playerStartPoints[1] = new Vector2(x, y);
+
+
+                        Entity wall = world.CreateEntity();
+
+                        wall.AddComponentFromPool<TransformComponent>();
+                        wall.AddComponent(new SpatialFormComponent("Wall"));
+                        wall.AddComponent(new HealthComponent(0));
+
+                        wall.GetComponent<TransformComponent>().X = i * wallSize;
+                        wall.GetComponent<TransformComponent>().Y = j * wallSize;
+                        wall.Group = "Walls";
                     }
                 }
             }

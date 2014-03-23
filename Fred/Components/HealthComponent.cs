@@ -11,17 +11,10 @@ namespace Fred.Components
 {
     class HealthComponent : IComponent
     {
-        public HealthComponent()
-            : this(0)
-        {
-        }
 
-        public HealthComponent(int points)
-        {
-            this.CurrentHealth = this.MaximumHealth = points;
-        }
 
-        public int CurrentHealth { get; set; }
+        public double CurrentHealth { get; set; }
+        public double MaximumHealth { get; set; }
 
         public bool IsAlive
         {
@@ -31,14 +24,36 @@ namespace Fred.Components
             }
         }
 
-        public int MaximumHealth { get; set; }
+        public HealthComponent()
+            : this(0)
+        {
+        }
 
-        public void AddDamage(int damage)
+        public HealthComponent(double points)
+        {
+            this.CurrentHealth = this.MaximumHealth = points;
+        }
+
+        public HealthComponent(double current, double max)
+        {
+            this.CurrentHealth = current;
+            this.MaximumHealth = max;
+        }
+
+        public void AddDamage(double damage)
         {
             this.CurrentHealth -= damage;
             if (this.CurrentHealth < 0)
             {
                 this.CurrentHealth = 0;
+            }
+        }
+        public void AddHealth(double heal)
+        {
+            this.CurrentHealth += heal;
+            if (this.CurrentHealth > this.MaximumHealth)
+            {
+                this.CurrentHealth = this.MaximumHealth;
             }
         }
     }
