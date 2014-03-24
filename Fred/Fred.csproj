@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components\CooldownComponent.cs" />
+    <Compile Include="Components\ExpirationComponent.cs" />
     <Compile Include="Components\HealComponent.cs" />
     <Compile Include="Components\DamageComponent.cs" />
     <Compile Include="Components\HealthComponent.cs" />
@@ -49,12 +50,15 @@
     <Compile Include="Spatials\BadPlayer.cs" />
     <Compile Include="Spatials\GoodPlayer.cs" />
     <Compile Include="Spatials\Wall.cs" />
+    <Compile Include="Spatials\WallAttack.cs" />
     <Compile Include="Systems\BadPlayerControlSystem.cs" />
     <Compile Include="Systems\CooldownSystem.cs" />
+    <Compile Include="Systems\ExpirationSystem.cs" />
     <Compile Include="Systems\GoodPlayerControlSystem.cs" />
     <Compile Include="Systems\MovementSystem.cs" />
     <Compile Include="Systems\RenderSystem.cs" />
     <Compile Include="Systems\WallCollisionSystem.cs" />
+    <Compile Include="Templates\WallAttackTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="artemis">
@@ -83,6 +87,9 @@
     <Content Include="Content\badplayer.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\wallattack.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\goodplayer.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -90,11 +97,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />
+    <Content Include="Mazes\maze4.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\WindowsGL\Debug\" />
     <Folder Include="Primitives\" />
-    <Folder Include="Templates\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

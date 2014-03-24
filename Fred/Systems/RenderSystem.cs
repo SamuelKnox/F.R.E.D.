@@ -54,6 +54,11 @@ namespace Fred.Systems
                             Wall.Render(spriteBatch, contentManager, transformComponent);
                         }
                     }
+                    else if (string.Compare("WallAttack", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
+                    {
+                            WallAttack.Render(spriteBatch, contentManager, transformComponent);
+                        
+                    }
                 }
             }
         }

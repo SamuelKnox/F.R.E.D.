@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Fred.Spatials;
+using Fred.Templates;
 
 namespace Fred.Systems
 {
@@ -149,7 +151,6 @@ namespace Fred.Systems
                 Entity closestWall = walls[0];
                 foreach (Entity w in walls)
                 {
-                    //w.GetComponent<HealthComponent>().CurrentHealth = 0;
                     double currentDistance = Math.Sqrt(Math.Pow(w.GetComponent<TransformComponent>().X - transformComponent.X, 2) + Math.Pow(w.GetComponent<TransformComponent>().Y - transformComponent.Y, 2));
                     if (w.GetComponent<HealthComponent>().IsAlive && currentDistance < closestDistance)
                     {
@@ -161,6 +162,9 @@ namespace Fred.Systems
                 {
                     closestWall.GetComponent<HealthComponent>().AddDamage(entity.GetComponent<DamageComponent>().Damage);
                 cooldownComponent.ResetAttackCooldown();
+                Entity attack = this.EntityWorld.CreateEntityFromTemplate(WallAttackTemplate.Name);
+                attack.GetComponent<TransformComponent>().Position = closestWall.GetComponent<TransformComponent>().Position;
+       
                 }
             }
 

@@ -20,10 +20,10 @@ namespace Fred.Spatials
                 tex = contentManager.Load<Texture2D>("wall");
             }
             spriteBatch.Begin();
-            spriteBatch.Draw(tex, new Rectangle((int) transformComponent.X, (int) transformComponent.Y, tex.Width, tex.Height), tex.Bounds, Color.White);
+            spriteBatch.Draw(tex, new Rectangle((int)transformComponent.X, (int)transformComponent.Y, tex.Width, tex.Height), tex.Bounds, Color.White);
             spriteBatch.End();
-       transformComponent.Location = new Rectangle((int)transformComponent.X, (int)transformComponent.Y, tex.Width, tex.Height);
-     }
+            transformComponent.Location = new Rectangle((int)transformComponent.X, (int)transformComponent.Y, tex.Width, tex.Height);
+        }
 
     }
 }
