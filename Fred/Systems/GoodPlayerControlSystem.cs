@@ -39,8 +39,8 @@ namespace Fred.Systems
             VelocityComponent velocityComponent = entity.GetComponent<VelocityComponent>();
             CooldownComponent cooldownComponent = entity.GetComponent<CooldownComponent>();
 
-            float turningOffset = 1F;
-            float changeInAngle = 1;
+            //float turningOffset = .0001F;
+            //float changeInAngle = 5;
             float maxMoveSpeed = .2F;
             float keyMoveSpeed = 0.001F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             float moveSpeedFriction = 0.0003f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
@@ -48,101 +48,30 @@ namespace Fred.Systems
             KeyboardState pressedKey = Keyboard.GetState();
             GamePadState controller = GamePad.GetState(PlayerIndex.One);
 
+            //oard.GetState().IsKeyDown(Keys.Left) || Keyboard.GetState().IsKeyDown(Keys.A)) && player.Mobile == true)
+            //{
+            //    float x = player.Vector.X - player.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //    player.Vector = new Vector2(x, player.Vector.Y);
+            //}
             if (pressedKey.IsKeyDown(Keys.A) || controller.ThumbSticks.Left.X < 0)
             {
-                if (Math.Abs(velocityComponent.Speed) < turningOffset)
-                {
-                    velocityComponent.Angle = 180;
-                }
-
-                if (velocityComponent.Angle >= 90 && velocityComponent.Angle < 270)
-                {
-                    velocityComponent.Speed += keyMoveSpeed;
-                }
-                else
-                {
-                    velocityComponent.Speed -= keyMoveSpeed;
-                }
-
-                if (velocityComponent.Angle < 180)
-                {
-                    velocityComponent.AddAngle(changeInAngle);
-                }
-                else if (velocityComponent.Angle > 180 && velocityComponent.Angle > 0)
-                {
-                    velocityComponent.AddAngle(-changeInAngle);
-                }
+                velocityComponent.xVelocity -= keyMoveSpeed;
             }
             if (pressedKey.IsKeyDown(Keys.D) || controller.ThumbSticks.Left.X > 0)
             {
-                if (Math.Abs(velocityComponent.Speed) < turningOffset)
-                {
-                    velocityComponent.Angle = 0;
-                }
-                if (velocityComponent.Angle >= 270 || velocityComponent.Angle < 90)
-                {
-                    velocityComponent.Speed += keyMoveSpeed;
-                }
-                else
-                {
-                    velocityComponent.Speed -= keyMoveSpeed;
-                }
-                if (velocityComponent.Angle > 180)
-                {
-                    velocityComponent.AddAngle(changeInAngle);
-                }
-                else if (velocityComponent.Angle < 180 && velocityComponent.Angle > 0)
-                {
-                    velocityComponent.AddAngle(-changeInAngle);
-                }
+                velocityComponent.xVelocity += keyMoveSpeed;
             }
 
             if (pressedKey.IsKeyDown(Keys.W) || controller.ThumbSticks.Left.Y > 0)
             {
-                if (Math.Abs(velocityComponent.Speed) < turningOffset)
-                {
-                    velocityComponent.Angle = 270;
-                }
-                if (velocityComponent.Angle >= 180)
-                {
-                    velocityComponent.Speed += keyMoveSpeed;
-                }
-                else
-                {
-                    velocityComponent.Speed -= keyMoveSpeed;
-                }
-                if (velocityComponent.Angle < 270 && velocityComponent.Angle > 90)
-                {
-                    velocityComponent.AddAngle(changeInAngle);
-                }
-                else if (velocityComponent.Angle < 90 || velocityComponent.Angle > 270)
-                {
-                    velocityComponent.AddAngle(-changeInAngle);
-                }
+
+                velocityComponent.yVelocity -= keyMoveSpeed;
             }
 
             if (pressedKey.IsKeyDown(Keys.S) || controller.ThumbSticks.Left.Y < 0)
             {
-                if (Math.Abs(velocityComponent.Speed) < turningOffset)
-                {
-                    velocityComponent.Angle = 90;
-                }
-                if (velocityComponent.Angle < 180)
-                {
-                    velocityComponent.Speed += keyMoveSpeed;
-                }
-                else
-                {
-                    velocityComponent.Speed -= keyMoveSpeed;
-                }
-                if (velocityComponent.Angle < 90 || velocityComponent.Angle > 270)
-                {
-                    velocityComponent.AddAngle(changeInAngle);
-                }
-                else if (velocityComponent.Angle < 270 && velocityComponent.Angle > 90)
-                {
-                    velocityComponent.AddAngle(-changeInAngle);
-                }
+
+                velocityComponent.yVelocity += keyMoveSpeed;
             }
             if ((pressedKey.IsKeyDown(Keys.D1) || controller.Buttons.A == ButtonState.Pressed) && cooldownComponent.IsAttackReady)
             {
@@ -171,16 +100,45 @@ namespace Fred.Systems
 
 
             // Handle max speed
-            if (velocityComponent.Speed > 0)
+            if (Math.Abs(velocityComponent.xVelocity) > maxMoveSpeed)
             {
-                velocityComponent.Speed -= moveSpeedFriction;
+                if (velocityComponent.xVelocity > 0)
+                {
+                    velocityComponent.xVelocity = maxMoveSpeed;
+                }
+                else
+                {
+                    velocityComponent.xVelocity = -maxMoveSpeed;
+                }
             }
-            else if (velocityComponent.Speed < 0)
+            else if (Math.Abs(velocityComponent.yVelocity) > maxMoveSpeed)
             {
-                velocityComponent.Speed += moveSpeedFriction;
+
+                if (velocityComponent.yVelocity > 0)
+                {
+                    velocityComponent.yVelocity = maxMoveSpeed;
+                }
+                else
+                {
+                    velocityComponent.yVelocity = -maxMoveSpeed;
+                }
             }
-            velocityComponent.Speed = Math.Max(velocityComponent.Speed, -1 * maxMoveSpeed);
-            velocityComponent.Speed = Math.Min(velocityComponent.Speed, maxMoveSpeed);
+            if (velocityComponent.xVelocity > 0)
+            {
+                velocityComponent.xVelocity -= moveSpeedFriction;
+            }
+            else if (velocityComponent.xVelocity < 0)
+            {
+                velocityComponent.xVelocity += moveSpeedFriction;
+            }
+            if (velocityComponent.yVelocity > 0)
+            {
+                velocityComponent.yVelocity -= moveSpeedFriction;
+            }
+            else if (velocityComponent.yVelocity < 0)
+            {
+                velocityComponent.yVelocity += moveSpeedFriction;
+            }
         }
     }
 }

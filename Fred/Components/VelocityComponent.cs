@@ -10,35 +10,19 @@ namespace Fred.Components
     {
         private const float ToRadians = (float)(Math.PI / 180.0);
 
-        public float Speed { get; set; }
-        public float Angle { get; set; }
-
-        public float AngleAsRadians
-        {
-            get
-            {
-                return this.Angle * ToRadians;
-            }
-        }
+        public float xVelocity { get; set; }
+        public float yVelocity { get; set; }
 
         public VelocityComponent()
             : this(0.0f, 0.0f)
         {
         }
 
-        public VelocityComponent(float velocity)
-            : this(velocity, 0.0f)
-        {
-        }
 
-        public VelocityComponent(float velocity, float angle)
+        public VelocityComponent(float x, float y)
         {
-            this.Speed = velocity;
-            this.Angle = angle;
-        }
-        public void AddAngle(float angle)
-        {
-            this.Angle = (this.Angle + angle) % 360;
+            this.xVelocity = x;
+            this.yVelocity = y;
         }
     }
 }
