@@ -36,8 +36,6 @@ namespace Fred.Systems
             VelocityComponent velocityComponent = entity.GetComponent<VelocityComponent>();
             CooldownComponent cooldownComponent = entity.GetComponent<CooldownComponent>();
 
-            float turningOffset = 1F;
-            float changeInAngle = 1;
             float maxMoveSpeed = .2F;
             float keyMoveSpeed = 0.001F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             float moveSpeedFriction = 0.0005f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;

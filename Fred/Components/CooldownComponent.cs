@@ -12,6 +12,8 @@ namespace Fred.Components
         public double MaxAttackCooldown { get; set; }
         public double CurrentBuildCooldown { get; set; }
         public double MaxBuildCooldown { get; set; }
+        public double CurrentBounceCooldown { get; set; }
+        public double MaxBounceCooldown { get; set; }
         public bool IsAttackReady
         {
             get
@@ -32,22 +34,26 @@ namespace Fred.Components
         {
             CurrentAttackCooldown = MaxAttackCooldown = 3000;
             CurrentBuildCooldown = MaxBuildCooldown = 3000;
+            CurrentBounceCooldown = MaxBounceCooldown = 50;
         }
 
-        public CooldownComponent(double attack, double build)
+        public CooldownComponent(double attack, double build, double bounce)
         {
             CurrentAttackCooldown = CurrentAttackCooldown = attack;
             CurrentBuildCooldown = MaxBuildCooldown = build;
+            CurrentBounceCooldown = MaxBounceCooldown = bounce;
         }
         public void ResetCooldowns()
         {
             CurrentAttackCooldown = MaxAttackCooldown;
             CurrentBuildCooldown = MaxBuildCooldown;
+            CurrentBounceCooldown = MaxBounceCooldown;
         }
         public void CancelCooldowns()
         {
             CurrentAttackCooldown = 0;
             CurrentBuildCooldown = 0;
+            CurrentBounceCooldown = 0;
         }
         public void ResetAttackCooldown()
         {
@@ -56,6 +62,10 @@ namespace Fred.Components
         public void ResetBuildCooldown()
         {
             CurrentBuildCooldown = MaxBuildCooldown;
+        }
+        public void ResetBounceCooldown()
+        {
+            CurrentBounceCooldown = MaxBounceCooldown;
         }
     }
 }
