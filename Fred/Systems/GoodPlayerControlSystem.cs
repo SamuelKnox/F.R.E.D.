@@ -48,11 +48,6 @@ namespace Fred.Systems
             KeyboardState pressedKey = Keyboard.GetState();
             GamePadState controller = GamePad.GetState(PlayerIndex.One);
 
-            //oard.GetState().IsKeyDown(Keys.Left) || Keyboard.GetState().IsKeyDown(Keys.A)) && player.Mobile == true)
-            //{
-            //    float x = player.Vector.X - player.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //    player.Vector = new Vector2(x, player.Vector.Y);
-            //}
             if (pressedKey.IsKeyDown(Keys.A) || controller.ThumbSticks.Left.X < 0)
             {
                 velocityComponent.xVelocity -= keyMoveSpeed;
@@ -93,36 +88,53 @@ namespace Fred.Systems
                 cooldownComponent.ResetAttackCooldown();
                 Entity attack = this.EntityWorld.CreateEntityFromTemplate(WallAttackTemplate.Name);
                 attack.GetComponent<TransformComponent>().Position = closestWall.GetComponent<TransformComponent>().Position;
-       
+
                 }
             }
 
 
 
             // Handle max speed
-            if (Math.Abs(velocityComponent.xVelocity) > maxMoveSpeed)
-            {
-                if (velocityComponent.xVelocity > 0)
-                {
-                    velocityComponent.xVelocity = maxMoveSpeed;
-                }
-                else
-                {
-                    velocityComponent.xVelocity = -maxMoveSpeed;
-                }
-            }
-            else if (Math.Abs(velocityComponent.yVelocity) > maxMoveSpeed)
-            {
+            float maxTwoMoveSpeed =  maxMoveSpeed * 1.4142f; // xSqrt(2)
 
-                if (velocityComponent.yVelocity > 0)
+            if (velocityComponent.xVelocity > 0 && velocityComponent.yVelocity > 0)
                 {
-                    velocityComponent.yVelocity = maxMoveSpeed;
+                    velocityComponent.xVelocity = Math.Min(velocityComponent.xVelocity, maxTwoMoveSpeed);
+                    velocityComponent.yVelocity = Math.Min(velocityComponent.yVelocity, maxTwoMoveSpeed);
                 }
-                else
+            if (velocityComponent.xVelocity > 0 && velocityComponent.yVelocity < 0)
                 {
-                    velocityComponent.yVelocity = -maxMoveSpeed;
+                    velocityComponent.xVelocity = Math.Min(velocityComponent.xVelocity, maxTwoMoveSpeed);
+                    velocityComponent.yVelocity = Math.Max(velocityComponent.yVelocity, -1 * maxTwoMoveSpeed);
                 }
-            }
+            if (velocityComponent.xVelocity < 0 && velocityComponent.yVelocity > 0)
+                {
+                    velocityComponent.xVelocity = Math.Max(velocityComponent.xVelocity, -1 * maxTwoMoveSpeed);
+                    velocityComponent.yVelocity = Math.Min(velocityComponent.yVelocity, maxTwoMoveSpeed);
+                }
+            if (velocityComponent.xVelocity < 0 && velocityComponent.yVelocity < 0)
+                {
+                    velocityComponent.xVelocity = Math.Max(velocityComponent.xVelocity, -1 * maxTwoMoveSpeed);
+                    velocityComponent.yVelocity = Math.Max(velocityComponent.yVelocity, -1 * maxTwoMoveSpeed);
+                }
+            if (velocityComponent.xVelocity == 0 && velocityComponent.yVelocity > 0)
+                {
+                    velocityComponent.yVelocity = Math.Min(velocityComponent.yVelocity, maxMoveSpeed);
+                }
+            if (velocityComponent.xVelocity == 0 && velocityComponent.yVelocity < 0)
+                {
+                    velocityComponent.yVelocity = Math.Max(velocityComponent.yVelocity, -1 * maxMoveSpeed);
+                }
+            if (velocityComponent.xVelocity > 0 && velocityComponent.yVelocity == 0)
+                {
+                    velocityComponent.xVelocity = Math.Min(velocityComponent.xVelocity, maxMoveSpeed);
+                }
+            if (velocityComponent.xVelocity < 0 && velocityComponent.yVelocity == 0)
+                {
+                    velocityComponent.xVelocity = Math.Max(velocityComponent.xVelocity, -1 * maxMoveSpeed);
+                }
+
+            // Apply Friction
             if (velocityComponent.xVelocity > 0)
             {
                 velocityComponent.xVelocity -= moveSpeedFriction;
