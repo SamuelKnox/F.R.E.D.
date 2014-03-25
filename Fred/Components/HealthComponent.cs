@@ -23,6 +23,13 @@ namespace Fred.Components
                 return this.CurrentHealth > 0;
             }
         }
+        public double HealthPercentage
+        {
+            get
+            {
+                return this.CurrentHealth / this.MaximumHealth;
+            }
+        }
 
         public HealthComponent()
             : this(0)

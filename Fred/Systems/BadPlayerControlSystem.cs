@@ -36,8 +36,8 @@ namespace Fred.Systems
             VelocityComponent velocityComponent = entity.GetComponent<VelocityComponent>();
             CooldownComponent cooldownComponent = entity.GetComponent<CooldownComponent>();
 
-            float maxMoveSpeed = .2F;
-            float keyMoveSpeed = 0.001F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+            float maxMoveSpeed = .15F;
+            float keyMoveSpeed = 0.0008F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             float moveSpeedFriction = 0.0005f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
 
             Bag<Entity> walls = this.EntityWorld.GroupManager.GetEntities("Walls");
@@ -46,7 +46,7 @@ namespace Fred.Systems
                 if (transformComponent.Location.Intersects(w.GetComponent<TransformComponent>().Location) && w.GetComponent<HealthComponent>().IsAlive)
                 {
                     maxMoveSpeed = .04F;
-                    keyMoveSpeed = (float) ((0.0005F / w.GetComponent<HealthComponent>().CurrentHealth) * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds);
+                    keyMoveSpeed = (float) ((0.00023F * w.GetComponent<HealthComponent>().HealthPercentage) * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds);
                     moveSpeedFriction = 0.0001f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
                 }
             }
