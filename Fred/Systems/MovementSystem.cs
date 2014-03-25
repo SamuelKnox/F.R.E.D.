@@ -28,5 +28,3 @@ namespace Fred.Systems
         }
     }
 }
-    
-
