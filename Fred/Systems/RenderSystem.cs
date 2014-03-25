@@ -57,7 +57,11 @@ namespace Fred.Systems
                     else if (string.Compare("WallAttack", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
                     {
                             WallAttack.Render(spriteBatch, contentManager, transformComponent);
-                        
+
+                    }
+                    else if (string.Compare("Text", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
+                    {
+                        Text.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<TextComponent>());
                     }
                 }
             }

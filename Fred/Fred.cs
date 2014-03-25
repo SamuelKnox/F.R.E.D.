@@ -59,6 +59,7 @@ namespace Fred
             List<Vector2> playerStartPositions = InitializeWalls();
             InitializeGoodPlayers(playerStartPositions[0]);
             InitializeEvilPlayers(playerStartPositions[1]);
+            InitializeTimer();
 
             base.Initialize();
         }
@@ -218,8 +219,8 @@ namespace Fred
                     }
                     else if (mazeLayout[i, j] == 3)
                     {
-                        float x = i * wallSize + wallSize / 4;
-                        float y = j * wallSize + wallSize / 4;
+                        float x = i * wallSize + wallSize / 2;
+                        float y = j * wallSize + wallSize / 2;
                         playerStartPoints[0] = new Vector2(x, y);
 
 
@@ -235,8 +236,8 @@ namespace Fred
                     }
                     else if (mazeLayout[i, j] == 4)
                     {
-                        float x = i * wallSize + wallSize / 4;
-                        float y = j * wallSize + wallSize / 4;
+                        float x = i * wallSize + wallSize / 2;
+                        float y = j * wallSize + wallSize / 2;
                         playerStartPoints[1] = new Vector2(x, y);
 
 
@@ -254,6 +255,17 @@ namespace Fred
             }
             }
             return playerStartPoints;
+        }
+        void InitializeTimer()
+        {
+            Entity timer = world.CreateEntity();
+            timer.AddComponent(new TextComponent("Arial", "Time", Color.White));
+            timer.AddComponent(new SpatialFormComponent("Text"));
+            timer.AddComponentFromPool<TransformComponent>();
+            timer.GetComponent<TransformComponent>().X = GraphicsDevice.DisplayMode.Width * 0.5F;
+            timer.GetComponent<TransformComponent>().Y = GraphicsDevice.DisplayMode.Height * 0.05F;
+            timer.AddComponent(new TimerComponent(30000));
+            
         }
 
     }

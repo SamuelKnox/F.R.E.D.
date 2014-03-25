@@ -20,8 +20,8 @@ namespace Fred.Components
         {
             get
             {
-                float x = Location.X + Location.Width / 2;
-                float y = Location.Y + Location.Height / 2;
+                float x = X + Location.Width / 2;
+                float y = Y + Location.Height / 2;
                 return new Vector2(x, y);
             }
         }

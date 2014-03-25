@@ -18,17 +18,17 @@ namespace Fred.Systems
     class BadPlayerControlSystem : TagSystem
     {
 
-        private GraphicsDevice graphicsDevice;
+        //private GraphicsDevice graphicsDevice;
 
         public BadPlayerControlSystem()
             : base("BAD_PLAYER")
         {
         }
 
-        public override void LoadContent()
-        {
-            graphicsDevice = BlackBoard.GetEntry<GraphicsDevice>("GraphicsDevice");
-        }
+        //public override void LoadContent()
+        //{
+            //graphicsDevice = BlackBoard.GetEntry<GraphicsDevice>("GraphicsDevice");
+        //}
 
         public override void Process(Entity entity)
         {
@@ -46,7 +46,7 @@ namespace Fred.Systems
                 if (transformComponent.Location.Intersects(w.GetComponent<TransformComponent>().Location) && w.GetComponent<HealthComponent>().IsAlive)
                 {
                     maxMoveSpeed = .04F;
-                    keyMoveSpeed = 0.0005F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+                    keyMoveSpeed = (float) ((0.0005F / w.GetComponent<HealthComponent>().CurrentHealth) * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds);
                     moveSpeedFriction = 0.0001f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
                 }
             }

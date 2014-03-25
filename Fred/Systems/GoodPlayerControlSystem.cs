@@ -20,17 +20,17 @@ namespace Fred.Systems
     class GoodPlayerControlSystem : TagSystem
     {
 
-        private GraphicsDevice graphicsDevice;
+        //private GraphicsDevice graphicsDevice;
 
         public GoodPlayerControlSystem()
             : base("GOOD_PLAYER")
         {
         }
 
-        public override void LoadContent()
-        {
-            graphicsDevice = BlackBoard.GetEntry<GraphicsDevice>("GraphicsDevice");
-        }
+        //public override void LoadContent()
+        //{
+        //    graphicsDevice = BlackBoard.GetEntry<GraphicsDevice>("GraphicsDevice");
+        //}
 
         public override void Process(Entity entity)
         {
