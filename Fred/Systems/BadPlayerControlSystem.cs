@@ -37,8 +37,10 @@ namespace Fred.Systems
             CooldownComponent cooldownComponent = entity.GetComponent<CooldownComponent>();
 
             float maxMoveSpeed = .15F;
-            float keyMoveSpeed = 0.0008F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+            float acceleration = 0.0008F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             float moveSpeedFriction = 0.0005f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+            int keysDown = 0;
+            float squareRootOfTwo = 1.4142F;
 
             Bag<Entity> walls = this.EntityWorld.GroupManager.GetEntities("Walls");
             foreach (Entity w in walls)
@@ -46,31 +48,51 @@ namespace Fred.Systems
                 if (transformComponent.Location.Intersects(w.GetComponent<TransformComponent>().Location) && w.GetComponent<HealthComponent>().IsAlive)
                 {
                     maxMoveSpeed = .04F;
-                    keyMoveSpeed = (float) ((0.00023F * w.GetComponent<HealthComponent>().HealthPercentage) * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds);
+                    acceleration = (float) ((0.00023F * w.GetComponent<HealthComponent>().HealthPercentage) * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds);
                     moveSpeedFriction = 0.0001f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
                 }
             }
 
             KeyboardState pressedKey = Keyboard.GetState();
             GamePadState controller = GamePad.GetState(PlayerIndex.Two);
-
             if (pressedKey.IsKeyDown(Keys.Left) || controller.ThumbSticks.Left.X < 0)
             {
-                velocityComponent.xVelocity -= keyMoveSpeed;
+                keysDown++;
             }
             if (pressedKey.IsKeyDown(Keys.Right) || controller.ThumbSticks.Left.X > 0)
             {
-                velocityComponent.xVelocity += keyMoveSpeed;
+                keysDown++;
             }
 
             if (pressedKey.IsKeyDown(Keys.Up) || controller.ThumbSticks.Left.Y > 0)
             {
-                velocityComponent.yVelocity -= keyMoveSpeed;
+
+                keysDown++;
             }
 
             if (pressedKey.IsKeyDown(Keys.Down) || controller.ThumbSticks.Left.Y < 0)
             {
-                velocityComponent.yVelocity += keyMoveSpeed;
+
+                keysDown++;
+            }
+            acceleration /= keysDown;
+            if (pressedKey.IsKeyDown(Keys.Left) || controller.ThumbSticks.Left.X < 0)
+            {
+                velocityComponent.xVelocity -= acceleration;
+            }
+            if (pressedKey.IsKeyDown(Keys.Right) || controller.ThumbSticks.Left.X > 0)
+            {
+                velocityComponent.xVelocity += acceleration;
+            }
+
+            if (pressedKey.IsKeyDown(Keys.Up) || controller.ThumbSticks.Left.Y > 0)
+            {
+                velocityComponent.yVelocity -= acceleration;
+            }
+
+            if (pressedKey.IsKeyDown(Keys.Down) || controller.ThumbSticks.Left.Y < 0)
+            {
+                velocityComponent.yVelocity += acceleration;
             }
 
             if ((pressedKey.IsKeyDown(Keys.RightShift) || controller.Buttons.A == ButtonState.Pressed) && cooldownComponent.IsBuildReady)
@@ -94,7 +116,7 @@ namespace Fred.Systems
             }
 
             // Handle max speed
-            float maxTwoMoveSpeed =  maxMoveSpeed * 1.4142f; // xSqrt(2)
+            float maxTwoMoveSpeed =  maxMoveSpeed * squareRootOfTwo; // xSqrt(2)
 
             if (velocityComponent.xVelocity > 0 && velocityComponent.yVelocity > 0)
                 {

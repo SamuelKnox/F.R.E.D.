@@ -42,31 +42,54 @@ namespace Fred.Systems
             //float turningOffset = .0001F;
             //float changeInAngle = 5;
             float maxMoveSpeed = .2F;
-            float keyMoveSpeed = 0.001F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+            float acceleration = 0.001F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             float moveSpeedFriction = 0.0003f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+            int keysDown = 0;
+            float squareRootOfTwo = 1.4142F;
 
             KeyboardState pressedKey = Keyboard.GetState();
             GamePadState controller = GamePad.GetState(PlayerIndex.One);
 
             if (pressedKey.IsKeyDown(Keys.A) || controller.ThumbSticks.Left.X < 0)
             {
-                velocityComponent.xVelocity -= keyMoveSpeed;
+                keysDown++;
             }
             if (pressedKey.IsKeyDown(Keys.D) || controller.ThumbSticks.Left.X > 0)
             {
-                velocityComponent.xVelocity += keyMoveSpeed;
+                keysDown++;
             }
 
             if (pressedKey.IsKeyDown(Keys.W) || controller.ThumbSticks.Left.Y > 0)
             {
 
-                velocityComponent.yVelocity -= keyMoveSpeed;
+                keysDown++;
             }
 
             if (pressedKey.IsKeyDown(Keys.S) || controller.ThumbSticks.Left.Y < 0)
             {
 
-                velocityComponent.yVelocity += keyMoveSpeed;
+                keysDown++;
+            }
+            acceleration /= keysDown;
+            if (pressedKey.IsKeyDown(Keys.A) || controller.ThumbSticks.Left.X < 0)
+            {
+                velocityComponent.xVelocity -= acceleration;
+            }
+            if (pressedKey.IsKeyDown(Keys.D) || controller.ThumbSticks.Left.X > 0)
+            {
+                velocityComponent.xVelocity += acceleration;
+            }
+
+            if (pressedKey.IsKeyDown(Keys.W) || controller.ThumbSticks.Left.Y > 0)
+            {
+
+                velocityComponent.yVelocity -= acceleration;
+            }
+
+            if (pressedKey.IsKeyDown(Keys.S) || controller.ThumbSticks.Left.Y < 0)
+            {
+
+                velocityComponent.yVelocity += acceleration;
             }
             if ((pressedKey.IsKeyDown(Keys.D1) || controller.Buttons.A == ButtonState.Pressed) && cooldownComponent.IsAttackReady)
             {
@@ -95,7 +118,7 @@ namespace Fred.Systems
 
 
             // Handle max speed
-            float maxTwoMoveSpeed =  maxMoveSpeed * 1.4142f; // xSqrt(2)
+            float maxTwoMoveSpeed =  maxMoveSpeed * squareRootOfTwo; // xSqrt(2)
 
             if (velocityComponent.xVelocity > 0 && velocityComponent.yVelocity > 0)
                 {
