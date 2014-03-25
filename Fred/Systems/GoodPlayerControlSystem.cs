@@ -36,7 +36,7 @@ namespace Fred.Systems
             float acceleration = 0.001F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             float moveSpeedFriction = 0.0003f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             int keysDown = 0;
-            float squareRootOfTwo = 1.4142F;
+            float cosFourtyFive = 0.707F;
 
             KeyboardState pressedKey = Keyboard.GetState();
             GamePadState controller = GamePad.GetState(PlayerIndex.One);
@@ -107,7 +107,7 @@ namespace Fred.Systems
             }
 
             // Handle max speed
-            float maxTwoMoveSpeed =  maxMoveSpeed * squareRootOfTwo; // xSqrt(2)
+            float maxTwoMoveSpeed =  maxMoveSpeed * cosFourtyFive; // cos(45)
 
             if (velocityComponent.xVelocity > 0 && velocityComponent.yVelocity > 0)
                 {
