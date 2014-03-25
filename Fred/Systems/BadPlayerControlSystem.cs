@@ -36,82 +36,87 @@ namespace Fred.Systems
             VelocityComponent velocityComponent = entity.GetComponent<VelocityComponent>();
             CooldownComponent cooldownComponent = entity.GetComponent<CooldownComponent>();
 
-            float maxMoveSpeed = .3F;
-            float acceleration = 0.001F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
-            float moveSpeedFriction = 0.0003f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+            float maxMoveSpeed = .15F;
+            float acceleration = 0.0008F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+            float moveSpeedFriction = 0.0005f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             int keysDown = 0;
-            float cosFourtyFive = 0.707F;
+            float squareRootOfTwo = 1.4142F;
+
+            Bag<Entity> walls = this.EntityWorld.GroupManager.GetEntities("Walls");
+            foreach (Entity w in walls)
+            {
+                if (transformComponent.Location.Intersects(w.GetComponent<TransformComponent>().Location) && w.GetComponent<HealthComponent>().IsAlive)
+                {
+                    maxMoveSpeed = .04F;
+                    acceleration = (float) ((0.00023F * w.GetComponent<HealthComponent>().HealthPercentage) * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds);
+                    moveSpeedFriction = 0.0001f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+                }
+            }
 
             KeyboardState pressedKey = Keyboard.GetState();
-            GamePadState controller = GamePad.GetState(PlayerIndex.One);
-
-            if (pressedKey.IsKeyDown(Keys.A) || controller.ThumbSticks.Left.X < 0)
+            GamePadState controller = GamePad.GetState(PlayerIndex.Two);
+            if (pressedKey.IsKeyDown(Keys.Left) || controller.ThumbSticks.Left.X < 0)
             {
                 keysDown++;
             }
-            if (pressedKey.IsKeyDown(Keys.D) || controller.ThumbSticks.Left.X > 0)
+            if (pressedKey.IsKeyDown(Keys.Right) || controller.ThumbSticks.Left.X > 0)
             {
                 keysDown++;
             }
 
-            if (pressedKey.IsKeyDown(Keys.W) || controller.ThumbSticks.Left.Y > 0)
+            if (pressedKey.IsKeyDown(Keys.Up) || controller.ThumbSticks.Left.Y > 0)
             {
 
                 keysDown++;
             }
 
-            if (pressedKey.IsKeyDown(Keys.S) || controller.ThumbSticks.Left.Y < 0)
+            if (pressedKey.IsKeyDown(Keys.Down) || controller.ThumbSticks.Left.Y < 0)
             {
 
                 keysDown++;
             }
             acceleration /= keysDown;
-            if (pressedKey.IsKeyDown(Keys.A) || controller.ThumbSticks.Left.X < 0)
+            if (pressedKey.IsKeyDown(Keys.Left) || controller.ThumbSticks.Left.X < 0)
             {
                 velocityComponent.xVelocity -= acceleration;
             }
-            if (pressedKey.IsKeyDown(Keys.D) || controller.ThumbSticks.Left.X > 0)
+            if (pressedKey.IsKeyDown(Keys.Right) || controller.ThumbSticks.Left.X > 0)
             {
                 velocityComponent.xVelocity += acceleration;
             }
 
-            if (pressedKey.IsKeyDown(Keys.W) || controller.ThumbSticks.Left.Y > 0)
+            if (pressedKey.IsKeyDown(Keys.Up) || controller.ThumbSticks.Left.Y > 0)
             {
-
                 velocityComponent.yVelocity -= acceleration;
             }
 
-            if (pressedKey.IsKeyDown(Keys.S) || controller.ThumbSticks.Left.Y < 0)
+            if (pressedKey.IsKeyDown(Keys.Down) || controller.ThumbSticks.Left.Y < 0)
             {
-
                 velocityComponent.yVelocity += acceleration;
             }
-            if ((pressedKey.IsKeyDown(Keys.D1) || controller.Buttons.A == ButtonState.Pressed) && cooldownComponent.IsAttackReady)
+
+            if ((pressedKey.IsKeyDown(Keys.RightShift) || controller.Buttons.A == ButtonState.Pressed) && cooldownComponent.IsBuildReady)
             {
-                Bag<Entity> walls = this.EntityWorld.GroupManager.GetEntities("Walls");
                 double closestDistance = int.MaxValue;
-                Entity closestWall = walls[0];
+                Entity closestWall = null;
                 foreach (Entity w in walls)
                 {
                     double currentDistance = Math.Sqrt(Math.Pow(w.GetComponent<TransformComponent>().X - transformComponent.X, 2) + Math.Pow(w.GetComponent<TransformComponent>().Y - transformComponent.Y, 2));
-                    if (w.GetComponent<HealthComponent>().IsAlive && currentDistance < closestDistance)
+                    if (!w.GetComponent<HealthComponent>().IsAlive && currentDistance < closestDistance)
                     {
                         closestDistance = currentDistance;
                         closestWall = w;
                     }
                 }
-                if (closestDistance < 50)
+                if (closestDistance < 50 && closestWall != null)
                 {
-                    closestWall.GetComponent<HealthComponent>().AddDamage(entity.GetComponent<DamageComponent>().Damage);
-                cooldownComponent.ResetAttackCooldown();
-                Entity attack = this.EntityWorld.CreateEntityFromTemplate(WallAttackTemplate.Name);
-                attack.GetComponent<TransformComponent>().Position = closestWall.GetComponent<TransformComponent>().Position;
-
+                    closestWall.GetComponent<HealthComponent>().AddHealth(entity.GetComponent<HealComponent>().Heal);
+                cooldownComponent.ResetBuildCooldown();
                 }
             }
 
             // Handle max speed
-            float maxTwoMoveSpeed =  maxMoveSpeed * cosFourtyFive; // cos(45)
+            float maxTwoMoveSpeed =  maxMoveSpeed * squareRootOfTwo; // xSqrt(2)
 
             if (velocityComponent.xVelocity > 0 && velocityComponent.yVelocity > 0)
                 {
@@ -167,6 +172,7 @@ namespace Fred.Systems
             {
                 velocityComponent.yVelocity += moveSpeedFriction;
             }
+
         }
     }
 }
