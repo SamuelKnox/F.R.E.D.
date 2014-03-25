@@ -32,11 +32,11 @@ namespace Fred.Systems
             VelocityComponent velocityComponent = entity.GetComponent<VelocityComponent>();
             CooldownComponent cooldownComponent = entity.GetComponent<CooldownComponent>();
 
-            float maxMoveSpeed = .2F;
+            float maxMoveSpeed = .3F;
             float acceleration = 0.001F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             float moveSpeedFriction = 0.0003f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             int keysDown = 0;
-            float cosFourtyFive = 0.707F;
+            float cosFortyFive = 0.707F;
 
             KeyboardState pressedKey = Keyboard.GetState();
             GamePadState controller = GamePad.GetState(PlayerIndex.One);
@@ -52,16 +52,17 @@ namespace Fred.Systems
 
             if (pressedKey.IsKeyDown(Keys.W) || controller.ThumbSticks.Left.Y > 0)
             {
-
                 keysDown++;
             }
 
             if (pressedKey.IsKeyDown(Keys.S) || controller.ThumbSticks.Left.Y < 0)
             {
-
                 keysDown++;
             }
-            acceleration /= keysDown;
+            if (keysDown > 1)
+            {
+                acceleration *= cosFortyFive;
+            }
             if (pressedKey.IsKeyDown(Keys.A) || controller.ThumbSticks.Left.X < 0)
             {
                 velocityComponent.xVelocity -= acceleration;
@@ -73,13 +74,11 @@ namespace Fred.Systems
 
             if (pressedKey.IsKeyDown(Keys.W) || controller.ThumbSticks.Left.Y > 0)
             {
-
                 velocityComponent.yVelocity -= acceleration;
             }
 
             if (pressedKey.IsKeyDown(Keys.S) || controller.ThumbSticks.Left.Y < 0)
             {
-
                 velocityComponent.yVelocity += acceleration;
             }
             if ((pressedKey.IsKeyDown(Keys.D1) || controller.Buttons.A == ButtonState.Pressed) && cooldownComponent.IsAttackReady)
@@ -107,7 +106,7 @@ namespace Fred.Systems
             }
 
             // Handle max speed
-            float maxTwoMoveSpeed =  maxMoveSpeed * cosFourtyFive; // cos(45)
+            float maxTwoMoveSpeed =  maxMoveSpeed * cosFortyFive; // cos(45)
 
             if (velocityComponent.xVelocity > 0 && velocityComponent.yVelocity > 0)
                 {

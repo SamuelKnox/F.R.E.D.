@@ -40,7 +40,7 @@ namespace Fred.Systems
             float acceleration = 0.0008F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             float moveSpeedFriction = 0.0005f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             int keysDown = 0;
-            float squareRootOfTwo = 1.4142F;
+            float cosFortyFive = 0.707F;
 
             Bag<Entity> walls = this.EntityWorld.GroupManager.GetEntities("Walls");
             foreach (Entity w in walls)
@@ -48,7 +48,7 @@ namespace Fred.Systems
                 if (transformComponent.Location.Intersects(w.GetComponent<TransformComponent>().Location) && w.GetComponent<HealthComponent>().IsAlive)
                 {
                     maxMoveSpeed = .04F;
-                    acceleration = (float) ((0.00023F * w.GetComponent<HealthComponent>().HealthPercentage) * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds);
+                    acceleration = (float) ((0.0004F * w.GetComponent<HealthComponent>().HealthPercentage) * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds);
                     moveSpeedFriction = 0.0001f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
                 }
             }
@@ -66,16 +66,15 @@ namespace Fred.Systems
 
             if (pressedKey.IsKeyDown(Keys.Up) || controller.ThumbSticks.Left.Y > 0)
             {
-
                 keysDown++;
             }
 
             if (pressedKey.IsKeyDown(Keys.Down) || controller.ThumbSticks.Left.Y < 0)
             {
-
                 keysDown++;
             }
-            acceleration /= keysDown;
+            if(keysDown >1){
+            acceleration *= cosFortyFive;}
             if (pressedKey.IsKeyDown(Keys.Left) || controller.ThumbSticks.Left.X < 0)
             {
                 velocityComponent.xVelocity -= acceleration;
@@ -116,7 +115,7 @@ namespace Fred.Systems
             }
 
             // Handle max speed
-            float maxTwoMoveSpeed =  maxMoveSpeed * squareRootOfTwo; // xSqrt(2)
+            float maxTwoMoveSpeed =  maxMoveSpeed * cosFortyFive; // xSqrt(2)
 
             if (velocityComponent.xVelocity > 0 && velocityComponent.yVelocity > 0)
                 {
