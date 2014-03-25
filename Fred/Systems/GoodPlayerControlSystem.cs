@@ -20,17 +20,10 @@ namespace Fred.Systems
     class GoodPlayerControlSystem : TagSystem
     {
 
-        //private GraphicsDevice graphicsDevice;
-
         public GoodPlayerControlSystem()
             : base("GOOD_PLAYER")
         {
         }
-
-        //public override void LoadContent()
-        //{
-        //    graphicsDevice = BlackBoard.GetEntry<GraphicsDevice>("GraphicsDevice");
-        //}
 
         public override void Process(Entity entity)
         {
@@ -39,8 +32,6 @@ namespace Fred.Systems
             VelocityComponent velocityComponent = entity.GetComponent<VelocityComponent>();
             CooldownComponent cooldownComponent = entity.GetComponent<CooldownComponent>();
 
-            //float turningOffset = .0001F;
-            //float changeInAngle = 5;
             float maxMoveSpeed = .2F;
             float acceleration = 0.001F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             float moveSpeedFriction = 0.0003f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
@@ -114,8 +105,6 @@ namespace Fred.Systems
 
                 }
             }
-
-
 
             // Handle max speed
             float maxTwoMoveSpeed =  maxMoveSpeed * squareRootOfTwo; // xSqrt(2)
