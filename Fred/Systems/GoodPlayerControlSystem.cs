@@ -89,7 +89,7 @@ namespace Fred.Systems
                 foreach (Entity w in walls)
                 {
                     double currentDistance = Math.Sqrt(Math.Pow(w.GetComponent<TransformComponent>().X - transformComponent.X, 2) + Math.Pow(w.GetComponent<TransformComponent>().Y - transformComponent.Y, 2));
-                    if (w.GetComponent<HealthComponent>().IsAlive && currentDistance < closestDistance)
+                    if (w.GetComponent<HealthComponent>().IsAlive && currentDistance < closestDistance && w.GetComponent<HealthComponent>().CurrentHealth < 1000000)
                     {
                         closestDistance = currentDistance;
                         closestWall = w;

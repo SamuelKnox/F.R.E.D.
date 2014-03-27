@@ -36,11 +36,12 @@ namespace Fred.Systems
             VelocityComponent velocityComponent = entity.GetComponent<VelocityComponent>();
             CooldownComponent cooldownComponent = entity.GetComponent<CooldownComponent>();
 
-            float maxMoveSpeed = .15F;
+            float maxMoveSpeed = .25F;
             float acceleration = 0.0008F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             float moveSpeedFriction = 0.0005f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             int keysDown = 0;
-            float cosFortyFive = 0.707F;
+            //float cosFortyFive = 0.707F;
+            float cosFortyFive = 0.9F;
 
             Bag<Entity> walls = this.EntityWorld.GroupManager.GetEntities("Walls");
             foreach (Entity w in walls)

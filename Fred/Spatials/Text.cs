@@ -18,8 +18,8 @@ namespace Fred.Spatials
                 textComponent.SpriteFont = contentManager.Load<SpriteFont>("Arial");
             }
             spriteBatch.Begin();
-           spriteBatch.DrawString(textComponent.SpriteFont, textComponent.Message, new Vector2(transformComponent.CenterOfRectangle.X - textComponent.SpriteFont.MeasureString(textComponent.Message).X / 2, transformComponent.CenterOfRectangle.Y - textComponent.SpriteFont.MeasureString(textComponent.Message).Y / 2), textComponent.Color);
+            spriteBatch.DrawString(textComponent.SpriteFont, textComponent.Message, new Vector2(transformComponent.CenterOfRectangle.X - textComponent.SpriteFont.MeasureString(textComponent.Message).X / 2, transformComponent.CenterOfRectangle.Y - textComponent.SpriteFont.MeasureString(textComponent.Message).Y / 2), textComponent.Color);
             spriteBatch.End();
-          }
+        }
     }
 }
