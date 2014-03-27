@@ -41,6 +41,7 @@
     <Compile Include="Components\DamageComponent.cs" />
     <Compile Include="Components\HealthComponent.cs" />
     <Compile Include="Components\MenuSelectionComponent.cs" />
+    <Compile Include="Components\NearbyGridsComponent.cs" />
     <Compile Include="Components\OrientationComponent.cs" />
     <Compile Include="Components\SpatialFormComponent.cs" />
     <Compile Include="Components\TextComponent.cs" />

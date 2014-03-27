@@ -111,6 +111,8 @@ namespace Fred.Systems
 
         void InitializeGoodPlayers(Vector2 playerStartPosition)
         {
+            int wallSize = content.Load<Texture2D>("wall").Width;
+
             Entity player = world.CreateEntity();
 
             player.AddComponentFromPool<TransformComponent>();
@@ -119,6 +121,7 @@ namespace Fred.Systems
             player.AddComponent(new DamageComponent(5, .25));
             player.AddComponent(new VelocityComponent());
             player.AddComponent(new CooldownComponent());
+            player.AddComponent(new NearbyGridsComponent(new Vector2(playerStartPosition.X / wallSize, playerStartPosition.Y / wallSize)));
 
             player.GetComponent<TransformComponent>().X = playerStartPosition.X;
             player.GetComponent<TransformComponent>().Y = playerStartPosition.Y;
@@ -127,6 +130,8 @@ namespace Fred.Systems
         }
         void InitializeEvilPlayers(Vector2 playerStartPosition)
         {
+            int wallSize = content.Load<Texture2D>("wall").Width;
+
             Entity enemy = world.CreateEntity();
 
             enemy.AddComponentFromPool<TransformComponent>();
@@ -135,6 +140,8 @@ namespace Fred.Systems
             enemy.AddComponent(new VelocityComponent());
             enemy.AddComponent(new HealComponent(3));
             enemy.AddComponent(new CooldownComponent());
+            enemy.AddComponent(new NearbyGridsComponent(new Vector2(playerStartPosition.X / wallSize, playerStartPosition.Y / wallSize)));
+
 
             enemy.GetComponent<TransformComponent>().X = playerStartPosition.X;
             enemy.GetComponent<TransformComponent>().Y = playerStartPosition.Y;
@@ -180,6 +187,8 @@ namespace Fred.Systems
                             wall.AddComponentFromPool<TransformComponent>();
                             wall.AddComponent(new SpatialFormComponent("Wall"));
                             wall.AddComponent(new HealthComponent(0, 10));
+                            wall.AddComponent(new NearbyGridsComponent(new Vector2(i,j)));
+
 
                             wall.GetComponent<TransformComponent>().X = i * wallSize;
                             wall.GetComponent<TransformComponent>().Y = j * wallSize;
@@ -192,6 +201,7 @@ namespace Fred.Systems
                             wall.AddComponentFromPool<TransformComponent>();
                             wall.AddComponent(new SpatialFormComponent("Wall"));
                             wall.AddComponent(new HealthComponent(5, 10));
+                            wall.AddComponent(new NearbyGridsComponent(new Vector2(i, j)));
 
                             wall.GetComponent<TransformComponent>().X = i * wallSize;
                             wall.GetComponent<TransformComponent>().Y = j * wallSize;
@@ -204,6 +214,7 @@ namespace Fred.Systems
                             wall.AddComponentFromPool<TransformComponent>();
                             wall.AddComponent(new SpatialFormComponent("Wall"));
                             wall.AddComponent(new HealthComponent(1000000000));
+                            wall.AddComponent(new NearbyGridsComponent(new Vector2(i, j)));
 
                             wall.GetComponent<TransformComponent>().X = i * wallSize;
                             wall.GetComponent<TransformComponent>().Y = j * wallSize;
@@ -221,6 +232,7 @@ namespace Fred.Systems
                             wall.AddComponentFromPool<TransformComponent>();
                             wall.AddComponent(new SpatialFormComponent("Wall"));
                             wall.AddComponent(new HealthComponent(0));
+                            wall.AddComponent(new NearbyGridsComponent(new Vector2(i, j)));
 
                             wall.GetComponent<TransformComponent>().X = i * wallSize;
                             wall.GetComponent<TransformComponent>().Y = j * wallSize;
@@ -238,6 +250,7 @@ namespace Fred.Systems
                             wall.AddComponentFromPool<TransformComponent>();
                             wall.AddComponent(new SpatialFormComponent("Wall"));
                             wall.AddComponent(new HealthComponent(0));
+                            wall.AddComponent(new NearbyGridsComponent(new Vector2(i, j)));
 
                             wall.GetComponent<TransformComponent>().X = i * wallSize;
                             wall.GetComponent<TransformComponent>().Y = j * wallSize;
