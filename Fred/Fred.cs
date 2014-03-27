@@ -22,7 +22,7 @@ namespace Fred
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        Entity maze;
         EntityWorld world;
 
         public Fred()
@@ -48,11 +48,13 @@ namespace Fred
             IsMouseVisible = false;
 
             world = new EntityWorld();
+            maze = world.CreateEntity();
 
             EntitySystem.BlackBoard.SetEntry<ContentManager>("ContentManager", Content);
             EntitySystem.BlackBoard.SetEntry<GraphicsDevice>("GraphicsDevice", GraphicsDevice);
             EntitySystem.BlackBoard.SetEntry<SpriteBatch>("SpriteBatch", spriteBatch);
             EntitySystem.BlackBoard.SetEntry<EntityWorld>("EntityWorld", world);
+            EntitySystem.BlackBoard.SetEntry<Entity>("Maze", maze);
             EntitySystem.BlackBoard.SetEntry<Game>("Game", this);
 
             world.InitializeAll(true);

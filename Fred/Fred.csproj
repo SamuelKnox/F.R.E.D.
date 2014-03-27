@@ -40,6 +40,7 @@
     <Compile Include="Components\HealComponent.cs" />
     <Compile Include="Components\DamageComponent.cs" />
     <Compile Include="Components\HealthComponent.cs" />
+    <Compile Include="Components\MazeComponent.cs" />
     <Compile Include="Components\MenuSelectionComponent.cs" />
     <Compile Include="Components\NearbyGridsComponent.cs" />
     <Compile Include="Components\OrientationComponent.cs" />

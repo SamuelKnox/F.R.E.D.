@@ -18,17 +18,17 @@ namespace Fred.Systems
     class BadPlayerControlSystem : TagSystem
     {
 
-        //private GraphicsDevice graphicsDevice;
+        private Entity maze;
 
         public BadPlayerControlSystem()
             : base("BAD_PLAYER")
         {
         }
 
-        //public override void LoadContent()
-        //{
-            //graphicsDevice = BlackBoard.GetEntry<GraphicsDevice>("GraphicsDevice");
-        //}
+        public override void LoadContent()
+        {
+            maze = BlackBoard.GetEntry<Entity>("Maze");
+        }
 
         public override void Process(Entity entity)
         {
@@ -44,8 +44,9 @@ namespace Fred.Systems
             float cosFortyFive = 0.9F;
 
             Bag<Entity> walls = this.EntityWorld.GroupManager.GetEntities("Walls");
-            foreach (Entity w in walls)
+            foreach (Vector2 coords in entity.GetComponent<NearbyGridsComponent>().NearbyGrids)
             {
+                Entity w = walls[(int)(coords.Y * maze.GetComponent<MazeComponent>().Width + coords.X)];
                 if (transformComponent.Location.Intersects(w.GetComponent<TransformComponent>().Location) && w.GetComponent<HealthComponent>().IsAlive)
                 {
                     maxMoveSpeed = .04F;
@@ -98,9 +99,11 @@ namespace Fred.Systems
             if ((pressedKey.IsKeyDown(Keys.RightShift) || controller.Buttons.A == ButtonState.Pressed) && cooldownComponent.IsBuildReady)
             {
                 double closestDistance = int.MaxValue;
-                Entity closestWall = null;
-                foreach (Entity w in walls)
+                Entity closestWall = null; 
+                foreach (Vector2 coords in entity.GetComponent<NearbyGridsComponent>().NearbyGrids)
                 {
+                    Entity w = walls[(int)(coords.Y * maze.GetComponent<MazeComponent>().Width + coords.X)];
+            
                     double currentDistance = Math.Sqrt(Math.Pow(w.GetComponent<TransformComponent>().X - transformComponent.X, 2) + Math.Pow(w.GetComponent<TransformComponent>().Y - transformComponent.Y, 2));
                     if (!w.GetComponent<HealthComponent>().IsAlive && currentDistance < closestDistance)
                     {

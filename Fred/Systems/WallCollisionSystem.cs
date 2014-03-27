@@ -13,6 +13,15 @@ namespace Fred.Systems
     [ArtemisEntitySystem(GameLoopType = GameLoopType.Update, Layer = 1)]
     class WallCollisionSystem : EntityProcessingSystem<TransformComponent, VelocityComponent>
     {
+        private Entity maze;
+
+                        bool tester = false;
+
+        public override void LoadContent()
+        {
+            maze = BlackBoard.GetEntry<Entity>("Maze");
+        }
+
         protected override void Process(Entity entity, TransformComponent transformComponent, VelocityComponent velocityComponent)
         {
             if (velocityComponent != null && transformComponent != null)
@@ -21,8 +30,19 @@ namespace Fred.Systems
                 {
                     float bounce = -0.75F;
                     Bag<Entity> walls = this.EntityWorld.GroupManager.GetEntities("Walls");
-                    foreach (Entity w in walls)
+                    foreach (Vector2 coords in entity.GetComponent<NearbyGridsComponent>().NearbyGrids)
                     {
+                        //for w, x too small, y too big
+                        Entity w = walls[(int)(coords.Y * maze.GetComponent<MazeComponent>().Width + coords.X)];
+                        if (!tester)
+                        {
+                            Console.WriteLine("Player:  " +
+                            entity.GetComponent<TransformComponent>().X + "  " +
+                            entity.GetComponent<TransformComponent>().Y);
+                            Console.WriteLine("WALL:  " + w.GetComponent<TransformComponent>().X + "  " + w.GetComponent<TransformComponent>().Y);
+                       
+                            Console.WriteLine(); }
+            
                         if (transformComponent.Location.Intersects(w.GetComponent<TransformComponent>().Location) && w.GetComponent<HealthComponent>().IsAlive)
                         {
                             float xDistance = w.GetComponent<TransformComponent>().CenterOfRectangle.X - transformComponent.CenterOfRectangle.X;
@@ -132,13 +152,16 @@ namespace Fred.Systems
 
                         }
                     }
+                    tester = true;
                 }
                 else if (entity.Tag.Equals("BAD_PLAYER"))
                 {
 
                     Bag<Entity> walls = this.EntityWorld.GroupManager.GetEntities("Walls");
-                    foreach (Entity w in walls)
+                    foreach (Vector2 coords in entity.GetComponent<NearbyGridsComponent>().NearbyGrids)
                     {
+                        Entity w = walls[(int)(coords.Y * maze.GetComponent<MazeComponent>().Width + coords.X)];
+            
                         if (transformComponent.Location.Intersects(w.GetComponent<TransformComponent>().Location) && w.GetComponent<HealthComponent>().CurrentHealth > 1000000)
                         {
                             float xDistance = w.GetComponent<TransformComponent>().CenterOfRectangle.X - transformComponent.CenterOfRectangle.X;

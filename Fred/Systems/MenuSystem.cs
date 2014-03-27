@@ -22,6 +22,7 @@ namespace Fred.Systems
         EntityWorld world;
         ContentManager content;
         Game game;
+        Entity maze;
 
         public override void LoadContent()
         {
@@ -29,6 +30,7 @@ namespace Fred.Systems
             world = BlackBoard.GetEntry<EntityWorld>("EntityWorld");
             content = BlackBoard.GetEntry<ContentManager>("ContentManager");
             game = BlackBoard.GetEntry<Game>("Game");
+            maze = BlackBoard.GetEntry<Entity>("Maze");
         }
 
 
@@ -107,56 +109,20 @@ namespace Fred.Systems
 
         }
 
-
-
-        void InitializeGoodPlayers(Vector2 playerStartPosition)
-        {
-            int wallSize = content.Load<Texture2D>("wall").Width;
-
-            Entity player = world.CreateEntity();
-
-            player.AddComponentFromPool<TransformComponent>();
-            player.AddComponent(new SpatialFormComponent("GoodPlayer"));
-            player.AddComponent(new HealthComponent(10));
-            player.AddComponent(new DamageComponent(5, .25));
-            player.AddComponent(new VelocityComponent());
-            player.AddComponent(new CooldownComponent());
-            player.AddComponent(new NearbyGridsComponent(new Vector2(playerStartPosition.X / wallSize, playerStartPosition.Y / wallSize)));
-
-            player.GetComponent<TransformComponent>().X = playerStartPosition.X;
-            player.GetComponent<TransformComponent>().Y = playerStartPosition.Y;
-            player.Tag = "GOOD_PLAYER";
-
-        }
-        void InitializeEvilPlayers(Vector2 playerStartPosition)
-        {
-            int wallSize = content.Load<Texture2D>("wall").Width;
-
-            Entity enemy = world.CreateEntity();
-
-            enemy.AddComponentFromPool<TransformComponent>();
-            enemy.AddComponent(new SpatialFormComponent("BadPlayer"));
-            enemy.AddComponent(new HealthComponent(10));
-            enemy.AddComponent(new VelocityComponent());
-            enemy.AddComponent(new HealComponent(3));
-            enemy.AddComponent(new CooldownComponent());
-            enemy.AddComponent(new NearbyGridsComponent(new Vector2(playerStartPosition.X / wallSize, playerStartPosition.Y / wallSize)));
-
-
-            enemy.GetComponent<TransformComponent>().X = playerStartPosition.X;
-            enemy.GetComponent<TransformComponent>().Y = playerStartPosition.Y;
-            enemy.Tag = "BAD_PLAYER";
-        }
         List<Vector2> InitializeWalls()
         {
+            maze.AddComponent(new MazeComponent());
             int mazesNum = Directory.GetFiles("Mazes/", "*.*", SearchOption.TopDirectoryOnly).Length;
             Random rand = new Random();
-            StreamReader file = new StreamReader("Mazes/maze" + rand.Next(0, mazesNum) + ".txt");
+            maze.GetComponent<MazeComponent>().Name = "Mazes/maze" + rand.Next(0, mazesNum) + ".txt";
+            StreamReader file = new StreamReader(maze.GetComponent<MazeComponent>().Name);
             string line = file.ReadLine();
             string[] firstLine = line.Split(' ');
             int wallSize = content.Load<Texture2D>("wall").Width;
             int width = int.Parse(firstLine[0]);
+            maze.GetComponent<MazeComponent>().Width = width;
             int height = int.Parse(firstLine[1]);
+            maze.GetComponent<MazeComponent>().Height = height;
             List<Vector2> playerStartPoints = new List<Vector2>();
             playerStartPoints.Add(new Vector2(graphicsDevice.DisplayMode.Width * 0.5F, graphicsDevice.DisplayMode.Height * 0.5F));
             playerStartPoints.Add(new Vector2(graphicsDevice.DisplayMode.Width * 0.8F, graphicsDevice.DisplayMode.Height * 0.5F));
@@ -187,7 +153,7 @@ namespace Fred.Systems
                             wall.AddComponentFromPool<TransformComponent>();
                             wall.AddComponent(new SpatialFormComponent("Wall"));
                             wall.AddComponent(new HealthComponent(0, 10));
-                            wall.AddComponent(new NearbyGridsComponent(new Vector2(i,j)));
+                            wall.AddComponent(new NearbyGridsComponent(new Vector2(i, j), width, height));
 
 
                             wall.GetComponent<TransformComponent>().X = i * wallSize;
@@ -201,7 +167,7 @@ namespace Fred.Systems
                             wall.AddComponentFromPool<TransformComponent>();
                             wall.AddComponent(new SpatialFormComponent("Wall"));
                             wall.AddComponent(new HealthComponent(5, 10));
-                            wall.AddComponent(new NearbyGridsComponent(new Vector2(i, j)));
+                            wall.AddComponent(new NearbyGridsComponent(new Vector2(i, j), width, height));
 
                             wall.GetComponent<TransformComponent>().X = i * wallSize;
                             wall.GetComponent<TransformComponent>().Y = j * wallSize;
@@ -214,7 +180,7 @@ namespace Fred.Systems
                             wall.AddComponentFromPool<TransformComponent>();
                             wall.AddComponent(new SpatialFormComponent("Wall"));
                             wall.AddComponent(new HealthComponent(1000000000));
-                            wall.AddComponent(new NearbyGridsComponent(new Vector2(i, j)));
+                            wall.AddComponent(new NearbyGridsComponent(new Vector2(i, j), width, height));
 
                             wall.GetComponent<TransformComponent>().X = i * wallSize;
                             wall.GetComponent<TransformComponent>().Y = j * wallSize;
@@ -232,7 +198,7 @@ namespace Fred.Systems
                             wall.AddComponentFromPool<TransformComponent>();
                             wall.AddComponent(new SpatialFormComponent("Wall"));
                             wall.AddComponent(new HealthComponent(0));
-                            wall.AddComponent(new NearbyGridsComponent(new Vector2(i, j)));
+                            wall.AddComponent(new NearbyGridsComponent(new Vector2(i, j), width, height));
 
                             wall.GetComponent<TransformComponent>().X = i * wallSize;
                             wall.GetComponent<TransformComponent>().Y = j * wallSize;
@@ -250,7 +216,7 @@ namespace Fred.Systems
                             wall.AddComponentFromPool<TransformComponent>();
                             wall.AddComponent(new SpatialFormComponent("Wall"));
                             wall.AddComponent(new HealthComponent(0));
-                            wall.AddComponent(new NearbyGridsComponent(new Vector2(i, j)));
+                            wall.AddComponent(new NearbyGridsComponent(new Vector2(i, j), width, height));
 
                             wall.GetComponent<TransformComponent>().X = i * wallSize;
                             wall.GetComponent<TransformComponent>().Y = j * wallSize;
@@ -260,6 +226,46 @@ namespace Fred.Systems
                 }
             }
             return playerStartPoints;
+        }
+
+
+        void InitializeGoodPlayers(Vector2 playerStartPosition)
+        {
+            int wallSize = content.Load<Texture2D>("wall").Width;
+
+            Entity player = world.CreateEntity();
+
+            player.AddComponentFromPool<TransformComponent>();
+            player.AddComponent(new SpatialFormComponent("GoodPlayer"));
+            player.AddComponent(new HealthComponent(10));
+            player.AddComponent(new DamageComponent(5, .25));
+            player.AddComponent(new VelocityComponent());
+            player.AddComponent(new CooldownComponent());
+            player.AddComponent(new NearbyGridsComponent(new Vector2(playerStartPosition.X / wallSize, playerStartPosition.Y / wallSize), maze.GetComponent<MazeComponent>().Width, maze.GetComponent<MazeComponent>().Height));
+
+            player.GetComponent<TransformComponent>().X = playerStartPosition.X;
+            player.GetComponent<TransformComponent>().Y = playerStartPosition.Y;
+            player.Tag = "GOOD_PLAYER";
+
+        }
+        void InitializeEvilPlayers(Vector2 playerStartPosition)
+        {
+            int wallSize = content.Load<Texture2D>("wall").Width;
+
+            Entity enemy = world.CreateEntity();
+
+            enemy.AddComponentFromPool<TransformComponent>();
+            enemy.AddComponent(new SpatialFormComponent("BadPlayer"));
+            enemy.AddComponent(new HealthComponent(10));
+            enemy.AddComponent(new VelocityComponent());
+            enemy.AddComponent(new HealComponent(3));
+            enemy.AddComponent(new CooldownComponent());
+            enemy.AddComponent(new NearbyGridsComponent(new Vector2(playerStartPosition.X / wallSize, playerStartPosition.Y / wallSize), maze.GetComponent<MazeComponent>().Width, maze.GetComponent<MazeComponent>().Height));
+
+
+            enemy.GetComponent<TransformComponent>().X = playerStartPosition.X;
+            enemy.GetComponent<TransformComponent>().Y = playerStartPosition.Y;
+            enemy.Tag = "BAD_PLAYER";
         }
         void InitializeTimer()
         {

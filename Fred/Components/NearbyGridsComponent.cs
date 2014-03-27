@@ -19,8 +19,10 @@ namespace Fred.Components
         public Vector2 TopLeftGrid { get; set; }
         public Vector2 TopGrid { get; set; }
         public Vector2 TopRightGrid { get; set; }
+        public int MapWidth { get; set; }
+        public int MapHeight { get; set; }
 
-        public NearbyGridsComponent(Vector2 current)
+        public NearbyGridsComponent(Vector2 current, int w, int h)
         {
             this.CurrentGrid = current;
             this.RightGrid = new Vector2(current.X + 1, current.Y);
@@ -42,6 +44,9 @@ namespace Fred.Components
             this.NearbyGrids.Add(TopLeftGrid);
             this.NearbyGrids.Add(TopGrid);
             this.NearbyGrids.Add(TopRightGrid);
+
+            this.MapWidth = w;
+            this.MapHeight = h;
         }
     }
 }
