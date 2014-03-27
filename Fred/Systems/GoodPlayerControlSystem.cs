@@ -27,7 +27,6 @@ namespace Fred.Systems
 
         public override void Process(Entity entity)
         {
-            // TODO: Add your update logic here
             TransformComponent transformComponent = entity.GetComponent<TransformComponent>();
             VelocityComponent velocityComponent = entity.GetComponent<VelocityComponent>();
             CooldownComponent cooldownComponent = entity.GetComponent<CooldownComponent>();
