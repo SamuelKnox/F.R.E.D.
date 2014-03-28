@@ -30,12 +30,12 @@ namespace Fred.Systems
         {
             int width = content.Load<Texture2D>("wall").Width;
             int height = content.Load<Texture2D>("wall").Height;
-            entity.GetComponent<NearbyGridsComponent>().NearbyGrids = NearbyGridsUpdate(nearbyGridsComponent, new Vector2((int)(entity.GetComponent<TransformComponent>().X / width), (int)(entity.GetComponent<TransformComponent>().Y / height)), maze.GetComponent<MazeComponent>().Width, maze.GetComponent<MazeComponent>().Height);
+            NearbyGridsUpdate(nearbyGridsComponent, new Vector2((int)(entity.GetComponent<TransformComponent>().X / width), (int)(entity.GetComponent<TransformComponent>().Y / height)), maze.GetComponent<MazeComponent>().Width, maze.GetComponent<MazeComponent>().Height);
 
 
         }
 
-        public List<Vector2> NearbyGridsUpdate(NearbyGridsComponent nearbyGridsComponent, Vector2 current, int w, int h)
+        public void NearbyGridsUpdate(NearbyGridsComponent nearbyGridsComponent, Vector2 current, int w, int h)
         {
             nearbyGridsComponent.CurrentGrid = current;
             nearbyGridsComponent.RightGrid = new Vector2(current.X + 1, current.Y);
@@ -60,7 +60,6 @@ namespace Fred.Systems
 
             nearbyGridsComponent.MapWidth = w;
             nearbyGridsComponent.MapHeight = h;
-            return nearbyGridsComponent.NearbyGrids;
         }
     }
 }
