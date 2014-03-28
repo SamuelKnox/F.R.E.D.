@@ -21,7 +21,7 @@ namespace Fred.Components
         public Vector2 TopRightGrid { get; set; }
         public int MapWidth { get; set; }
         public int MapHeight { get; set; }
-
+        
         public NearbyGridsComponent(Vector2 current, int w, int h)
         {
             this.CurrentGrid = current;

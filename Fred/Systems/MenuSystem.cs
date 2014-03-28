@@ -188,8 +188,10 @@ namespace Fred.Systems
                         }
                         else if (mazeLayout[i, j] == 3)
                         {
-                            float x = i * wallSize + wallSize / 2;
-                            float y = j * wallSize + wallSize / 2;
+                            //float x = i * wallSize + wallSize / 2;
+                            //float y = j * wallSize + wallSize / 2;
+                            float x = i * wallSize;
+                            float y = j * wallSize;
                             playerStartPoints[0] = new Vector2(x, y);
 
 
@@ -206,8 +208,10 @@ namespace Fred.Systems
                         }
                         else if (mazeLayout[i, j] == 4)
                         {
-                            float x = i * wallSize + wallSize / 2;
-                            float y = j * wallSize + wallSize / 2;
+                            //float x = i * wallSize + wallSize / 2;
+                            //float y = j * wallSize + wallSize / 2;
+                            float x = i * wallSize;
+                            float y = j * wallSize;
                             playerStartPoints[1] = new Vector2(x, y);
 
 

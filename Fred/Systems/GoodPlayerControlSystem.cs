@@ -90,15 +90,21 @@ namespace Fred.Systems
                 Bag<Entity> walls = this.EntityWorld.GroupManager.GetEntities("Walls");
                 double closestDistance = int.MaxValue;
                 Entity closestWall = walls[0];
+
                 foreach (Vector2 coords in entity.GetComponent<NearbyGridsComponent>().NearbyGrids)
                 {
-                    Entity w = walls[(int)(coords.Y * maze.GetComponent<MazeComponent>().Width + coords.X)];
-
-                    double currentDistance = Math.Sqrt(Math.Pow(w.GetComponent<TransformComponent>().X - transformComponent.X, 2) + Math.Pow(w.GetComponent<TransformComponent>().Y - transformComponent.Y, 2));
-                    if (w.GetComponent<HealthComponent>().IsAlive && currentDistance < closestDistance && w.GetComponent<HealthComponent>().CurrentHealth < 1000000)
+                    int index = (int)(coords.X * maze.GetComponent<MazeComponent>().Height + coords.Y);
+                    Entity w = null;
+                    if (index >= 0 && index < walls.Count)
                     {
-                        closestDistance = currentDistance;
-                        closestWall = w;
+                        w = walls[(int)(coords.X * maze.GetComponent<MazeComponent>().Height + coords.Y)];
+
+                        double currentDistance = Math.Sqrt(Math.Pow(w.GetComponent<TransformComponent>().X - transformComponent.X, 2) + Math.Pow(w.GetComponent<TransformComponent>().Y - transformComponent.Y, 2));
+                        if (w.GetComponent<HealthComponent>().IsAlive && currentDistance < closestDistance && w.GetComponent<HealthComponent>().CurrentHealth < 1000000)
+                        {
+                            closestDistance = currentDistance;
+                            closestWall = w;
+                        }
                     }
                 }
                 if (closestDistance < 50)

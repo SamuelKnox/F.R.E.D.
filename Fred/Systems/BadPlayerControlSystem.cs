@@ -46,13 +46,18 @@ namespace Fred.Systems
             Bag<Entity> walls = this.EntityWorld.GroupManager.GetEntities("Walls");
             foreach (Vector2 coords in entity.GetComponent<NearbyGridsComponent>().NearbyGrids)
             {
-                Entity w = walls[(int)(coords.Y * maze.GetComponent<MazeComponent>().Width + coords.X)];
-                if (transformComponent.Location.Intersects(w.GetComponent<TransformComponent>().Location) && w.GetComponent<HealthComponent>().IsAlive)
-                {
-                    maxMoveSpeed = .04F;
-                    acceleration = (float) ((0.0004F * w.GetComponent<HealthComponent>().HealthPercentage) * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds);
-                    moveSpeedFriction = 0.0001f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
-                }
+                        int index = (int)(coords.X * maze.GetComponent<MazeComponent>().Height + coords.Y);
+                        Entity w = null;
+                        if (index >= 0 && index < walls.Count)
+                        {
+                            w = walls[(int)(coords.X * maze.GetComponent<MazeComponent>().Height + coords.Y)];
+                            if (transformComponent.Location.Intersects(w.GetComponent<TransformComponent>().Location) && w.GetComponent<HealthComponent>().IsAlive)
+                            {
+                                maxMoveSpeed = .04F;
+                                acceleration = (float)((0.0004F * w.GetComponent<HealthComponent>().HealthPercentage) * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds);
+                                moveSpeedFriction = 0.0001f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+                            }
+                        }
             }
 
             KeyboardState pressedKey = Keyboard.GetState();
@@ -99,16 +104,21 @@ namespace Fred.Systems
             if ((pressedKey.IsKeyDown(Keys.RightShift) || controller.Buttons.A == ButtonState.Pressed) && cooldownComponent.IsBuildReady)
             {
                 double closestDistance = int.MaxValue;
-                Entity closestWall = null; 
+                Entity closestWall = null;
                 foreach (Vector2 coords in entity.GetComponent<NearbyGridsComponent>().NearbyGrids)
                 {
-                    Entity w = walls[(int)(coords.Y * maze.GetComponent<MazeComponent>().Width + coords.X)];
-            
-                    double currentDistance = Math.Sqrt(Math.Pow(w.GetComponent<TransformComponent>().X - transformComponent.X, 2) + Math.Pow(w.GetComponent<TransformComponent>().Y - transformComponent.Y, 2));
-                    if (!w.GetComponent<HealthComponent>().IsAlive && currentDistance < closestDistance)
+                    int index = (int)(coords.X * maze.GetComponent<MazeComponent>().Height + coords.Y);
+                    Entity w = null;
+                    if (index >= 0 && index < walls.Count)
                     {
-                        closestDistance = currentDistance;
-                        closestWall = w;
+                        w = walls[(int)(coords.X * maze.GetComponent<MazeComponent>().Height + coords.Y)];
+
+                        double currentDistance = Math.Sqrt(Math.Pow(w.GetComponent<TransformComponent>().X - transformComponent.X, 2) + Math.Pow(w.GetComponent<TransformComponent>().Y - transformComponent.Y, 2));
+                        if (!w.GetComponent<HealthComponent>().IsAlive && currentDistance < closestDistance)
+                        {
+                            closestDistance = currentDistance;
+                            closestWall = w;
+                        }
                     }
                 }
                 if (closestDistance < 50 && closestWall != null)

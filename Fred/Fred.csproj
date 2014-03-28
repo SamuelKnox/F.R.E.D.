@@ -63,6 +63,7 @@
     <Compile Include="Systems\GoodPlayerControlSystem.cs" />
     <Compile Include="Systems\MenuSystem.cs" />
     <Compile Include="Systems\MovementSystem.cs" />
+    <Compile Include="Systems\NearbyGridsSystem.cs" />
     <Compile Include="Systems\RenderSystem.cs" />
     <Compile Include="Systems\TimerSystem.cs" />
     <Compile Include="Systems\WallCollisionSystem.cs" />
