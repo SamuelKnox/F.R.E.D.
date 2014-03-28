@@ -46,8 +46,8 @@ namespace Fred.Systems
             nearbyGridsComponent.TopLeftGrid = new Vector2(current.X - 1, current.Y - 1);
             nearbyGridsComponent.TopGrid = new Vector2(current.X, current.Y - 1);
             nearbyGridsComponent.TopRightGrid = new Vector2(current.X + 1, current.Y - 1);
-            nearbyGridsComponent.NearbyGrids = new List<Vector2>();
 
+            nearbyGridsComponent.NearbyGrids = new List<Vector2>();
             nearbyGridsComponent.NearbyGrids.Add(nearbyGridsComponent.CurrentGrid);
             nearbyGridsComponent.NearbyGrids.Add(nearbyGridsComponent.RightGrid);
             nearbyGridsComponent.NearbyGrids.Add(nearbyGridsComponent.BottomRightGrid);
