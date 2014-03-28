@@ -36,6 +36,10 @@ namespace Fred.Systems
             VelocityComponent velocityComponent = entity.GetComponent<VelocityComponent>();
             CooldownComponent cooldownComponent = entity.GetComponent<CooldownComponent>();
 
+
+            velocityComponent.Direction = (float)(-Math.Atan2(velocityComponent.XVelocity, velocityComponent.YVelocity) + (-Math.PI * 0.45));
+            //velocityComponent.Direction++;
+
             float maxMoveSpeed = .3F;
             float acceleration = 0.001F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             float moveSpeedFriction = 0.0003f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
@@ -69,21 +73,21 @@ namespace Fred.Systems
             }
             if (pressedKey.IsKeyDown(Keys.A) || controller.ThumbSticks.Left.X < 0)
             {
-                velocityComponent.xVelocity -= acceleration;
+                velocityComponent.XVelocity -= acceleration;
             }
             if (pressedKey.IsKeyDown(Keys.D) || controller.ThumbSticks.Left.X > 0)
             {
-                velocityComponent.xVelocity += acceleration;
+                velocityComponent.XVelocity += acceleration;
             }
 
             if (pressedKey.IsKeyDown(Keys.W) || controller.ThumbSticks.Left.Y > 0)
             {
-                velocityComponent.yVelocity -= acceleration;
+                velocityComponent.YVelocity -= acceleration;
             }
 
             if (pressedKey.IsKeyDown(Keys.S) || controller.ThumbSticks.Left.Y < 0)
             {
-                velocityComponent.yVelocity += acceleration;
+                velocityComponent.YVelocity += acceleration;
             }
             if ((pressedKey.IsKeyDown(Keys.D1) || controller.Buttons.A == ButtonState.Pressed) && cooldownComponent.IsAttackReady)
             {
@@ -120,59 +124,59 @@ namespace Fred.Systems
             // Handle max speed
             float maxTwoMoveSpeed = maxMoveSpeed * cosFortyFive; // cos(45)
 
-            if (velocityComponent.xVelocity > 0 && velocityComponent.yVelocity > 0)
+            if (velocityComponent.XVelocity > 0 && velocityComponent.YVelocity > 0)
             {
-                velocityComponent.xVelocity = Math.Min(velocityComponent.xVelocity, maxTwoMoveSpeed);
-                velocityComponent.yVelocity = Math.Min(velocityComponent.yVelocity, maxTwoMoveSpeed);
+                velocityComponent.XVelocity = Math.Min(velocityComponent.XVelocity, maxTwoMoveSpeed);
+                velocityComponent.YVelocity = Math.Min(velocityComponent.YVelocity, maxTwoMoveSpeed);
             }
-            if (velocityComponent.xVelocity > 0 && velocityComponent.yVelocity < 0)
+            if (velocityComponent.XVelocity > 0 && velocityComponent.YVelocity < 0)
             {
-                velocityComponent.xVelocity = Math.Min(velocityComponent.xVelocity, maxTwoMoveSpeed);
-                velocityComponent.yVelocity = Math.Max(velocityComponent.yVelocity, -1 * maxTwoMoveSpeed);
+                velocityComponent.XVelocity = Math.Min(velocityComponent.XVelocity, maxTwoMoveSpeed);
+                velocityComponent.YVelocity = Math.Max(velocityComponent.YVelocity, -1 * maxTwoMoveSpeed);
             }
-            if (velocityComponent.xVelocity < 0 && velocityComponent.yVelocity > 0)
+            if (velocityComponent.XVelocity < 0 && velocityComponent.YVelocity > 0)
             {
-                velocityComponent.xVelocity = Math.Max(velocityComponent.xVelocity, -1 * maxTwoMoveSpeed);
-                velocityComponent.yVelocity = Math.Min(velocityComponent.yVelocity, maxTwoMoveSpeed);
+                velocityComponent.XVelocity = Math.Max(velocityComponent.XVelocity, -1 * maxTwoMoveSpeed);
+                velocityComponent.YVelocity = Math.Min(velocityComponent.YVelocity, maxTwoMoveSpeed);
             }
-            if (velocityComponent.xVelocity < 0 && velocityComponent.yVelocity < 0)
+            if (velocityComponent.XVelocity < 0 && velocityComponent.YVelocity < 0)
             {
-                velocityComponent.xVelocity = Math.Max(velocityComponent.xVelocity, -1 * maxTwoMoveSpeed);
-                velocityComponent.yVelocity = Math.Max(velocityComponent.yVelocity, -1 * maxTwoMoveSpeed);
+                velocityComponent.XVelocity = Math.Max(velocityComponent.XVelocity, -1 * maxTwoMoveSpeed);
+                velocityComponent.YVelocity = Math.Max(velocityComponent.YVelocity, -1 * maxTwoMoveSpeed);
             }
-            if (velocityComponent.xVelocity == 0 && velocityComponent.yVelocity > 0)
+            if (velocityComponent.XVelocity == 0 && velocityComponent.YVelocity > 0)
             {
-                velocityComponent.yVelocity = Math.Min(velocityComponent.yVelocity, maxMoveSpeed);
+                velocityComponent.YVelocity = Math.Min(velocityComponent.YVelocity, maxMoveSpeed);
             }
-            if (velocityComponent.xVelocity == 0 && velocityComponent.yVelocity < 0)
+            if (velocityComponent.XVelocity == 0 && velocityComponent.YVelocity < 0)
             {
-                velocityComponent.yVelocity = Math.Max(velocityComponent.yVelocity, -1 * maxMoveSpeed);
+                velocityComponent.YVelocity = Math.Max(velocityComponent.YVelocity, -1 * maxMoveSpeed);
             }
-            if (velocityComponent.xVelocity > 0 && velocityComponent.yVelocity == 0)
+            if (velocityComponent.XVelocity > 0 && velocityComponent.YVelocity == 0)
             {
-                velocityComponent.xVelocity = Math.Min(velocityComponent.xVelocity, maxMoveSpeed);
+                velocityComponent.XVelocity = Math.Min(velocityComponent.XVelocity, maxMoveSpeed);
             }
-            if (velocityComponent.xVelocity < 0 && velocityComponent.yVelocity == 0)
+            if (velocityComponent.XVelocity < 0 && velocityComponent.YVelocity == 0)
             {
-                velocityComponent.xVelocity = Math.Max(velocityComponent.xVelocity, -1 * maxMoveSpeed);
+                velocityComponent.XVelocity = Math.Max(velocityComponent.XVelocity, -1 * maxMoveSpeed);
             }
 
             // Apply Friction
-            if (velocityComponent.xVelocity > 0)
+            if (velocityComponent.XVelocity > 0)
             {
-                velocityComponent.xVelocity -= moveSpeedFriction;
+                velocityComponent.XVelocity -= moveSpeedFriction;
             }
-            else if (velocityComponent.xVelocity < 0)
+            else if (velocityComponent.XVelocity < 0)
             {
-                velocityComponent.xVelocity += moveSpeedFriction;
+                velocityComponent.XVelocity += moveSpeedFriction;
             }
-            if (velocityComponent.yVelocity > 0)
+            if (velocityComponent.YVelocity > 0)
             {
-                velocityComponent.yVelocity -= moveSpeedFriction;
+                velocityComponent.YVelocity -= moveSpeedFriction;
             }
-            else if (velocityComponent.yVelocity < 0)
+            else if (velocityComponent.YVelocity < 0)
             {
-                velocityComponent.yVelocity += moveSpeedFriction;
+                velocityComponent.YVelocity += moveSpeedFriction;
             }
         }
     }

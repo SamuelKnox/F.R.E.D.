@@ -52,7 +52,6 @@ namespace Fred.Components
         }
 
 
-
         public override void CleanUp()
         {
             this.Position = Vector2.Zero;
