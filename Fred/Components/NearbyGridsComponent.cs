@@ -21,6 +21,60 @@ namespace Fred.Components
         public Vector2 TopRightGrid { get; set; }
         public int MapWidth { get; set; }
         public int MapHeight { get; set; }
+        public int CurrentIndex
+        {
+            get{
+                return (int) (this.CurrentGrid.X * this.MapHeight + this.CurrentGrid.Y);
+            }
+        }
+        public int RightIndex{
+            get
+            {
+                return (int)(this.RightGrid.X * this.MapHeight + this.RightGrid.Y);
+            }
+        }
+        public int BottomRightIndex{
+            get
+            {
+                return (int)(this.BottomRightGrid.X * this.MapHeight + this.BottomRightGrid.Y);
+            }
+        }
+        public int BottomIndex{
+            get
+            {
+                return (int)(this.BottomGrid.X * this.MapHeight + this.BottomGrid.Y);
+            }
+        }
+        public int BottomLeftIndex{
+            get
+            {
+                return (int)(this.BottomLeftGrid.X * this.MapHeight + this.BottomLeftGrid.Y);
+            }
+        }
+        public int LeftIndex{
+            get
+            {
+                return (int)(this.LeftGrid.X * this.MapHeight + this.LeftGrid.Y);
+            }
+        }
+        public int TopLeftIndex{
+            get
+            {
+                return (int)(this.TopLeftGrid.X * this.MapHeight + this.TopLeftGrid.Y);
+            }
+        }
+        public int TopIndex{
+            get
+            {
+                return (int)(this.TopGrid.X * this.MapHeight + this.TopGrid.Y);
+            }
+        }
+        public int TopRightIndex{
+            get
+            {
+                return (int)(this.TopRightGrid.X * this.MapHeight + this.TopRightGrid.Y);
+            }
+        }
         
         public NearbyGridsComponent(Vector2 current, int w, int h)
         {

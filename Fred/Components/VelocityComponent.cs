@@ -24,8 +24,7 @@ namespace Fred.Components
         {
             this.XVelocity = x;
             this.YVelocity = y;
-            //this.Direction = (float)(Math.Atan2(this.XVelocity, this.YVelocity) + (-Math.PI * 0.45));
-            this.Direction = 200;
+            this.Direction = 0;
         }
     }
 }

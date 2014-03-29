@@ -35,8 +35,14 @@ namespace Fred.Systems
             TransformComponent transformComponent = entity.GetComponent<TransformComponent>();
             VelocityComponent velocityComponent = entity.GetComponent<VelocityComponent>();
             CooldownComponent cooldownComponent = entity.GetComponent<CooldownComponent>();
+            NearbyGridsComponent nearbyGridsComponent = entity.GetComponent<NearbyGridsComponent>();
 
-            velocityComponent.Direction = (float)(-Math.Atan2(velocityComponent.XVelocity, velocityComponent.YVelocity) + (-Math.PI * 0.45));
+            float pi = 3.14159265359F;
+
+            if (Math.Abs(velocityComponent.XVelocity) + Math.Abs(velocityComponent.YVelocity) > 0.05F)
+            {
+                velocityComponent.Direction = (float)(-Math.Atan2(velocityComponent.XVelocity, velocityComponent.YVelocity) + (-pi * 0.45));
+            }
 
             float maxMoveSpeed = .25F;
             float acceleration = 0.0008F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
@@ -102,32 +108,49 @@ namespace Fred.Systems
             {
                 velocityComponent.YVelocity += acceleration;
             }
-
             if ((pressedKey.IsKeyDown(Keys.RightShift) || controller.Buttons.A == ButtonState.Pressed) && cooldownComponent.IsBuildReady)
             {
-                double closestDistance = int.MaxValue;
-                Entity closestWall = null;
-                foreach (Vector2 coords in entity.GetComponent<NearbyGridsComponent>().NearbyGrids)
+                Entity toBuild = null;
+                float direction = (velocityComponent.Direction * (180 / pi)) - 180;
+                while (direction < 0)
                 {
-                    int index = (int)(coords.X * maze.GetComponent<MazeComponent>().Height + coords.Y);
-                    Entity w = null;
-                    if (index >= 0 && index < walls.Count)
-                    {
-                        w = walls[(int)(coords.X * maze.GetComponent<MazeComponent>().Height + coords.Y)];
-
-                        double currentDistance = Math.Sqrt(Math.Pow(w.GetComponent<TransformComponent>().X - transformComponent.X, 2) + Math.Pow(w.GetComponent<TransformComponent>().Y - transformComponent.Y, 2));
-                        if (!w.GetComponent<HealthComponent>().IsAlive && currentDistance < closestDistance)
-                        {
-                            closestDistance = currentDistance;
-                            closestWall = w;
-                        }
-                    }
+                    direction += 360;
                 }
-                if (closestDistance < 50 && closestWall != null)
+                Console.WriteLine(direction + " UHFEKHFKJREGRE");
+                if (direction < 22.5 || direction >= 337.5)
                 {
-                    closestWall.GetComponent<HealthComponent>().AddHealth(entity.GetComponent<HealComponent>().Heal);
+                    toBuild = walls[nearbyGridsComponent.RightIndex];
+                }
+                else if (direction >= 22.5 && direction < 67.5)
+                {
+                    toBuild = walls[nearbyGridsComponent.BottomRightIndex];
+                }
+                else if (direction >= 67.5 && direction < 112.5)
+                {
+                    toBuild = walls[nearbyGridsComponent.BottomIndex];
+                }
+                else if (direction >= 112.5 && direction < 157.5)
+                {
+                    toBuild = walls[nearbyGridsComponent.BottomLeftIndex];
+                }
+                else if (direction >= 157.5 && direction < 202.5)
+                {
+                    toBuild = walls[nearbyGridsComponent.LeftIndex];
+                }
+                else if (direction >= 202.5 && direction < 247.5)
+                {
+                    toBuild = walls[nearbyGridsComponent.TopLeftIndex];
+                }
+                else if (direction >= 247.5 && direction < 292.5)
+                {
+                    toBuild = walls[nearbyGridsComponent.TopIndex];
+                }
+                else if (direction >= 292.5 && direction < 337.5)
+                {
+                    toBuild = walls[nearbyGridsComponent.TopRightIndex];
+                }
+                    toBuild.GetComponent<HealthComponent>().AddHealth(entity.GetComponent<HealComponent>().Heal);
                 cooldownComponent.ResetBuildCooldown();
-                }
             }
 
             // Handle max speed
