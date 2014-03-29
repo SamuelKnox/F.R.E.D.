@@ -39,7 +39,7 @@ namespace Fred.Systems
 
             float pi = 3.14159265359F;
 
-            if (Math.Abs(velocityComponent.XVelocity) + Math.Abs(velocityComponent.YVelocity) > 0.05F)
+            if (Math.Abs(velocityComponent.XVelocity) + Math.Abs(velocityComponent.YVelocity) > 0.02F)
             {
                 velocityComponent.Direction = (float)(-Math.Atan2(velocityComponent.XVelocity, velocityComponent.YVelocity) + (-pi * 0.45));
             }
@@ -149,8 +149,11 @@ namespace Fred.Systems
                 {
                     toBuild = walls[nearbyGridsComponent.TopRightIndex];
                 }
+                if (!toBuild.GetComponent<HealthComponent>().IsAlive)
+                {
                     toBuild.GetComponent<HealthComponent>().AddHealth(entity.GetComponent<HealComponent>().Heal);
-                cooldownComponent.ResetBuildCooldown();
+                    cooldownComponent.ResetBuildCooldown();
+                }
             }
 
             // Handle max speed
