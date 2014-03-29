@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Components\CooldownComponent.cs" />
     <Compile Include="Components\ExpirationComponent.cs" />
+    <Compile Include="Components\FuseComponent.cs" />
     <Compile Include="Components\HealComponent.cs" />
     <Compile Include="Components\DamageComponent.cs" />
     <Compile Include="Components\HealthComponent.cs" />
@@ -53,11 +54,13 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spatials\BadPlayer.cs" />
+    <Compile Include="Spatials\Bomb.cs" />
     <Compile Include="Spatials\GoodPlayer.cs" />
     <Compile Include="Spatials\Text.cs" />
     <Compile Include="Spatials\Wall.cs" />
     <Compile Include="Spatials\WallAttack.cs" />
     <Compile Include="Systems\BadPlayerControlSystem.cs" />
+    <Compile Include="Systems\BombSystem.cs" />
     <Compile Include="Systems\CooldownSystem.cs" />
     <Compile Include="Systems\ExpirationSystem.cs" />
     <Compile Include="Systems\GoodPlayerControlSystem.cs" />
@@ -67,6 +70,7 @@
     <Compile Include="Systems\RenderSystem.cs" />
     <Compile Include="Systems\TimerSystem.cs" />
     <Compile Include="Systems\WallCollisionSystem.cs" />
+    <Compile Include="Templates\BombTemplate.cs" />
     <Compile Include="Templates\WallAttackTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +98,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\badplayer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\bomb.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\wallattack.png">

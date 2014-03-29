@@ -10,8 +10,9 @@ namespace Fred.Components
     {
         private const float ToRadians = (float)(Math.PI / 180.0);
 
-        public float xVelocity { get; set; }
-        public float yVelocity { get; set; }
+        public float XVelocity { get; set; }
+        public float YVelocity { get; set; }
+        public float Direction { get; set; }
 
         public VelocityComponent()
             : this(0.0f, 0.0f)
@@ -21,8 +22,9 @@ namespace Fred.Components
 
         public VelocityComponent(float x, float y)
         {
-            this.xVelocity = x;
-            this.yVelocity = y;
+            this.XVelocity = x;
+            this.YVelocity = y;
+            this.Direction = 0;
         }
     }
 }

@@ -21,8 +21,8 @@ namespace Fred.Systems
                 {
                     float ms = TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
 
-                    transformComponent.X += entity.GetComponent<VelocityComponent>().xVelocity * ms;
-                    transformComponent.Y += entity.GetComponent<VelocityComponent>().yVelocity * ms;
+                    transformComponent.X += entity.GetComponent<VelocityComponent>().XVelocity * ms;
+                    transformComponent.Y += entity.GetComponent<VelocityComponent>().YVelocity * ms;
                 }
             }
         }

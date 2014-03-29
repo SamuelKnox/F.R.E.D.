@@ -51,7 +51,7 @@ namespace Fred.Systems
                                         transformComponent.X += x;
                                         if (entity.GetComponent<CooldownComponent>().CurrentBounceCooldown < 0)
                                         {
-                                            velocityComponent.xVelocity *= bounce;
+                                            velocityComponent.XVelocity *= bounce;
                                             entity.GetComponent<CooldownComponent>().ResetBounceCooldown();
                                         }
                                     }
@@ -62,7 +62,7 @@ namespace Fred.Systems
                                         transformComponent.Y += y;
                                         if (entity.GetComponent<CooldownComponent>().CurrentBounceCooldown < 0)
                                         {
-                                            velocityComponent.yVelocity *= bounce;
+                                            velocityComponent.YVelocity *= bounce;
                                             entity.GetComponent<CooldownComponent>().ResetBounceCooldown();
                                         }
                                     }
@@ -76,7 +76,7 @@ namespace Fred.Systems
                                         transformComponent.X -= x;
                                         if (entity.GetComponent<CooldownComponent>().CurrentBounceCooldown < 0)
                                         {
-                                            velocityComponent.xVelocity *= bounce;
+                                            velocityComponent.XVelocity *= bounce;
                                             entity.GetComponent<CooldownComponent>().ResetBounceCooldown();
                                         }
                                     }
@@ -87,7 +87,7 @@ namespace Fred.Systems
                                         transformComponent.Y += y;
                                         if (entity.GetComponent<CooldownComponent>().CurrentBounceCooldown < 0)
                                         {
-                                            velocityComponent.yVelocity *= bounce;
+                                            velocityComponent.YVelocity *= bounce;
                                             entity.GetComponent<CooldownComponent>().ResetBounceCooldown();
                                         }
                                     }
@@ -102,7 +102,7 @@ namespace Fred.Systems
                                         transformComponent.X -= x;
                                         if (entity.GetComponent<CooldownComponent>().CurrentBounceCooldown < 0)
                                         {
-                                            velocityComponent.xVelocity *= bounce;
+                                            velocityComponent.XVelocity *= bounce;
                                             entity.GetComponent<CooldownComponent>().ResetBounceCooldown();
                                         }
                                     }
@@ -113,7 +113,7 @@ namespace Fred.Systems
                                         transformComponent.Y -= y;
                                         if (entity.GetComponent<CooldownComponent>().CurrentBounceCooldown < 0)
                                         {
-                                            velocityComponent.yVelocity *= bounce;
+                                            velocityComponent.YVelocity *= bounce;
                                             entity.GetComponent<CooldownComponent>().ResetBounceCooldown();
                                         }
                                     }
@@ -127,7 +127,7 @@ namespace Fred.Systems
                                         transformComponent.X += x;
                                         if (entity.GetComponent<CooldownComponent>().CurrentBounceCooldown < 0)
                                         {
-                                            velocityComponent.xVelocity *= bounce;
+                                            velocityComponent.XVelocity *= bounce;
                                             entity.GetComponent<CooldownComponent>().ResetBounceCooldown();
                                         }
                                     }
@@ -138,7 +138,7 @@ namespace Fred.Systems
                                         transformComponent.Y -= y;
                                         if (entity.GetComponent<CooldownComponent>().CurrentBounceCooldown < 0)
                                         {
-                                            velocityComponent.yVelocity *= bounce;
+                                            velocityComponent.YVelocity *= bounce;
                                             entity.GetComponent<CooldownComponent>().ResetBounceCooldown();
                                         }
                                     }

@@ -15,7 +15,7 @@ namespace Fred.Systems
     {
         protected override void Process(Entity entity, CooldownComponent cooldownComponent)
         {
-            cooldownComponent.CurrentAttackCooldown -= TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+            cooldownComponent.CurrentBombCooldown -= TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             cooldownComponent.CurrentBuildCooldown -= TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             cooldownComponent.CurrentBounceCooldown -= TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             cooldownComponent.CurrentMenuSelectCooldown -= TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;

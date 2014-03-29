@@ -41,11 +41,11 @@ namespace Fred.Systems
                 {
                     if (string.Compare("GoodPlayer", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
                     {
-                        GoodPlayer.Render(spriteBatch, contentManager, transformComponent);
+                        GoodPlayer.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<VelocityComponent>());
                     }
                     else if (string.Compare("BadPlayer", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
                     {
-                        BadPlayer.Render(spriteBatch, contentManager, transformComponent);
+                        BadPlayer.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<VelocityComponent>());
                     }
                     else if (string.Compare("Wall", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
                     {
@@ -56,7 +56,12 @@ namespace Fred.Systems
                     }
                     else if (string.Compare("WallAttack", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
                     {
-                            WallAttack.Render(spriteBatch, contentManager, transformComponent);
+                        WallAttack.Render(spriteBatch, contentManager, transformComponent);
+                    }
+
+                    else if (string.Compare("Bomb", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
+                    {
+                        Bomb.Render(spriteBatch, contentManager, transformComponent);
 
                     }
                     else if (string.Compare("Text", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)

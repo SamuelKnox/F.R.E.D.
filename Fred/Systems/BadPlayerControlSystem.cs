@@ -35,6 +35,14 @@ namespace Fred.Systems
             TransformComponent transformComponent = entity.GetComponent<TransformComponent>();
             VelocityComponent velocityComponent = entity.GetComponent<VelocityComponent>();
             CooldownComponent cooldownComponent = entity.GetComponent<CooldownComponent>();
+            NearbyGridsComponent nearbyGridsComponent = entity.GetComponent<NearbyGridsComponent>();
+
+            float pi = 3.14159265359F;
+
+            if (Math.Abs(velocityComponent.XVelocity) + Math.Abs(velocityComponent.YVelocity) > 0.02F)
+            {
+                velocityComponent.Direction = (float)(-Math.Atan2(velocityComponent.XVelocity, velocityComponent.YVelocity) + (-pi * 0.45));
+            }
 
             float maxMoveSpeed = .25F;
             float acceleration = 0.0008F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
@@ -107,106 +115,126 @@ namespace Fred.Systems
             acceleration *= cosFortyFive;}
             if (pressedKey.IsKeyDown(Keys.Left) || controller.ThumbSticks.Left.X < 0)
             {
-                velocityComponent.xVelocity -= acceleration;
+                velocityComponent.XVelocity -= acceleration;
             }
             if (pressedKey.IsKeyDown(Keys.Right) || controller.ThumbSticks.Left.X > 0)
             {
-                velocityComponent.xVelocity += acceleration;
+                velocityComponent.XVelocity += acceleration;
             }
 
             if (pressedKey.IsKeyDown(Keys.Up) || controller.ThumbSticks.Left.Y > 0)
             {
-                velocityComponent.yVelocity -= acceleration;
+                velocityComponent.YVelocity -= acceleration;
             }
 
             if (pressedKey.IsKeyDown(Keys.Down) || controller.ThumbSticks.Left.Y < 0)
             {
-                velocityComponent.yVelocity += acceleration;
+                velocityComponent.YVelocity += acceleration;
             }
-
             if ((pressedKey.IsKeyDown(Keys.RightShift) || controller.Buttons.A == ButtonState.Pressed) && cooldownComponent.IsBuildReady)
             {
-                double closestDistance = int.MaxValue;
-                Entity closestWall = null;
-                foreach (Vector2 coords in entity.GetComponent<NearbyGridsComponent>().NearbyGrids)
+                Entity toBuild = null;
+                float direction = (velocityComponent.Direction * (180 / pi)) - 180;
+                while (direction < 0)
                 {
-                    int index = (int)(coords.X * maze.GetComponent<MazeComponent>().Height + coords.Y);
-                    Entity w = null;
-                    if (index >= 0 && index < walls.Count)
-                    {
-                        w = walls[(int)(coords.X * maze.GetComponent<MazeComponent>().Height + coords.Y)];
-
-                        double currentDistance = Math.Sqrt(Math.Pow(w.GetComponent<TransformComponent>().X - transformComponent.X, 2) + Math.Pow(w.GetComponent<TransformComponent>().Y - transformComponent.Y, 2));
-                        if (!w.GetComponent<HealthComponent>().IsAlive && currentDistance < closestDistance)
-                        {
-                            closestDistance = currentDistance;
-                            closestWall = w;
-                        }
-                    }
+                    direction += 360;
                 }
-                if (closestDistance < 50 && closestWall != null)
+                Console.WriteLine(direction + " UHFEKHFKJREGRE");
+                if (direction < 22.5 || direction >= 337.5)
                 {
-                    closestWall.GetComponent<HealthComponent>().AddHealth(entity.GetComponent<HealComponent>().Heal);
-                cooldownComponent.ResetBuildCooldown();
+                    toBuild = walls[nearbyGridsComponent.RightIndex];
+                }
+                else if (direction >= 22.5 && direction < 67.5)
+                {
+                    toBuild = walls[nearbyGridsComponent.BottomRightIndex];
+                }
+                else if (direction >= 67.5 && direction < 112.5)
+                {
+                    toBuild = walls[nearbyGridsComponent.BottomIndex];
+                }
+                else if (direction >= 112.5 && direction < 157.5)
+                {
+                    toBuild = walls[nearbyGridsComponent.BottomLeftIndex];
+                }
+                else if (direction >= 157.5 && direction < 202.5)
+                {
+                    toBuild = walls[nearbyGridsComponent.LeftIndex];
+                }
+                else if (direction >= 202.5 && direction < 247.5)
+                {
+                    toBuild = walls[nearbyGridsComponent.TopLeftIndex];
+                }
+                else if (direction >= 247.5 && direction < 292.5)
+                {
+                    toBuild = walls[nearbyGridsComponent.TopIndex];
+                }
+                else if (direction >= 292.5 && direction < 337.5)
+                {
+                    toBuild = walls[nearbyGridsComponent.TopRightIndex];
+                }
+                if (!toBuild.GetComponent<HealthComponent>().IsAlive)
+                {
+                    toBuild.GetComponent<HealthComponent>().AddHealth(entity.GetComponent<HealComponent>().Heal);
+                    cooldownComponent.ResetBuildCooldown();
                 }
             }
 
             // Handle max speed
             float maxTwoMoveSpeed =  maxMoveSpeed * cosFortyFive; // xSqrt(2)
 
-            if (velocityComponent.xVelocity > 0 && velocityComponent.yVelocity > 0)
+            if (velocityComponent.XVelocity > 0 && velocityComponent.YVelocity > 0)
                 {
-                    velocityComponent.xVelocity = Math.Min(velocityComponent.xVelocity, maxTwoMoveSpeed);
-                    velocityComponent.yVelocity = Math.Min(velocityComponent.yVelocity, maxTwoMoveSpeed);
+                    velocityComponent.XVelocity = Math.Min(velocityComponent.XVelocity, maxTwoMoveSpeed);
+                    velocityComponent.YVelocity = Math.Min(velocityComponent.YVelocity, maxTwoMoveSpeed);
                 }
-            if (velocityComponent.xVelocity > 0 && velocityComponent.yVelocity < 0)
+            if (velocityComponent.XVelocity > 0 && velocityComponent.YVelocity < 0)
                 {
-                    velocityComponent.xVelocity = Math.Min(velocityComponent.xVelocity, maxTwoMoveSpeed);
-                    velocityComponent.yVelocity = Math.Max(velocityComponent.yVelocity, -1 * maxTwoMoveSpeed);
+                    velocityComponent.XVelocity = Math.Min(velocityComponent.XVelocity, maxTwoMoveSpeed);
+                    velocityComponent.YVelocity = Math.Max(velocityComponent.YVelocity, -1 * maxTwoMoveSpeed);
                 }
-            if (velocityComponent.xVelocity < 0 && velocityComponent.yVelocity > 0)
+            if (velocityComponent.XVelocity < 0 && velocityComponent.YVelocity > 0)
                 {
-                    velocityComponent.xVelocity = Math.Max(velocityComponent.xVelocity, -1 * maxTwoMoveSpeed);
-                    velocityComponent.yVelocity = Math.Min(velocityComponent.yVelocity, maxTwoMoveSpeed);
+                    velocityComponent.XVelocity = Math.Max(velocityComponent.XVelocity, -1 * maxTwoMoveSpeed);
+                    velocityComponent.YVelocity = Math.Min(velocityComponent.YVelocity, maxTwoMoveSpeed);
                 }
-            if (velocityComponent.xVelocity < 0 && velocityComponent.yVelocity < 0)
+            if (velocityComponent.XVelocity < 0 && velocityComponent.YVelocity < 0)
                 {
-                    velocityComponent.xVelocity = Math.Max(velocityComponent.xVelocity, -1 * maxTwoMoveSpeed);
-                    velocityComponent.yVelocity = Math.Max(velocityComponent.yVelocity, -1 * maxTwoMoveSpeed);
+                    velocityComponent.XVelocity = Math.Max(velocityComponent.XVelocity, -1 * maxTwoMoveSpeed);
+                    velocityComponent.YVelocity = Math.Max(velocityComponent.YVelocity, -1 * maxTwoMoveSpeed);
                 }
-            if (velocityComponent.xVelocity == 0 && velocityComponent.yVelocity > 0)
+            if (velocityComponent.XVelocity == 0 && velocityComponent.YVelocity > 0)
                 {
-                    velocityComponent.yVelocity = Math.Min(velocityComponent.yVelocity, maxMoveSpeed);
+                    velocityComponent.YVelocity = Math.Min(velocityComponent.YVelocity, maxMoveSpeed);
                 }
-            if (velocityComponent.xVelocity == 0 && velocityComponent.yVelocity < 0)
+            if (velocityComponent.XVelocity == 0 && velocityComponent.YVelocity < 0)
                 {
-                    velocityComponent.yVelocity = Math.Max(velocityComponent.yVelocity, -1 * maxMoveSpeed);
+                    velocityComponent.YVelocity = Math.Max(velocityComponent.YVelocity, -1 * maxMoveSpeed);
                 }
-            if (velocityComponent.xVelocity > 0 && velocityComponent.yVelocity == 0)
+            if (velocityComponent.XVelocity > 0 && velocityComponent.YVelocity == 0)
                 {
-                    velocityComponent.xVelocity = Math.Min(velocityComponent.xVelocity, maxMoveSpeed);
+                    velocityComponent.XVelocity = Math.Min(velocityComponent.XVelocity, maxMoveSpeed);
                 }
-            if (velocityComponent.xVelocity < 0 && velocityComponent.yVelocity == 0)
+            if (velocityComponent.XVelocity < 0 && velocityComponent.YVelocity == 0)
                 {
-                    velocityComponent.xVelocity = Math.Max(velocityComponent.xVelocity, -1 * maxMoveSpeed);
+                    velocityComponent.XVelocity = Math.Max(velocityComponent.XVelocity, -1 * maxMoveSpeed);
                 }
 
             // Apply Friction
-            if (velocityComponent.xVelocity > 0)
+            if (velocityComponent.XVelocity > 0)
             {
-                velocityComponent.xVelocity -= moveSpeedFriction;
+                velocityComponent.XVelocity -= moveSpeedFriction;
             }
-            else if (velocityComponent.xVelocity < 0)
+            else if (velocityComponent.XVelocity < 0)
             {
-                velocityComponent.xVelocity += moveSpeedFriction;
+                velocityComponent.XVelocity += moveSpeedFriction;
             }
-            if (velocityComponent.yVelocity > 0)
+            if (velocityComponent.YVelocity > 0)
             {
-                velocityComponent.yVelocity -= moveSpeedFriction;
+                velocityComponent.YVelocity -= moveSpeedFriction;
             }
-            else if (velocityComponent.yVelocity < 0)
+            else if (velocityComponent.YVelocity < 0)
             {
-                velocityComponent.yVelocity += moveSpeedFriction;
+                velocityComponent.YVelocity += moveSpeedFriction;
             }
 
         }
