@@ -8,19 +8,19 @@ namespace Fred.Components
 {
     class CooldownComponent : IComponent
     {
-        public double CurrentAttackCooldown { get; set; }
-        public double MaxAttackCooldown { get; set; }
+        public double CurrentBombCooldown { get; set; }
+        public double MaxBombCooldown { get; set; }
         public double CurrentBuildCooldown { get; set; }
         public double MaxBuildCooldown { get; set; }
         public double CurrentBounceCooldown { get; set; }
         public double MaxBounceCooldown { get; set; }
         public double CurrentMenuSelectCooldown { get; set; }
         public double MaxMenuSelectCooldown { get; set; }
-        public bool IsAttackReady
+        public bool IsBombReady
         {
             get
             {
-                return this.CurrentAttackCooldown <= 0;
+                return this.CurrentBombCooldown <= 0;
             }
         }
         public bool IsBuildReady
@@ -48,37 +48,37 @@ namespace Fred.Components
 
         public CooldownComponent()
         {
-            CurrentAttackCooldown = MaxAttackCooldown = 500;
-            CurrentBuildCooldown = MaxBuildCooldown = 500;
+            CurrentBombCooldown = MaxBombCooldown = 2000;
+            CurrentBuildCooldown = MaxBuildCooldown = 2000;
             CurrentBounceCooldown = MaxBounceCooldown = 50;
             CurrentMenuSelectCooldown = MaxMenuSelectCooldown = 150;
 
         }
 
-        public CooldownComponent(double attack, double build, double bounce, double menu)
+        public CooldownComponent(double bomb, double build, double bounce, double menu)
         {
-            CurrentAttackCooldown = CurrentAttackCooldown = attack;
+            CurrentBombCooldown = CurrentBombCooldown = bomb;
             CurrentBuildCooldown = MaxBuildCooldown = build;
             CurrentBounceCooldown = MaxBounceCooldown = bounce;
             CurrentMenuSelectCooldown = MaxMenuSelectCooldown = menu;
         }
         public void ResetCooldowns()
         {
-            CurrentAttackCooldown = MaxAttackCooldown;
+            CurrentBombCooldown = MaxBombCooldown;
             CurrentBuildCooldown = MaxBuildCooldown;
             CurrentBounceCooldown = MaxBounceCooldown;
             CurrentMenuSelectCooldown = MaxMenuSelectCooldown;
         }
         public void CancelCooldowns()
         {
-            CurrentAttackCooldown = 0;
+            CurrentBombCooldown = 0;
             CurrentBuildCooldown = 0;
             CurrentBounceCooldown = 0;
             CurrentMenuSelectCooldown = 0;
         }
-        public void ResetAttackCooldown()
+        public void ResetBombCooldown()
         {
-            CurrentAttackCooldown = MaxAttackCooldown;
+            CurrentBombCooldown = MaxBombCooldown;
         }
         public void ResetBuildCooldown()
         {

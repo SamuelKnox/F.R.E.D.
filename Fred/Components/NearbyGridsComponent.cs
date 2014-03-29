@@ -75,6 +75,28 @@ namespace Fred.Components
                 return (int)(this.TopRightGrid.X * this.MapHeight + this.TopRightGrid.Y);
             }
         }
+
+        public List<int> NearbyIndices
+        {
+            get
+            {
+                List<int> indices = new List<int>();
+                indices.Add(this.CurrentIndex);
+                indices.Add(this.RightIndex);
+                indices.Add(this.BottomRightIndex);
+                indices.Add(this.BottomIndex);
+                indices.Add(this.BottomLeftIndex);
+                indices.Add(this.LeftIndex);
+                indices.Add(this.TopLeftIndex);
+                indices.Add(this.TopIndex);
+                indices.Add(this.TopRightIndex);
+                return indices;
+            }
+        }
+        public NearbyGridsComponent()
+        {
+            
+        }
         
         public NearbyGridsComponent(Vector2 current, int w, int h)
         {

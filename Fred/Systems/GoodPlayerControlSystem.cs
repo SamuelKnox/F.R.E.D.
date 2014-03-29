@@ -37,8 +37,10 @@ namespace Fred.Systems
             CooldownComponent cooldownComponent = entity.GetComponent<CooldownComponent>();
 
 
-            velocityComponent.Direction = (float)(-Math.Atan2(velocityComponent.XVelocity, velocityComponent.YVelocity) + (-Math.PI * 0.45));
-            //velocityComponent.Direction++;
+            if (Math.Abs(velocityComponent.XVelocity) + Math.Abs(velocityComponent.YVelocity) > 0.02F)
+            {
+                velocityComponent.Direction = (float)(-Math.Atan2(velocityComponent.XVelocity, velocityComponent.YVelocity) + (-Math.PI * 0.45));
+            }
 
             float maxMoveSpeed = .3F;
             float acceleration = 0.001F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
@@ -89,36 +91,11 @@ namespace Fred.Systems
             {
                 velocityComponent.YVelocity += acceleration;
             }
-            if ((pressedKey.IsKeyDown(Keys.D1) || controller.Buttons.A == ButtonState.Pressed) && cooldownComponent.IsAttackReady)
+            if ((pressedKey.IsKeyDown(Keys.D1) || controller.Buttons.A == ButtonState.Pressed) && cooldownComponent.IsBombReady)
             {
-                Bag<Entity> walls = this.EntityWorld.GroupManager.GetEntities("Walls");
-                double closestDistance = int.MaxValue;
-                Entity closestWall = walls[0];
-
-                foreach (Vector2 coords in entity.GetComponent<NearbyGridsComponent>().NearbyGrids)
-                {
-                    int index = (int)(coords.X * maze.GetComponent<MazeComponent>().Height + coords.Y);
-                    Entity w = null;
-                    if (index >= 0 && index < walls.Count)
-                    {
-                        w = walls[(int)(coords.X * maze.GetComponent<MazeComponent>().Height + coords.Y)];
-
-                        double currentDistance = Math.Sqrt(Math.Pow(w.GetComponent<TransformComponent>().X - transformComponent.X, 2) + Math.Pow(w.GetComponent<TransformComponent>().Y - transformComponent.Y, 2));
-                        if (w.GetComponent<HealthComponent>().IsAlive && currentDistance < closestDistance && w.GetComponent<HealthComponent>().CurrentHealth < 1000000)
-                        {
-                            closestDistance = currentDistance;
-                            closestWall = w;
-                        }
-                    }
-                }
-                if (closestDistance < 50)
-                {
-                    closestWall.GetComponent<HealthComponent>().AddDamage(entity.GetComponent<DamageComponent>().Damage);
-                    cooldownComponent.ResetAttackCooldown();
-                    Entity attack = this.EntityWorld.CreateEntityFromTemplate(WallAttackTemplate.Name);
-                    attack.GetComponent<TransformComponent>().Position = closestWall.GetComponent<TransformComponent>().Position;
-
-                }
+                Entity bomb = this.EntityWorld.CreateEntityFromTemplate(BombTemplate.Name);
+                bomb.GetComponent<TransformComponent>().Position = transformComponent.Position;
+                cooldownComponent.ResetBombCooldown();
             }
 
             // Handle max speed
