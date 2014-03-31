@@ -68,49 +68,26 @@ namespace Fred.Systems
                         }
             }
 
+            KeyboardState pressedKey = Keyboard.GetState();
+            GamePadState controller = GamePad.GetState(PlayerIndex.Two);
+            if (pressedKey.IsKeyDown(Keys.Left) || controller.ThumbSticks.Left.X < 0)
+            {
+                keysDown++;
+            }
+            if (pressedKey.IsKeyDown(Keys.Right) || controller.ThumbSticks.Left.X > 0)
+            {
+                keysDown++;
+            }
 
-			KeyboardState pressedKey = Keyboard.GetState();
-			GamePadState controller = GamePad.GetState(PlayerIndex.Two);
-			bool isdiag = false;
-			if (pressedKey.IsKeyDown (Keys.Left) && pressedKey.IsKeyDown (Keys.Up)) {
-				transformComponent.direction = "upleft";
-				isdiag = true;
-			}
-			if (pressedKey.IsKeyDown (Keys.Right) && pressedKey.IsKeyDown (Keys.Up)) {
-				transformComponent.direction = "upright";
-				isdiag = true;
-			}
-			if (pressedKey.IsKeyDown (Keys.Left) && pressedKey.IsKeyDown (Keys.Down)) {
-				transformComponent.direction = "downleft";
-				isdiag = true;
-			}
-			if (pressedKey.IsKeyDown (Keys.Right) && pressedKey.IsKeyDown (Keys.Down)) {
-				transformComponent.direction = "downright";
-				isdiag = true;
-			}
+            if (pressedKey.IsKeyDown(Keys.Up) || controller.ThumbSticks.Left.Y > 0)
+            {
+                keysDown++;
+            }
 
-			if ((pressedKey.IsKeyDown(Keys.Left) || controller.ThumbSticks.Left.X < 0)&& isdiag != true)
-			{
-				transformComponent.direction = "left";
-				keysDown++;
-			}
-			if ((pressedKey.IsKeyDown(Keys.Right) || controller.ThumbSticks.Left.X > 0)&& isdiag !=true)
-			{
-				transformComponent.direction = "right";
-				keysDown++;
-			}
-
-			if ((pressedKey.IsKeyDown(Keys.Up) || controller.ThumbSticks.Left.Y > 0)&& isdiag!= true)
-			{
-				transformComponent.direction = "up";
-				keysDown++;
-			}
-
-			if ((pressedKey.IsKeyDown(Keys.Down) || controller.ThumbSticks.Left.Y < 0)&& isdiag!= true)
-			{
-				transformComponent.direction = "down";
-				keysDown++;
-			}
+            if (pressedKey.IsKeyDown(Keys.Down) || controller.ThumbSticks.Left.Y < 0)
+            {
+                keysDown++;
+            }
             if(keysDown >1){
             acceleration *= cosFortyFive;}
             if (pressedKey.IsKeyDown(Keys.Left) || controller.ThumbSticks.Left.X < 0)

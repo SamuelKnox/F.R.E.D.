@@ -14,7 +14,6 @@ namespace Fred.Components
 
         public float X { get; set; }
         public float Y { get; set; }
-		public string direction;
         public Rectangle Location { get; set; }
         public Vector2 CenterOfRectangle 
         {
