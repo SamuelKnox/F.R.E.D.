@@ -22,9 +22,8 @@ namespace Fred.Spatials
             spriteBatch.Begin();
             SpriteEffects spriteEffects = new SpriteEffects();
             spriteBatch.Draw(tex, new Rectangle((int)transformComponent.CenterOfRectangle.X, (int)transformComponent.CenterOfRectangle.Y, tex.Width, tex.Height), tex.Bounds, Color.White, velocityComponent.Direction, new Vector2((int)(transformComponent.Location.Width * .5), (int)(transformComponent.Location.Height * 0.5)), spriteEffects, 1.0F);
-     spriteBatch.End();
+            spriteBatch.End();
             transformComponent.Location = new Rectangle((int)transformComponent.X, (int)transformComponent.Y, tex.Width, tex.Height);
         }
-
     }
 }
