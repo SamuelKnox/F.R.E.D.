@@ -31,10 +31,12 @@ namespace Fred.Systems
                     Bag<Entity> walls = this.EntityWorld.GroupManager.GetEntities("Walls");
                     foreach (int i in nearbyGridsComponent.NearbyIndices)
                     {
-                        //walls[i].GetComponent<HealthComponent>().AddDamage(damageComponent.Damage);
-                        walls[i].GetComponent<HealthComponent>().AddDamage(1000);
-                        Entity attackAnimation = this.EntityWorld.CreateEntityFromTemplate(WallAttackTemplate.Name);
-                        attackAnimation.GetComponent<TransformComponent>().Position = walls[i].GetComponent<TransformComponent>().Position;
+                        if (i >= 0 && i < walls.Count)
+                        {
+                            walls[i].GetComponent<HealthComponent>().AddDamage(damageComponent.Damage);
+                            Entity attackAnimation = this.EntityWorld.CreateEntityFromTemplate(WallAttackTemplate.Name);
+                            attackAnimation.GetComponent<TransformComponent>().Position = walls[i].GetComponent<TransformComponent>().Position;
+                        }
                     }
                 entity.Delete();
                 }

@@ -20,9 +20,9 @@ namespace Fred.Components
                 Random rand = new Random();
                 if (IsCriticalHit)
                 {
-                    return (this.BaseDamage * rand.Next(2, 4)) * (rand.Next(90, 110) / 100);
+                    return (this.BaseDamage * rand.Next(2, 4)) * ((double) rand.Next(90, 110) / 100);
                 }
-                return BaseDamage * (rand.Next(90, 110) / 100);
+                return BaseDamage * ((double) rand.Next(90, 110) / 100);
             }
         }
 
@@ -36,7 +36,6 @@ namespace Fred.Components
 
         public DamageComponent(double dmg)
         {
-            Random rand = new Random();
             BaseDamage = dmg;
             CriticalHitChance = 0.2;
         }
