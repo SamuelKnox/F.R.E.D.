@@ -32,6 +32,7 @@ namespace Fred.Systems
 
         public override void Process(Entity entity)
         {
+
             TransformComponent transformComponent = entity.GetComponent<TransformComponent>();
             VelocityComponent velocityComponent = entity.GetComponent<VelocityComponent>();
             CooldownComponent cooldownComponent = entity.GetComponent<CooldownComponent>();

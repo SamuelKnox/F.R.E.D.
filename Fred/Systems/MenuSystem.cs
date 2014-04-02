@@ -23,6 +23,7 @@ namespace Fred.Systems
         ContentManager content;
         Game game;
         Entity maze;
+        Entity exit;
 
         public override void LoadContent()
         {
@@ -31,6 +32,7 @@ namespace Fred.Systems
             content = BlackBoard.GetEntry<ContentManager>("ContentManager");
             game = BlackBoard.GetEntry<Game>("Game");
             maze = BlackBoard.GetEntry<Entity>("Maze");
+            exit = BlackBoard.GetEntry<Entity>("Exit");
         }
 
 
@@ -226,6 +228,15 @@ namespace Fred.Systems
                             wall.GetComponent<TransformComponent>().Y = j * wallSize;
                             wall.Group = "Walls";
                         }
+                        else if (mazeLayout[i, j] == 5)
+                        {
+                            exit = world.CreateEntity();
+                            exit.AddComponentFromPool<TransformComponent>();
+                            exit.GetComponent<TransformComponent>().X = i * wallSize;
+                            exit.GetComponent<TransformComponent>().Y = j * wallSize;
+                            exit.AddComponent(new NearbyGridsComponent(exit.GetComponent<TransformComponent>().Position, (int)maze.GetComponent<MazeComponent>().Width, (int)maze.GetComponent<MazeComponent>().Height));
+
+                        }
                     }
                 }
             }
@@ -279,7 +290,8 @@ namespace Fred.Systems
             timer.AddComponentFromPool<TransformComponent>();
             timer.GetComponent<TransformComponent>().X = graphicsDevice.DisplayMode.Width * 0.5F;
             timer.GetComponent<TransformComponent>().Y = graphicsDevice.DisplayMode.Height * 0.05F;
-            timer.AddComponent(new TimerComponent(30000));
+            timer.AddComponent(new TimerComponent(10000));
+            timer.Tag = "TIMER";
 
         }
 

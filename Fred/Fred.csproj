@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components\CooldownComponent.cs" />
+    <Compile Include="Components\ExitComponent.cs" />
     <Compile Include="Components\ExpirationComponent.cs" />
     <Compile Include="Components\FuseComponent.cs" />
     <Compile Include="Components\HealComponent.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Spatials\Wall.cs" />
     <Compile Include="Spatials\WallAttack.cs" />
     <Compile Include="Systems\BadPlayerControlSystem.cs" />
+    <Compile Include="Systems\BadWinCondition.cs" />
     <Compile Include="Systems\BombSystem.cs" />
     <Compile Include="Systems\CooldownSystem.cs" />
     <Compile Include="Systems\ExpirationSystem.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="Systems\RenderSystem.cs" />
     <Compile Include="Systems\TimerSystem.cs" />
     <Compile Include="Systems\WallCollisionSystem.cs" />
+    <Compile Include="Systems\GoodWinConditionSystem.cs" />
     <Compile Include="Templates\BombTemplate.cs" />
     <Compile Include="Templates\WallAttackTemplate.cs" />
   </ItemGroup>
@@ -113,8 +116,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />
-    <Content Include="Mazes\maze4.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Mazes\maze3.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -134,16 +137,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Mazes\maze0.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Mazes\maze1.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Mazes\maze2.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Mazes\maze3.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>

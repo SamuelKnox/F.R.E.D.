@@ -23,6 +23,7 @@ namespace Fred
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Entity maze;
+        Entity exit;
         EntityWorld world;
 
         public Fred()
@@ -55,6 +56,7 @@ namespace Fred
             EntitySystem.BlackBoard.SetEntry<SpriteBatch>("SpriteBatch", spriteBatch);
             EntitySystem.BlackBoard.SetEntry<EntityWorld>("EntityWorld", world);
             EntitySystem.BlackBoard.SetEntry<Entity>("Maze", maze);
+            EntitySystem.BlackBoard.SetEntry<Entity>("Exit", exit);
             EntitySystem.BlackBoard.SetEntry<Game>("Game", this);
 
             world.InitializeAll(true);
