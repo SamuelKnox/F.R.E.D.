@@ -110,6 +110,9 @@ namespace Fred.Systems
             }
             if ((pressedKey.IsKeyDown(Keys.RightShift) || controller.Buttons.A == ButtonState.Pressed) && cooldownComponent.IsBuildReady)
             {
+                System.Media.SoundPlayer player = new System.Media.SoundPlayer("Sounds/build.wav");
+
+                player.Play();
                 Entity toBuild = null;
                 float direction = (velocityComponent.Direction * (180 / pi)) - 180;
                 while (direction < 0)

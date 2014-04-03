@@ -28,6 +28,9 @@ namespace Fred.Systems
 
                 if (fuseComponent.IsExpired)
                 {
+                    System.Media.SoundPlayer player = new System.Media.SoundPlayer("Sounds/bombexplosion.wav");
+                     
+                    player.Play();
                     Bag<Entity> walls = this.EntityWorld.GroupManager.GetEntities("Walls");
                     foreach (int i in nearbyGridsComponent.NearbyIndices)
                     {

@@ -61,7 +61,7 @@
     <Compile Include="Spatials\Wall.cs" />
     <Compile Include="Spatials\WallAttack.cs" />
     <Compile Include="Systems\BadPlayerControlSystem.cs" />
-    <Compile Include="Systems\BadWinCondition.cs" />
+    <Compile Include="Systems\BadWinConditionSystem.cs" />
     <Compile Include="Systems\BombSystem.cs" />
     <Compile Include="Systems\CooldownSystem.cs" />
     <Compile Include="Systems\ExpirationSystem.cs" />
@@ -140,6 +140,18 @@
     <Content Include="Mazes\maze2.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Sounds\bombexplosion.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\bombplant.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\build.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\winorchestra.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\WindowsGL\Debug\" />
@@ -163,5 +175,16 @@
     <None Include="Mazes\maze4.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
 </Project>
