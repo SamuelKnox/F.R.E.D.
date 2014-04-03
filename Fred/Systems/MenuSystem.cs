@@ -290,7 +290,7 @@ namespace Fred.Systems
             timer.AddComponentFromPool<TransformComponent>();
             timer.GetComponent<TransformComponent>().X = graphicsDevice.DisplayMode.Width * 0.5F;
             timer.GetComponent<TransformComponent>().Y = graphicsDevice.DisplayMode.Height * 0.05F;
-            timer.AddComponent(new TimerComponent(10000));
+            timer.AddComponent(new TimerComponent(120000));
             timer.Tag = "TIMER";
 
         }

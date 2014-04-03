@@ -20,7 +20,7 @@ namespace Fred.Spatials
                 tex = contentManager.Load<Texture2D>("bomb");
             }
             spriteBatch.Begin();
-            spriteBatch.Draw(tex, new Rectangle((int)transformComponent.X - tex.Width / 2, (int)transformComponent.Y - tex.Height / 2, tex.Width, tex.Height), tex.Bounds, Color.White);
+            spriteBatch.Draw(tex, new Rectangle((int)transformComponent.X - tex.Width / 4, (int)transformComponent.Y - tex.Height / 4, tex.Width, tex.Height), tex.Bounds, Color.White);
             spriteBatch.End();
             transformComponent.Location = new Rectangle((int)transformComponent.X, (int)transformComponent.Y, tex.Width, tex.Height);
         }
