@@ -123,13 +123,12 @@ namespace Fred
 
                 Entity menuItem = world.CreateEntity();
                 entities[i] = menuItem;
-                menuItem.AddComponent(new TextComponent("Arial", items[i], Color.White));
                 menuItem.AddComponentFromPool<TransformComponent>();
                 menuItem.AddComponent(new MenuSelectionComponent(i, entities.Length));
                 menuItem.AddComponent(new CooldownComponent());
-                menuItem.AddComponent(new SpatialFormComponent("Text"));
-                menuItem.GetComponent<TransformComponent>().X = GraphicsDevice.DisplayMode.Width * 0.5F;
-                menuItem.GetComponent<TransformComponent>().Y = 100 + (100 * (1 + i));
+                menuItem.AddComponent(new SpatialFormComponent("Level"));
+                menuItem.GetComponent<TransformComponent>().X = GraphicsDevice.DisplayMode.Width * 0.2F;
+                menuItem.GetComponent<TransformComponent>().Y = (-205 + (210 * (1 + i)));
             }
 
 

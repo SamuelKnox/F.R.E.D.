@@ -70,11 +70,11 @@ namespace Fred.Systems
 
             if (menuSelectionComponent.IsSelected)
             {
-                entity.GetComponent<TextComponent>().Color = Color.Red;
+                entity.GetComponent<TransformComponent>().X = graphicsDevice.DisplayMode.Width * 0.3F;
             }
             else
             {
-                entity.GetComponent<TextComponent>().Color = Color.White;
+                entity.GetComponent<TransformComponent>().X = graphicsDevice.DisplayMode.Width * 0.2F; 
             }
 
 
@@ -130,6 +130,10 @@ namespace Fred.Systems
 
         List<Vector2> InitializeWalls(int level)
         {
+
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer("Sounds/alrightletsgo.wav");
+
+            player.Play();
             maze.AddComponent(new MazeComponent());
             int mazesNum = Directory.GetFiles("Mazes/", "*.*", SearchOption.TopDirectoryOnly).Length;
             Random rand = new Random();
@@ -316,7 +320,7 @@ namespace Fred.Systems
             timer.AddComponentFromPool<TransformComponent>();
             timer.GetComponent<TransformComponent>().X = graphicsDevice.DisplayMode.Width * 0.5F;
             timer.GetComponent<TransformComponent>().Y = graphicsDevice.DisplayMode.Height * 0.05F;
-            timer.AddComponent(new TimerComponent(1200));
+            timer.AddComponent(new TimerComponent(60000));
             timer.Tag = "TIMER";
 
         }

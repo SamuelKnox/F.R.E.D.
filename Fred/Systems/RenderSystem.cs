@@ -68,6 +68,10 @@ namespace Fred.Systems
                     {
                         Text.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<TextComponent>());
                     }
+                    else if (string.Compare("Level", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
+                    {
+                        Level.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<MenuSelectionComponent>());
+                    }
                 }
             }
         }

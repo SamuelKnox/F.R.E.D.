@@ -62,7 +62,7 @@ namespace Fred.Systems
                             if (transformComponent.Location.Intersects(w.GetComponent<TransformComponent>().Location) && w.GetComponent<HealthComponent>().IsAlive)
                             {
                                 maxMoveSpeed = .04F;
-                                acceleration = (float)((0.0004F * w.GetComponent<HealthComponent>().HealthPercentage) * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds);
+                                acceleration = (float)((0.0006F * w.GetComponent<HealthComponent>().HealthPercentage) * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds);
                                 moveSpeedFriction = 0.0001f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
                             }
                         }
@@ -107,6 +107,12 @@ namespace Fred.Systems
             if (pressedKey.IsKeyDown(Keys.Down) || controller.ThumbSticks.Left.Y < 0)
             {
                 velocityComponent.YVelocity += acceleration;
+            }
+            if (pressedKey.IsKeyDown(Keys.Q) || controller.Buttons.Y == ButtonState.Pressed)
+            {
+                System.Media.SoundPlayer player = new System.Media.SoundPlayer("Sounds/qqq.wav");
+
+                player.Play();
             }
             if ((pressedKey.IsKeyDown(Keys.RightShift) || controller.Buttons.A == ButtonState.Pressed) && cooldownComponent.IsBuildReady)
             {
