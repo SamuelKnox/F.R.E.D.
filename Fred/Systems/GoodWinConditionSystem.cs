@@ -5,6 +5,8 @@ using Artemis.Manager;
 using Artemis.System;
 using Fred.Components;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,12 @@ namespace Fred.Systems
     {
         Entity exit;
         Game game;
-
+        Entity maze;
+        EntityWorld world;
+        GraphicsDevice graphicsDevice;
+        ContentManager content;
+        int wallWidth;
+        int wallHeight;
         public GoodWinConditionSystem()
             : base("GOOD_PLAYER")
         {
@@ -25,22 +32,30 @@ namespace Fred.Systems
 
         public override void LoadContent()
         {
+
+            content = BlackBoard.GetEntry<ContentManager>("ContentManager");
+            wallWidth = content.Load<Texture2D>("wall").Width;
+            wallHeight = content.Load<Texture2D>("wall").Height;
+            world = BlackBoard.GetEntry<EntityWorld>("EntityWorld");
+            graphicsDevice = BlackBoard.GetEntry<GraphicsDevice>("GraphicsDevice");
             exit = BlackBoard.GetEntry<Entity>("Exit");
             game = BlackBoard.GetEntry<Game>("Game");
+            maze = BlackBoard.GetEntry<Entity>("Maze");
         }
 
         public override void Process(Entity entity)
         {
-            if (exit != null)
+            TransformComponent transformComponent = entity.GetComponent<TransformComponent>();
+            // TODO: multiple height/width by wall height/width
+            if (transformComponent.X > maze.GetComponent<MazeComponent>().Width * wallWidth|| transformComponent.Y > maze.GetComponent<MazeComponent>().Height * wallHeight|| transformComponent.X < 0 || transformComponent.Y < 0)
             {
-                TransformComponent transformComponent = entity.GetComponent<TransformComponent>();
-                NearbyGridsComponent nearbyGridsComponent = entity.GetComponent<NearbyGridsComponent>();
-                Console.WriteLine(nearbyGridsComponent.CurrentGrid.X + "  " + nearbyGridsComponent.CurrentGrid.Y);
-                Console.WriteLine(exit.GetComponent<NearbyGridsComponent>().CurrentGrid.X + "  " + exit.GetComponent<NearbyGridsComponent>().CurrentGrid.Y);
-                if (nearbyGridsComponent.CurrentGrid == exit.GetComponent<NearbyGridsComponent>().CurrentGrid)
-                {
-                    game.Exit();
-                }
+                world.Clear();
+                Entity gameOverText = world.CreateEntity();
+                gameOverText.AddComponentFromPool<TransformComponent>();
+                gameOverText.AddComponent(new SpatialFormComponent("Text"));
+                gameOverText.GetComponent<TransformComponent>().X = graphicsDevice.DisplayMode.Width * 0.5F;
+                gameOverText.GetComponent<TransformComponent>().Y = graphicsDevice.DisplayMode.Height * 0.5F;
+                gameOverText.AddComponent(new TextComponent("Arial", "WELL PLAYED, FRED!!", Color.Red));  
             }
         }
     }

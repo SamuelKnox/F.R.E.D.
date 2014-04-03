@@ -31,8 +31,7 @@ namespace Fred.Systems
                     Bag<Entity> walls = this.EntityWorld.GroupManager.GetEntities("Walls");
                     foreach (int i in nearbyGridsComponent.NearbyIndices)
                     {
-                        Console.WriteLine(i);
-                        if (i >= 0 && i < walls.Count)
+                        if (i >= 0 && i < walls.Count && nearbyGridsComponent.CurrentIndex >= 0 && nearbyGridsComponent.CurrentIndex < walls.Count)
                         {
                             walls[i].GetComponent<HealthComponent>().AddDamage(damageComponent.Damage);
                             Entity attackAnimation = this.EntityWorld.CreateEntityFromTemplate(WallAttackTemplate.Name);

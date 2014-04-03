@@ -23,7 +23,6 @@ namespace Fred.Systems
         ContentManager content;
         Game game;
         Entity maze;
-        Entity exit;
 
         public override void LoadContent()
         {
@@ -32,7 +31,6 @@ namespace Fred.Systems
             content = BlackBoard.GetEntry<ContentManager>("ContentManager");
             game = BlackBoard.GetEntry<Game>("Game");
             maze = BlackBoard.GetEntry<Entity>("Maze");
-            exit = BlackBoard.GetEntry<Entity>("Exit");
         }
 
 
@@ -86,20 +84,39 @@ namespace Fred.Systems
 
                 if (menuSelectionComponent.IsSelected)
                 {
+                    List<Vector2> playerStartPositions = new List<Vector2>();
                     switch (menuSelectionComponent.CurrentSelection)
                     {
                         //new Game
                         case (0):
 
 
-                            List<Vector2> playerStartPositions = InitializeWalls();
+                            playerStartPositions = InitializeWalls(-1);
                             InitializeGoodPlayers(playerStartPositions[0]);
                             InitializeEvilPlayers(playerStartPositions[1]);
                             InitializeTimer();
                             break;
 
-                        //quit
                         case (1):
+
+
+                            playerStartPositions = InitializeWalls(1);
+                            InitializeGoodPlayers(playerStartPositions[0]);
+                            InitializeEvilPlayers(playerStartPositions[1]);
+                            InitializeTimer();
+                            break;
+
+                        case (2):
+
+                            playerStartPositions = InitializeWalls(2);
+                            InitializeGoodPlayers(playerStartPositions[0]);
+                            InitializeEvilPlayers(playerStartPositions[1]);
+                            InitializeTimer();
+                            break;
+
+
+                        //quit
+                        case (3):
                             game.Exit();
                             break;
                     }
@@ -111,12 +128,19 @@ namespace Fred.Systems
 
         }
 
-        List<Vector2> InitializeWalls()
+        List<Vector2> InitializeWalls(int level)
         {
             maze.AddComponent(new MazeComponent());
             int mazesNum = Directory.GetFiles("Mazes/", "*.*", SearchOption.TopDirectoryOnly).Length;
             Random rand = new Random();
-            maze.GetComponent<MazeComponent>().Name = "Mazes/maze" + rand.Next(0, mazesNum) + ".txt";
+            if (level == -1)
+            {
+
+                level = rand.Next(0, mazesNum);
+            }
+            maze.GetComponent<MazeComponent>().Name = "Mazes/maze" + level + ".txt";
+
+
             StreamReader file = new StreamReader(maze.GetComponent<MazeComponent>().Name);
             string line = file.ReadLine();
             string[] firstLine = line.Split(' ');
@@ -230,12 +254,14 @@ namespace Fred.Systems
                         }
                         else if (mazeLayout[i, j] == 5)
                         {
-                            exit = world.CreateEntity();
+                            Console.WriteLine("loaded exit");
+                            Entity exit = world.CreateEntity();
                             exit.AddComponentFromPool<TransformComponent>();
                             exit.GetComponent<TransformComponent>().X = i * wallSize;
                             exit.GetComponent<TransformComponent>().Y = j * wallSize;
                             exit.AddComponent(new NearbyGridsComponent(exit.GetComponent<TransformComponent>().Position, (int)maze.GetComponent<MazeComponent>().Width, (int)maze.GetComponent<MazeComponent>().Height));
 
+                            EntitySystem.BlackBoard.SetEntry<Entity>("Exit", exit);
                         }
                     }
                 }
