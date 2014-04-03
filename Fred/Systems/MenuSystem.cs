@@ -70,11 +70,11 @@ namespace Fred.Systems
 
             if (menuSelectionComponent.IsSelected)
             {
-                entity.GetComponent<TransformComponent>().X = graphicsDevice.DisplayMode.Width * 0.3F;
+                entity.GetComponent<TransformComponent>().X = graphicsDevice.DisplayMode.Width * 0.2F;
             }
             else
             {
-                entity.GetComponent<TransformComponent>().X = graphicsDevice.DisplayMode.Width * 0.2F; 
+                entity.GetComponent<TransformComponent>().X = graphicsDevice.DisplayMode.Width * 0F; 
             }
 
 
