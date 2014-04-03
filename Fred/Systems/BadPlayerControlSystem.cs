@@ -119,50 +119,67 @@ namespace Fred.Systems
                 System.Media.SoundPlayer player = new System.Media.SoundPlayer("Sounds/build.wav");
 
                 player.Play();
-                Entity toBuild = null;
+                Entity toBuild0 = null;
+                Entity toBuild1 = null;
+                Entity toBuild2 = null;
                 float direction = (velocityComponent.Direction * (180 / pi)) - 180;
                 while (direction < 0)
                 {
                     direction += 360;
                 }
-                Console.WriteLine(direction + " UHFEKHFKJREGRE");
                 if (direction < 22.5 || direction >= 337.5)
                 {
-                    toBuild = walls[nearbyGridsComponent.RightIndex];
+                    toBuild0 = walls[nearbyGridsComponent.TopRightIndex];
+                    toBuild1 = walls[nearbyGridsComponent.RightIndex];
+                    toBuild2 = walls[nearbyGridsComponent.BottomRightIndex];
                 }
                 else if (direction >= 22.5 && direction < 67.5)
                 {
-                    toBuild = walls[nearbyGridsComponent.BottomRightIndex];
+                    toBuild0 = walls[nearbyGridsComponent.RightIndex];
+                    toBuild1 = walls[nearbyGridsComponent.BottomRightIndex];
+                    toBuild2 = walls[nearbyGridsComponent.BottomIndex];
                 }
                 else if (direction >= 67.5 && direction < 112.5)
                 {
-                    toBuild = walls[nearbyGridsComponent.BottomIndex];
+                    toBuild0 = walls[nearbyGridsComponent.BottomRightIndex];
+                    toBuild1 = walls[nearbyGridsComponent.BottomIndex];
+                    toBuild2 = walls[nearbyGridsComponent.BottomLeftIndex];
                 }
                 else if (direction >= 112.5 && direction < 157.5)
                 {
-                    toBuild = walls[nearbyGridsComponent.BottomLeftIndex];
+                    toBuild0 = walls[nearbyGridsComponent.BottomIndex];
+                    toBuild1 = walls[nearbyGridsComponent.BottomLeftIndex];
+                    toBuild2 = walls[nearbyGridsComponent.LeftIndex];
                 }
                 else if (direction >= 157.5 && direction < 202.5)
                 {
-                    toBuild = walls[nearbyGridsComponent.LeftIndex];
+                    toBuild0 = walls[nearbyGridsComponent.BottomLeftIndex];
+                    toBuild1 = walls[nearbyGridsComponent.LeftIndex];
+                    toBuild2 = walls[nearbyGridsComponent.TopLeftIndex];
                 }
                 else if (direction >= 202.5 && direction < 247.5)
                 {
-                    toBuild = walls[nearbyGridsComponent.TopLeftIndex];
+                    toBuild0 = walls[nearbyGridsComponent.LeftIndex];
+                    toBuild1 = walls[nearbyGridsComponent.TopLeftIndex];
+                    toBuild2 = walls[nearbyGridsComponent.TopIndex];
                 }
                 else if (direction >= 247.5 && direction < 292.5)
                 {
-                    toBuild = walls[nearbyGridsComponent.TopIndex];
+                    toBuild0 = walls[nearbyGridsComponent.TopLeftIndex];
+                    toBuild1 = walls[nearbyGridsComponent.TopIndex];
+                    toBuild2 = walls[nearbyGridsComponent.TopRightIndex];
                 }
                 else if (direction >= 292.5 && direction < 337.5)
                 {
-                    toBuild = walls[nearbyGridsComponent.TopRightIndex];
+                    toBuild0 = walls[nearbyGridsComponent.TopIndex];
+                    toBuild1 = walls[nearbyGridsComponent.TopRightIndex];
+                    toBuild2 = walls[nearbyGridsComponent.RightIndex];
                 }
-                if (!toBuild.GetComponent<HealthComponent>().IsAlive)
-                {
-                    toBuild.GetComponent<HealthComponent>().AddHealth(entity.GetComponent<HealComponent>().Heal);
+                toBuild0.GetComponent<HealthComponent>().AddHealth(entity.GetComponent<HealComponent>().Heal);
+                toBuild1.GetComponent<HealthComponent>().AddHealth(entity.GetComponent<HealComponent>().Heal);
+                toBuild2.GetComponent<HealthComponent>().AddHealth(entity.GetComponent<HealComponent>().Heal);
                     cooldownComponent.ResetBuildCooldown();
-                }
+                
             }
 
             // Handle max speed
