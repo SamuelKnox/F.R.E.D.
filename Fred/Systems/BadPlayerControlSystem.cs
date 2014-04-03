@@ -175,9 +175,18 @@ namespace Fred.Systems
                     toBuild1 = walls[nearbyGridsComponent.TopRightIndex];
                     toBuild2 = walls[nearbyGridsComponent.RightIndex];
                 }
-                toBuild0.GetComponent<HealthComponent>().AddHealth(entity.GetComponent<HealComponent>().Heal);
-                toBuild1.GetComponent<HealthComponent>().AddHealth(entity.GetComponent<HealComponent>().Heal);
-                toBuild2.GetComponent<HealthComponent>().AddHealth(entity.GetComponent<HealComponent>().Heal);
+                if (toBuild0 != null)
+                {
+                    toBuild0.GetComponent<HealthComponent>().AddHealth(entity.GetComponent<HealComponent>().Heal);
+                }
+                if (toBuild1 != null)
+                {
+                    toBuild1.GetComponent<HealthComponent>().AddHealth(entity.GetComponent<HealComponent>().Heal);
+                }
+                if (toBuild2 != null)
+                {
+                    toBuild2.GetComponent<HealthComponent>().AddHealth(entity.GetComponent<HealComponent>().Heal);
+                }
                     cooldownComponent.ResetBuildCooldown();
                 
             }
