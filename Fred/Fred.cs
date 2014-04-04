@@ -105,9 +105,12 @@ namespace Fred
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
+            Texture2D background = Content.Load<Texture2D>("title");
+            Rectangle mainFrame = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
 
             spriteBatch.Begin();
             world.Draw();
+            spriteBatch.Draw(background, mainFrame, Color.Black);
             spriteBatch.End();
 
             base.Draw(gameTime);
