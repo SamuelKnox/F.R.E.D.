@@ -44,7 +44,7 @@ namespace Fred.Systems
                 velocityComponent.Direction = (float)(-Math.Atan2(velocityComponent.XVelocity, velocityComponent.YVelocity) + (-pi * 0.45));
             }
 
-            float maxMoveSpeed = .25F;
+            float maxMoveSpeed = .15F;
             float acceleration = 0.0008F * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             float moveSpeedFriction = 0.0005f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             int keysDown = 0;
@@ -61,9 +61,9 @@ namespace Fred.Systems
                             w = walls[(int)(coords.X * maze.GetComponent<MazeComponent>().Height + coords.Y)];
                             if (transformComponent.Location.Intersects(w.GetComponent<TransformComponent>().Location) && w.GetComponent<HealthComponent>().IsAlive)
                             {
-                                maxMoveSpeed = .04F;
-                                acceleration = (float)((0.0006F * w.GetComponent<HealthComponent>().HealthPercentage) * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds);
-                                moveSpeedFriction = 0.0001f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
+                                maxMoveSpeed = .35F;
+                                acceleration = (float)((0.0016F * w.GetComponent<HealthComponent>().HealthPercentage) * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds);
+                                moveSpeedFriction = 0.0003f * TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
                             }
                         }
             }

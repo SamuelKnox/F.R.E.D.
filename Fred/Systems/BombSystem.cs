@@ -36,7 +36,8 @@ namespace Fred.Systems
                     {
                         if (i >= 0 && i < walls.Count && nearbyGridsComponent.CurrentIndex >= 0 && nearbyGridsComponent.CurrentIndex < walls.Count)
                         {
-                            walls[i].GetComponent<HealthComponent>().AddDamage(damageComponent.Damage);
+                            double dmg = damageComponent.Damage;
+                            walls[i].GetComponent<HealthComponent>().AddDamage(dmg);
                             Entity attackAnimation = this.EntityWorld.CreateEntityFromTemplate(WallAttackTemplate.Name);
                             int currentIndexNumber = nearbyGridsComponent.CurrentIndex;
                             attackAnimation.GetComponent<TransformComponent>().Position = walls[currentIndexNumber].GetComponent<TransformComponent>().Position;

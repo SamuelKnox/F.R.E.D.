@@ -48,7 +48,7 @@ namespace Fred.Components
 
         public CooldownComponent()
         {
-            CurrentBombCooldown = MaxBombCooldown = 2500;
+            CurrentBombCooldown = MaxBombCooldown = 1500;
             CurrentBuildCooldown = MaxBuildCooldown = 1000;
             CurrentBounceCooldown = MaxBounceCooldown = 50;
             CurrentMenuSelectCooldown = MaxMenuSelectCooldown = 150;

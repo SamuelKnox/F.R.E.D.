@@ -47,6 +47,11 @@ namespace Fred.Systems
                     {
                         BadPlayer.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<VelocityComponent>(),entity.GetComponent<HealthComponent>());
                     }
+                    else if (string.Compare("Bomb", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
+                    {
+                        Bomb.Render(spriteBatch, contentManager, transformComponent);
+
+                    }
                     else if (string.Compare("Wall", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
                     {
                         Wall.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<HealthComponent>());
@@ -56,11 +61,6 @@ namespace Fred.Systems
                         WallAttack.Render(spriteBatch, contentManager, transformComponent);
                     }
 
-                    else if (string.Compare("Bomb", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
-                    {
-                        Bomb.Render(spriteBatch, contentManager, transformComponent);
-
-                    }
                     else if (string.Compare("Text", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
                     {
                         Text.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<TextComponent>());

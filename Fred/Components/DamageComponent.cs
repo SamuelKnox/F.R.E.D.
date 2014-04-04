@@ -17,12 +17,13 @@ namespace Fred.Components
         {
             get
             {
-                Random rand = new Random();
-                if (IsCriticalHit)
-                {
-                    return (this.BaseDamage * rand.Next(2, 4)) * ((double) rand.Next(90, 110) / 100);
-                }
-                return BaseDamage * ((double) rand.Next(90, 110) / 100);
+                //Random rand = new Random();
+                //if (IsCriticalHit)
+                //{
+                //    return (this.BaseDamage * rand.Next(2, 4));
+                //}
+                //return BaseDamage;
+                return 4;
             }
         }
 
@@ -46,11 +47,7 @@ namespace Fred.Components
             get
             {
                 Random rand = new Random();
-                if (rand.NextDouble() < CriticalHitChance)
-                {
-                    return true;
-                }
-                return false;
+                return rand.NextDouble() < CriticalHitChance;
             }
         }
 
