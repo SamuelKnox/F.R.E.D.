@@ -130,8 +130,8 @@ namespace Fred
                 menuItem.AddComponent(new MenuSelectionComponent(i, entities.Length));
                 menuItem.AddComponent(new CooldownComponent());
                 menuItem.AddComponent(new SpatialFormComponent("Level"));
-                menuItem.GetComponent<TransformComponent>().X = GraphicsDevice.DisplayMode.Width * 0.2F;
-                menuItem.GetComponent<TransformComponent>().Y = (-205 + (210 * (1 + i)));
+                menuItem.GetComponent<TransformComponent>().X = GraphicsDevice.DisplayMode.Width * 0.5F;
+                menuItem.GetComponent<TransformComponent>().Y = (200 + (100 * (1 + i)));
             }
 
 

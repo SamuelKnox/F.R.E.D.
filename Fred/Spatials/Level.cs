@@ -18,7 +18,7 @@ namespace Fred.Spatials
             switch(menuSelectionComponent.IndexNumber)
             {
                 case 0: //random
-                    tex = contentManager.Load<Texture2D>("level4");
+                    tex = contentManager.Load<Texture2D>("random");
                     break;
                 case 1:
                     tex = contentManager.Load<Texture2D>("level1");
@@ -27,7 +27,7 @@ namespace Fred.Spatials
                     tex = contentManager.Load<Texture2D>("level2");
                     break;
                 case 3: //exit
-                    tex = contentManager.Load<Texture2D>("level4");
+                    tex = contentManager.Load<Texture2D>("quit");
                     break;
             }
             spriteBatch.Begin();
