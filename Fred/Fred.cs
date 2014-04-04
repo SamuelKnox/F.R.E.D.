@@ -115,7 +115,7 @@ namespace Fred
 
         void InitializeMenu()
         {
-            Entity title = World.CreateEntity();
+            Entity title = world.CreateEntity();
             title.AddComponentFromPool<TransformComponent>();
             title.AddComponent(new SpatialFormComponent("Title"));
             title.GetComponent<TransformComponent>().X = GraphicsDevice.DisplayMode.Width * 0.25F;

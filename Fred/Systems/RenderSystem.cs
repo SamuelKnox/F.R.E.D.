@@ -71,7 +71,7 @@ namespace Fred.Systems
                     }
                     else if (string.Compare("Title", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
                     {
-                        Level.Render(spriteBatch, contentManager, transformComponent);
+                        Title.Render(spriteBatch, contentManager, transformComponent);
                     }
                 }
             }
