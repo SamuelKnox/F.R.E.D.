@@ -98,17 +98,8 @@ namespace Fred.Systems
                             break;
 
                         case (1):
-
-
-                            playerStartPositions = InitializeWalls(1);
-                            InitializeGoodPlayers(playerStartPositions[0]);
-                            InitializeEvilPlayers(playerStartPositions[1]);
-                            InitializeTimer();
-                            break;
-
                         case (2):
-
-                            playerStartPositions = InitializeWalls(2);
+                            playerStartPositions = InitializeWalls(menuSelectionComponent.CurrentSelection);
                             InitializeGoodPlayers(playerStartPositions[0]);
                             InitializeEvilPlayers(playerStartPositions[1]);
                             InitializeTimer();
@@ -182,7 +173,7 @@ namespace Fred.Systems
 
                             wall.AddComponentFromPool<TransformComponent>();
                             wall.AddComponent(new SpatialFormComponent("Wall"));
-							wall.AddComponent(new HealthComponent(0,10));
+                            wall.AddComponent(new HealthComponent(0,10));
                             //wall.AddComponent(new NearbyGridsComponent(new Vector2(i, j), width, height));
 
 
@@ -196,7 +187,7 @@ namespace Fred.Systems
 
                             wall.AddComponentFromPool<TransformComponent>();
                             wall.AddComponent(new SpatialFormComponent("Wall"));
-							wall.AddComponent(new HealthComponent(10));
+                            wall.AddComponent(new HealthComponent(10));
                             //wall.AddComponent(new NearbyGridsComponent(new Vector2(i, j), width, height));
 
                             wall.GetComponent<TransformComponent>().X = i * wallSize;
@@ -229,7 +220,7 @@ namespace Fred.Systems
 
                             wall.AddComponentFromPool<TransformComponent>();
                             wall.AddComponent(new SpatialFormComponent("Wall"));
-							wall.AddComponent(new HealthComponent(0, 10));
+                            wall.AddComponent(new HealthComponent(0, 10));
                             //wall.AddComponent(new NearbyGridsComponent(new Vector2(i, j), width, height));
 
                             wall.GetComponent<TransformComponent>().X = i * wallSize;
@@ -249,7 +240,7 @@ namespace Fred.Systems
 
                             wall.AddComponentFromPool<TransformComponent>();
                             wall.AddComponent(new SpatialFormComponent("Wall"));
-							wall.AddComponent(new HealthComponent(0, 10));
+                            wall.AddComponent(new HealthComponent(0, 10));
                             //wall.AddComponent(new NearbyGridsComponent(new Vector2(i, j), width, height));
 
                             wall.GetComponent<TransformComponent>().X = i * wallSize;
