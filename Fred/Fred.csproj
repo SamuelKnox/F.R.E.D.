@@ -59,6 +59,7 @@
     <Compile Include="Spatials\Level.cs" />
     <Compile Include="Spatials\GoodPlayer.cs" />
     <Compile Include="Spatials\Text.cs" />
+    <Compile Include="Spatials\Title.cs" />
     <Compile Include="Spatials\Wall.cs" />
     <Compile Include="Spatials\WallAttack.cs" />
     <Compile Include="Systems\BadPlayerControlSystem.cs" />

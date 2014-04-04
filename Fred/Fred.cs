@@ -105,10 +105,8 @@ namespace Fred
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.White);
-            Texture2D background = Content.Load<Texture2D>("title");
 
             spriteBatch.Begin();
-            spriteBatch.Draw(background, new Rectangle((int)(GraphicsDevice.DisplayMode.Width * 0.25F), 0, background.Width, background.Height), background.Bounds, Color.White);
             world.Draw();
             spriteBatch.End();
 
@@ -117,6 +115,11 @@ namespace Fred
 
         void InitializeMenu()
         {
+            Entity title = World.CreateEntity();
+            title.AddComponentFromPool<TransformComponent>();
+            title.AddComponent(new SpatialFormComponent("Title"));
+            title.GetComponent<TransformComponent>().X = GraphicsDevice.DisplayMode.Width * 0.25F;
+            title.GetComponent<TransformComponent>().Y = 0;
 
             String[] items = new String[] { "Play Random Level", "Level 1", "Level 2", "Quit" };
             Entity[] entities = new Entity[items.Length];
@@ -132,8 +135,6 @@ namespace Fred
                 menuItem.GetComponent<TransformComponent>().X = GraphicsDevice.DisplayMode.Width * 0.5F;
                 menuItem.GetComponent<TransformComponent>().Y = (200 + (100 * (1 + i)));
             }
-
-
         }
 
     }

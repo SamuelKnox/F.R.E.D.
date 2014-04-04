@@ -41,15 +41,15 @@ namespace Fred.Systems
                 {
                     if (string.Compare("GoodPlayer", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
                     {
-						GoodPlayer.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<VelocityComponent>(),entity.GetComponent<HealthComponent>());
+                        GoodPlayer.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<VelocityComponent>(),entity.GetComponent<HealthComponent>());
                     }
                     else if (string.Compare("BadPlayer", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
                     {
-						BadPlayer.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<VelocityComponent>(),entity.GetComponent<HealthComponent>());
+                        BadPlayer.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<VelocityComponent>(),entity.GetComponent<HealthComponent>());
                     }
                     else if (string.Compare("Wall", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
                     {
-						Wall.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<HealthComponent>());
+                        Wall.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<HealthComponent>());
                     }
                     else if (string.Compare("WallAttack", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
                     {
@@ -68,6 +68,10 @@ namespace Fred.Systems
                     else if (string.Compare("Level", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
                     {
                         Level.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<MenuSelectionComponent>());
+                    }
+                    else if (string.Compare("Title", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
+                    {
+                        Level.Render(spriteBatch, contentManager, transformComponent);
                     }
                 }
             }
