@@ -104,13 +104,12 @@ namespace Fred
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.White);
             Texture2D background = Content.Load<Texture2D>("title");
-            Rectangle mainFrame = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
 
             spriteBatch.Begin();
+            spriteBatch.Draw(background, new Rectangle((int)(GraphicsDevice.DisplayMode.Width * 0.25F), 0, background.Width, background.Height), background.Bounds, Color.White);
             world.Draw();
-            spriteBatch.Draw(background, mainFrame, Color.Black);
             spriteBatch.End();
 
             base.Draw(gameTime);
