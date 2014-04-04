@@ -47,10 +47,8 @@ namespace Fred.Systems
         public override void Process(Entity entity)
         {
             TransformComponent transformComponent = entity.GetComponent<TransformComponent>();
-            // TODO: multiple height/width by wall height/width
             if (transformComponent.X > maze.GetComponent<MazeComponent>().Width * wallWidth || transformComponent.Y > maze.GetComponent<MazeComponent>().Height * wallHeight || transformComponent.X < 0 || transformComponent.Y < 0)
             {
-
                 System.Media.SoundPlayer player = new System.Media.SoundPlayer("Sounds/winorchestra.wav");
 
                 player.Play();
