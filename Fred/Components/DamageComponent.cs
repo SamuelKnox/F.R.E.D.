@@ -17,12 +17,6 @@ namespace Fred.Components
         {
             get
             {
-                //Random rand = new Random();
-                //if (IsCriticalHit)
-                //{
-                //    return (this.BaseDamage * rand.Next(2, 4));
-                //}
-                //return BaseDamage;
                 return 4;
             }
         }

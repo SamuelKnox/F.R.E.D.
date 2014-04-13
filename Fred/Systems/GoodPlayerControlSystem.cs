@@ -94,8 +94,8 @@ namespace Fred.Systems
             if ((pressedKey.IsKeyDown(Keys.D1) || controller.Buttons.A == ButtonState.Pressed) && cooldownComponent.IsBombReady)
             {
                 System.Media.SoundPlayer player = new System.Media.SoundPlayer("Sounds/bombplant.wav");
-
                 player.Play();
+
                 Entity bomb = this.EntityWorld.CreateEntityFromTemplate(BombTemplate.Name);
                 bomb.GetComponent<TransformComponent>().Position = transformComponent.Position;
                 cooldownComponent.ResetBombCooldown();

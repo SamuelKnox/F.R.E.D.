@@ -52,7 +52,6 @@ namespace Fred.Components
             CurrentBuildCooldown = MaxBuildCooldown = 1000;
             CurrentBounceCooldown = MaxBounceCooldown = 50;
             CurrentMenuSelectCooldown = MaxMenuSelectCooldown = 150;
-
         }
 
         public CooldownComponent(double bomb, double build, double bounce, double menu)

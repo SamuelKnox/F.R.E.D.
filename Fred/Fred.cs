@@ -117,6 +117,7 @@ namespace Fred
         {
             Entity title = world.CreateEntity();
             title.AddComponentFromPool<TransformComponent>();
+            //Console.WriteLine("HFEKHESFHEKJWHFKJEHFKJEWHFKEWFKJHEKJWFKEF     " + title.GetComponent<TransformComponent>());
             title.AddComponent(new SpatialFormComponent("Title"));
             title.GetComponent<TransformComponent>().X = GraphicsDevice.DisplayMode.Width * 0.25F;
             title.GetComponent<TransformComponent>().Y = 0;

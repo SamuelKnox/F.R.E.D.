@@ -274,7 +274,7 @@ namespace Fred.Systems
             player.AddComponentFromPool<TransformComponent>();
             player.AddComponent(new SpatialFormComponent("GoodPlayer"));
             player.AddComponent(new HealthComponent(10));
-            player.AddComponent(new DamageComponent(3));
+            player.AddComponent(new DamageComponent(5));
             player.AddComponent(new VelocityComponent());
             player.AddComponent(new CooldownComponent());
             player.AddComponent(new NearbyGridsComponent(new Vector2(playerStartPosition.X / wallSize, playerStartPosition.Y / wallSize), maze.GetComponent<MazeComponent>().Width, maze.GetComponent<MazeComponent>().Height));
