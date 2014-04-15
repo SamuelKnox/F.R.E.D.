@@ -63,7 +63,7 @@ namespace Fred.Systems
 
                 KeyboardState pressedKey = Keyboard.GetState();
                 GamePadState controller = GamePad.GetState(PlayerIndex.One);
-                if (pressedKey.IsKeyDown(Keys.RightShift) || controller.Buttons.A == ButtonState.Pressed)
+                if (controller.Buttons.Start== ButtonState.Pressed)
                 {
                     game.Exit();
                 }

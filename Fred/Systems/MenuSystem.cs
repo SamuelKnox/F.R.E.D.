@@ -23,6 +23,7 @@ namespace Fred.Systems
         ContentManager content;
         Game game;
         Entity maze;
+        float timeLimit;
 
         public override void LoadContent()
         {
@@ -143,6 +144,7 @@ namespace Fred.Systems
             int width = int.Parse(firstLine[0]);
             maze.GetComponent<MazeComponent>().Width = width;
             int height = int.Parse(firstLine[1]);
+            timeLimit = float.Parse(firstLine[2]);
             maze.GetComponent<MazeComponent>().Height = height;
             List<Vector2> playerStartPoints = new List<Vector2>();
             playerStartPoints.Add(new Vector2(graphicsDevice.DisplayMode.Width * 0.5F, graphicsDevice.DisplayMode.Height * 0.5F));
@@ -311,7 +313,7 @@ namespace Fred.Systems
             timer.AddComponentFromPool<TransformComponent>();
             timer.GetComponent<TransformComponent>().X = graphicsDevice.DisplayMode.Width * 0.5F;
             timer.GetComponent<TransformComponent>().Y = graphicsDevice.DisplayMode.Height * 0.05F;
-            timer.AddComponent(new TimerComponent(60000));
+            timer.AddComponent(new TimerComponent(timeLimit));
             timer.Tag = "TIMER";
 
         }
