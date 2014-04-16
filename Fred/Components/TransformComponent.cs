@@ -15,6 +15,8 @@ namespace Fred.Components
         public float X { get; set; }
         public float Y { get; set; }
         public Rectangle Location { get; set; }
+		public bool leftImage = false;
+
         public Vector2 CenterOfRectangle 
         {
             get

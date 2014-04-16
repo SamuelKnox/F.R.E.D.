@@ -16,6 +16,9 @@ namespace Fred.Components
         public double MaxBounceCooldown { get; set; }
         public double CurrentMenuSelectCooldown { get; set; }
         public double MaxMenuSelectCooldown { get; set; }
+		public double CurrentSpriteCooldown { get; set; }
+		public double MaxSpriteCooldown { get; set; }
+
         public bool IsBombReady
         {
             get
@@ -44,37 +47,47 @@ namespace Fred.Components
                 return this.CurrentMenuSelectCooldown <= 0;
             }
         }
+			
+		public bool IsSpriteReady {
+			get {
+				return this.CurrentSpriteCooldown <= 0;
+			}
+		}
 
 
-        public CooldownComponent()
-        {
-            CurrentBombCooldown = MaxBombCooldown = 1500;
-            CurrentBuildCooldown = MaxBuildCooldown = 1000;
-            CurrentBounceCooldown = MaxBounceCooldown = 50;
-            CurrentMenuSelectCooldown = MaxMenuSelectCooldown = 150;
-        }
+		public CooldownComponent()
+		{
+			CurrentBombCooldown = MaxBombCooldown = 2000;
+			CurrentBuildCooldown = MaxBuildCooldown = 2000;
+			CurrentBounceCooldown = MaxBounceCooldown = 50;
+			CurrentMenuSelectCooldown = MaxMenuSelectCooldown = 150;
+			CurrentSpriteCooldown = MaxSpriteCooldown = 170;
+		}
 
-        public CooldownComponent(double bomb, double build, double bounce, double menu)
-        {
-            CurrentBombCooldown = CurrentBombCooldown = bomb;
-            CurrentBuildCooldown = MaxBuildCooldown = build;
-            CurrentBounceCooldown = MaxBounceCooldown = bounce;
-            CurrentMenuSelectCooldown = MaxMenuSelectCooldown = menu;
-        }
-        public void ResetCooldowns()
-        {
-            CurrentBombCooldown = MaxBombCooldown;
-            CurrentBuildCooldown = MaxBuildCooldown;
-            CurrentBounceCooldown = MaxBounceCooldown;
-            CurrentMenuSelectCooldown = MaxMenuSelectCooldown;
-        }
-        public void CancelCooldowns()
-        {
-            CurrentBombCooldown = 0;
-            CurrentBuildCooldown = 0;
-            CurrentBounceCooldown = 0;
-            CurrentMenuSelectCooldown = 0;
-        }
+		public CooldownComponent(double bomb, double build, double bounce, double menu, double sprite)
+		{
+			CurrentBombCooldown = CurrentBombCooldown = bomb;
+			CurrentBuildCooldown = MaxBuildCooldown = build;
+			CurrentBounceCooldown = MaxBounceCooldown = bounce;
+			CurrentMenuSelectCooldown = MaxMenuSelectCooldown = menu;
+			CurrentSpriteCooldown = MaxSpriteCooldown = sprite;
+		}
+		public void ResetCooldowns()
+		{
+			CurrentBombCooldown = MaxBombCooldown;
+			CurrentBuildCooldown = MaxBuildCooldown;
+			CurrentBounceCooldown = MaxBounceCooldown;
+			CurrentMenuSelectCooldown = MaxMenuSelectCooldown;
+			CurrentSpriteCooldown = MaxSpriteCooldown;
+		}
+		public void CancelCooldowns()
+		{
+			CurrentBombCooldown = 0;
+			CurrentBuildCooldown = 0;
+			CurrentBounceCooldown = 0;
+			CurrentMenuSelectCooldown = 0;
+			CurrentSpriteCooldown = 0;
+		}
         public void ResetBombCooldown()
         {
             CurrentBombCooldown = MaxBombCooldown;
@@ -91,5 +104,8 @@ namespace Fred.Components
         {
             CurrentMenuSelectCooldown = MaxMenuSelectCooldown;
         }
+		public void ResetSpriteCooldown(){
+			CurrentSpriteCooldown = MaxSpriteCooldown;
+		}
     }
 }

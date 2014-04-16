@@ -13,22 +13,25 @@ namespace Fred.Spatials
     {
         static Texture2D tex;
 
-		public static void Render(SpriteBatch spriteBatch, ContentManager contentManager, TransformComponent transformComponent, VelocityComponent velocityComponent, HealthComponent healthComponent)
-        {
-			if (tex == null)
-			{
-				if (healthComponent.HealthPercentage >= .90) {
-					tex = contentManager.Load<Texture2D> ("goodplayer");
-				}
-				else if (healthComponent.HealthPercentage >= .60) {
-					tex = contentManager.Load<Texture2D> ("goodplayer2");
-				}
-				else if (healthComponent.HealthPercentage >= .30) {
-					tex = contentManager.Load<Texture2D> ("goodplayer3");
-				}
-				else {
-					tex = contentManager.Load<Texture2D> ("goodplayer4");
-				}
+		public static void Render(SpriteBatch spriteBatch, ContentManager contentManager, TransformComponent transformComponent, VelocityComponent velocityComponent, CooldownComponent cooldownComponent)
+		{
+
+			if (Math.Abs(velocityComponent.XVelocity) <= 0.09 && Math.Abs(velocityComponent.YVelocity) <= 0.09) {
+				tex = contentManager.Load<Texture2D> ("goodplayer3");
+			}
+			else if (!transformComponent.leftImage && cooldownComponent.IsSpriteReady) {
+				tex = contentManager.Load<Texture2D> ("goodplayer");
+				cooldownComponent.ResetSpriteCooldown ();
+				transformComponent.leftImage = true;
+			}else if (transformComponent.leftImage && cooldownComponent.IsSpriteReady) {
+				tex = contentManager.Load<Texture2D> ("goodplayer2");
+				cooldownComponent.ResetSpriteCooldown ();
+				transformComponent.leftImage = false;
+			}else if (transformComponent.leftImage && !cooldownComponent.IsSpriteReady) {
+				tex = contentManager.Load<Texture2D> ("goodplayer");
+			}
+			else {
+				tex = contentManager.Load<Texture2D> ("goodplayer2");
 			}
             spriteBatch.Begin();
             SpriteEffects spriteEffects = new SpriteEffects();

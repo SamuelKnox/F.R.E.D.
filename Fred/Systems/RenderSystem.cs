@@ -41,11 +41,11 @@ namespace Fred.Systems
                 {
                     if (string.Compare("GoodPlayer", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
                     {
-                        GoodPlayer.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<VelocityComponent>(),entity.GetComponent<HealthComponent>());
+						GoodPlayer.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<VelocityComponent>(),entity.GetComponent<CooldownComponent>());
                     }
                     else if (string.Compare("BadPlayer", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
                     {
-                        BadPlayer.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<VelocityComponent>(),entity.GetComponent<HealthComponent>());
+						BadPlayer.Render(spriteBatch, contentManager, transformComponent, entity.GetComponent<VelocityComponent>(),entity.GetComponent<CooldownComponent>());
                     }
                     else if (string.Compare("Bomb", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
                     {

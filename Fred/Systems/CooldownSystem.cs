@@ -19,6 +19,8 @@ namespace Fred.Systems
             cooldownComponent.CurrentBuildCooldown -= TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             cooldownComponent.CurrentBounceCooldown -= TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
             cooldownComponent.CurrentMenuSelectCooldown -= TimeSpan.FromTicks(this.EntityWorld.Delta).Milliseconds;
-        }
+			cooldownComponent.CurrentSpriteCooldown -= TimeSpan.FromTicks (this.EntityWorld.Delta).Milliseconds;
+
+		}
     }
 }
