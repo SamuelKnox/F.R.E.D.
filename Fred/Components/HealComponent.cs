@@ -17,12 +17,13 @@ namespace Fred.Components
         {
             get
             {
-                Random rand = new Random();
-                if (IsCriticalHit)
-                {
-                    return (this.BaseHeal * rand.Next(2, 4)) * (rand.Next(90, 110) / 100);;
-                }
-                return BaseHeal * (rand.Next(90, 110) / 100);
+                return 3;
+                //Random rand = new Random();
+                //if (IsCriticalHit)
+                //{
+                //    return (this.BaseHeal * rand.Next(2, 4)) * (rand.Next(90, 110) / 100);;
+                //}
+                //return BaseHeal * (rand.Next(90, 110) / 100);
             }
         }
 

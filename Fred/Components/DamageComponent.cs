@@ -17,7 +17,7 @@ namespace Fred.Components
         {
             get
             {
-                return 4;
+                return 5;
             }
         }
 
